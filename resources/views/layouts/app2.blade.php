@@ -226,9 +226,33 @@
           </li>
           <li class="nav-item">
             <a href="pages/kanban.html" class="nav-link">
-              <i class="nav-icon fas fa-columns"></i>
+              <i class="nav-icon fa fa-stethoscope"></i>
               <p>
-                Kanban Board
+                Health Declaration History
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="pages/kanban.html" class="nav-link">
+              <i class="nav-icon fa fa-edit"></i>
+              <p>
+                Employee Health Monitoring
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="pages/kanban.html" class="nav-link">
+              <i class="nav-icon fa fa-user-plus"></i>
+              <p>
+                Positive Employee
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="pages/kanban.html" class="nav-link">
+              <i class="nav-icon fa fa-cogs"></i>
+              <p>
+                Activity Logs
               </p>
             </a>
           </li>
