@@ -24,7 +24,7 @@ class CompanyProfileController extends Controller
      */
     public function create()
     {
-        //
+        return view('company_profile.index');
     }
 
     /**

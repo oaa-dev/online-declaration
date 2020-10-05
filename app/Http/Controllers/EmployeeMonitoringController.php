@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 use Validator;
 use App\User;
 use Reponse;
+use DB;
+use App\EmployeeCovidStatus;
+use Hash;
+use Auth;
 
 class EmployeeMonitoringController extends Controller
 {
@@ -35,28 +39,52 @@ class EmployeeMonitoringController extends Controller
         return view('health_monitoring.employee_health_status');
     }
 
-    public function employee_health_condition(request $request)
+    public function employee_health_condition(Request $request)
     {
-        $results = Employee::join('users', 'users.employee_id', 'employees.id')
-                ->select('employees.id as employee_id','users.id as user_id', 'employees.*','users.*')
-                ->get();
+        $results = User::join('employees', 'employees.id', 'users.id')->select('users.id as user_id', 'employees.id as employee_id', 'users.*', 'employees.*')
+                ->where('users.status', '=', '1')->get();
 
         $data = array();
         if(!empty($results))
         {
             foreach ($results as $result)
             {
+                $ctr = 0;
 
-                $buttons = '<button onclick="edit('. $result->id .')" class= "btn btn-danger btn-sm"><i class="fa fa-user-plus"></i> POSITIVE</button> <button onclick="edit('. $result->id .')" class= "btn btn-warning btn-sm"><i class="fa fa-user-plus"></i> SUSPECTED</button> ';
+                $max_identifier = DB::table('employee_monitorings')->where('user_id', '=', $result->user_id)->max('identifier');
+                $latest_health = DB::table('employee_monitorings')->where('identifier', '=', $max_identifier)->where('user_id', '=', $result->user_id)->first();
                 
-                $status = ($result->status == 1)?'<span class="badge bg-primary">ACTIVE</span>':'<span class="badge bg-danger">IN-ACTIVE</span>';
-                $risk = ($result->status == 1)?'<span class="badge bg-danger">HIGH RISK</span>':'<span class="badge bg-warning">LOW RISK</span>';
+                if(!empty($latest_health)){
+                    ($latest_health->fever == 'YES')? $ctr++ : false;
+                    ($latest_health->cough == 'YES')? $ctr++ : false;
+                    ($latest_health->shortness_of_breathing == 'YES')? $ctr++ : false;
+                    ($latest_health->sore_throat == 'YES')? $ctr++ : false;
+                    ($latest_health->headache == 'YES')? $ctr++ : false;
+                    ($latest_health->body_pain == 'YES')? $ctr++ : false;
+                    ($latest_health->household_member_positive == 'YES')? $ctr++ : false;
+                    ($latest_health->person_diagnosed_positive == 'YES')? $ctr++ : false;
+                    ($latest_health->person_monitor == 'YES')? $ctr++ : false;
+                    ($latest_health->living_with_frontliners == 'YES')? $ctr++ : false;
+                    ($latest_health->relative_arrived_overseas == 'YES')? $ctr++ : false;
+
+                    if(EmployeeCovidStatus::where('user_id', '=', $result->user_id)->where('status', '=', '1')->first()){
+                        
+                        $buttons = '<button disabled class= "btn btn-danger btn-sm"><i class="fa fa-user-plus"></i> POSITIVE</button> <button disabled class= "btn btn-warning btn-sm"><i class="fa fa-user-plus"></i> SUSPECTED</button>';
+                        $risk = '<span class="badge bg-primary">COVID CASE MONITORING</span>';
+                    }else{
+                        $buttons = '<button onclick="positive('. $result->user_id .')" class= "btn btn-danger btn-sm"><i class="fa fa-user-plus"></i> POSITIVE</button> <button onclick="suspected('. $result->user_id .')" class= "btn btn-warning btn-sm"><i class="fa fa-user-plus"></i> SUSPECTED</button>';
+                        $risk = ($ctr > 5)?'<span class="badge bg-danger">HISH RISK</span>':'<span class="badge bg-warning">LOW RISK</span>';
+                    }
+                }else{
+                    $buttons = '<button disabled class= "btn btn-danger btn-sm"><i class="fa fa-user-plus"></i> POSITIVE</button> <button disabled class= "btn btn-warning btn-sm"><i class="fa fa-user-plus"></i> SUSPECTED</button>';
+                    $risk = '<span class="badge bg-primary">NO HISTORY OF TRANSACTION</span>';
+                }
 
                 $nestedData['id'] = $result->id;
                 $nestedData['employee_code'] =  $result->employee_code ;
+                $nestedData['contact'] =  $result->contact_number;
                 $nestedData['fullname'] =  strtoupper($result->lastname .', '. $result->firstname .' '. $result->middlename);
                 $nestedData['risk'] =  $risk;
-                $nestedData['status'] =  $status;
                 $nestedData['actions'] = $buttons;
                 $data[] = $nestedData;
             }
@@ -154,6 +182,7 @@ class EmployeeMonitoringController extends Controller
             $monitoring->relative_arrived_overseas = $request['relative_overseas'];
             $monitoring->person_monitor = $request['person_monitor'];
             $monitoring->status = $request['user_id'];
+            $monitoring->identifier = 1;
             $monitoring->save();
 
             
@@ -161,6 +190,27 @@ class EmployeeMonitoringController extends Controller
         }
     }
 
+    public function employeeActiveCase(Request $request){
+        $active = new EmployeeCovidStatus;
+        $active->user_id = $request['user_id'];
+        $active->health_status_remarks = $request['type'];
+        $active->final_remarks = '';
+        $active->date = $request['date_confirmed'];
+        $active->fulldetailed_reports = '';
+        $active->status = 1;
+        $active->save();
+
+        
+        return response::json(array('success'=>true, 'messages'=>'Record Successfully Saved!'));
+    }
+
+    public function verifyPassword(Request $request){
+        if (Hash::check($request['password'], Auth::user()->password)) {
+            return response()->json(array('success' => true));
+        }
+
+        return response()->json(array('success' => false));
+    }
     /**
      * Display the specified resource.
      *

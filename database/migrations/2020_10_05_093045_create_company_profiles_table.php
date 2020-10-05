@@ -15,6 +15,15 @@ class CreateCompanyProfilesTable extends Migration
     {
         Schema::create('company_profiles', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('company_name');
+            $table->longText('description')->nullable();
+            $table->string('email')->nullable();
+            $table->string('contact_number')->nullable();
+            $table->longtext('address')->nullable();
+            $table->longText('mission')->nullable();
+            $table->longText('vision')->nullable();
+            $table->longText('logo')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

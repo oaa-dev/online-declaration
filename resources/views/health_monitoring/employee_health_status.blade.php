@@ -7,9 +7,9 @@
         <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0">Employee Health Status</h1>
-            </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <h1 class="m-0">Employee Health Status</h1>
+                </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
         </div>
@@ -29,8 +29,8 @@
                                         <tr role="row">
                                             <th>Employee Code</th>
                                             <th>Fullname</th>
-                                            <th>Risk Type</th>
-                                            <th>Status</th>
+                                            <th>Contact</th>
+                                            <th>Risk</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -49,13 +49,49 @@
         </section>
       <!-- /.content -->
     </div>
+
+    <div class="modal fade" id="active_modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Employee Status</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="active_form">
+                    @csrf
+                    @method('POST')
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Date Confirmed</label>
+                            <input type="hidden" id="user_id" name="user_id">
+                            <input type="hidden" id="type" name="type">
+                            <input type="date" class="form-control" id="date_confirmed" name="date_confirmed">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Reports</label>
+                            <textarea class="form-control" id="reports" rows="6" name="reports"></textarea>
+                        </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
 @endsection
 
 
 @section('script')
 <script>
     let datatable = [];
-    let Toast = '';
     $(document).ready(function(){
         datatable = $('#datatable').DataTable({
             // "processing": false,
@@ -69,44 +105,23 @@
             "columns": [
                 { "data": "employee_code" },
                 { "data": "fullname" },
+                { "data": "contact" },
                 { "data": "risk" },
-                { "data": "status" },
                 { "data": "actions" },
-            ]
+            ],
+            "columnDefs": [
+                { "orderable": false, "targets": [ 1 ] }, 
+            ]	 	 
         });
+
+        
     });
 
-    $("#create_form").validate({
+    $("#active_form").validate({
         rules: {
-            firstname: {
-                minlength: 2,
+            date_confirmed: {
                 required: true
-            },
-            lastname: {
-                minlength: 2,
-                required: true
-            },
-            dateofbirth: {
-                required: true
-            },
-            gender: {
-                required: true
-            },
-            civilstatus: {
-                required: true
-            },
-            address: {
-                required: true
-            },
-            contact: {
-                required: true
-            },
-            email: {
-                required: true
-            },
-            employee_code: {
-                required: true
-            },
+            }
         },
         submitHandler: function (form) {
             Swal.fire({
@@ -120,14 +135,14 @@
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
-                        url: '{{ route('employee.store') }}',
+                        url: '{{ route('monitoring.store_active') }}',
                         type: "POST",
-                        data: $('#create_form').serialize(),
+                        data: $('#active_form').serialize(),
                         dataType: "JSON",
                         success: function (data) {
                             if (data.success) {
-                                $('#create_modal').modal('hide');
-                                $("#create_form")[0].reset();
+                                $('#active_modal').modal('hide');
+                                $("#active_form")[0].reset();
                                 swal.fire({
                                     title: "Success!",
                                     text: data.messages,
@@ -147,141 +162,74 @@
         }
     });
 
-    const edit = (id) => {
-        $.ajax({
-            url: '/employee/' + id,
-            type: "GET",
-            dataType: "JSON",
-            success: function (data) {
-
-                console.log(data);
-                $("#update_modal").modal("show");
-                $("#edit_id").val(data[0].id);
-                $("#edit_lastname").val(data[0].lastname);
-                $("#edit_firstname").val(data[0].firstname);
-                $("#edit_middlename").val(data[0].middlename);
-                $("#edit_suffix").val(data[0].suffix);
-                $("#edit_dateofbirth").val(data[0].date_of_birth);
-                $("#edit_gender").val(data[0].gender);
-                $("#edit_civilstatus").val(data[0].civil_status);
-                $("#edit_employeecode").val(data[0].employee_code);
-                $("#edit_email").val(data[0].user.email);
-                $("#edit_contact").val(data[0].user.contact_number);
-                $("#edit_address").val(data[0].address);
+    const positive = (id) => {
+        swal.fire({
+            title: 'Please enter password!',
+            input: 'password',
+            showCancelButton: true,
+            confirmButtonText: 'Submit',
+            showLoaderOnConfirm: true,
+            preConfirm: function (password) {
+                $.ajax({
+                    url:'{{ route('monitoring.verify-password')}}',
+                    type:'POST',
+                    data:{ _token:"{{ csrf_token() }}",password:password},
+                    dataType:'json',
+                    success:function(success){
+                        if(success.success){
+                            $('#user_id').val(id);
+                            $('#type').val('POSITIVE');
+                            $('#active_modal').modal('show');
+                            //process loader false
+                        }else{
+                            swal.fire({
+                                title: "Password do not match!",
+                                text: "Please input correct password",
+                                icon: "error"
+                            })
+                            //process loader false
+                        }
+                    }
+                }); 
+                    
             },
-            error: function (jqXHR, textStatus, errorThrown) {
-                alert(errorThrown);
-            }
-        });
+            allowOutsideClick: false
+        })
     }
 
-    $("#update_form").validate({
-        rules: {
-            edit_firstname: {
-                minlength: 2,
-                required: true
-            },
-            edit_lastname: {
-                minlength: 2,
-                required: true
-            },
-            edit_dateofbirth: {
-                required: true
-            },
-            edit_gender: {
-                required: true
-            },
-            edit_civilstatus: {
-                required: true
-            },
-            edit_address: {
-                required: true
-            },
-            edit_contact: {
-                required: true
-            },
-            edit_email: {
-                required: true
-            },
-            edit_employee_code: {
-                required: true
-            },
-        },
-        submitHandler: function (form) {
-            Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            type: 'warning',
+    
+    const suspected = (id) => {
+        swal.fire({
+            title: 'Please enter password!',
+            input: 'password',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Delete it!'
-            }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        url: '/employee/'+ $('#edit_id').val(),
-                        type: "POST",
-                        data: $('#update_form').serialize(),
-                        dataType: "JSON",
-                        success: function (data) {
-                            if (data.success) {
-                                $('#update_modal').modal('hide');
-                                $("#update_form")[0].reset();
-                                Swal.fire({
-                                    title: "Success!",
-                                    text: data.messages,
-                                    icon: "success"
-                                })
-                                datatable.ajax.reload( null, false );
-                            } else {
-                                toastr.error(data.messages)
-                            }
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            toastr.error(errorThrown)
-                        }
-                    });
-                }
-            });
-        }
-    });
-
-    const del = (id) => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Delete it!'
-        }).then((result) => {
-            if (result.value) {
+            confirmButtonText: 'Submit',
+            showLoaderOnConfirm: true,
+            preConfirm: function (password) {
                 $.ajax({
-                    url : '/employee/toggle/'+id,
-                    type: "POST",
-                    data:{ _token: "{{csrf_token()}}"},
-                    dataType: "JSON",
-                    success: function(response)
-                    { 
-                        swal.fire({
-                            title: "Success!",
-                            text: response.messages,
-                            icon: "success"
-                        })
-                        datatable.ajax.reload( null, false );
-                    },
-                    error: function (jqXHR, textStatus, errorThrown)
-                    {
-                        swal.fire({
-                            title: "Oops! something went wrong.",
-                            text: errorThrown,
-                            icon: "error"
-                        });
+                    url:'{{ route('monitoring.verify-password')}}',
+                    type:'POST',
+                    data:{ _token:"{{ csrf_token() }}",password:password},
+                    dataType:'json',
+                    success:function(success){
+                        if(success.success){
+                            $('#user_id').val(id);
+                            $('#type').val('SUSPECTED');
+                            $('#active_modal').modal('show');
+                        }else{
+                            swal.fire({
+                                title: "Password do not match!",
+                                text: "Please input correct password",
+                                icon: "error"
+                            })
+                            //process loader false
+                        }
                     }
-                });
-            }
-        });
+                }); 
+                    
+            },
+            allowOutsideClick: false
+        })
     }
 
 
