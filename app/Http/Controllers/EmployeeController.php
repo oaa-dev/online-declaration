@@ -26,22 +26,39 @@ class EmployeeController extends Controller
 
     public function findall(request $request)
     {
-        $results = Employee::with('user')->get();
+        if($request['module'] == 'modal'){
+            $results = Employee::join('users', 'users.employee_id', 'employees.id')
+                ->select('employees.id as employee_id','users.id as user_id', 'employees.*','users.*')
+                ->where('users.status', '=', '1')
+                ->get();
+        }else{
+            $results = Employee::join('users', 'users.employee_id', 'employees.id')
+                ->select('employees.id as employee_id','users.id as user_id', 'employees.*','users.*')
+                ->get();
+        }
 
         $data = array();
         if(!empty($results))
         {
             foreach ($results as $result)
             {
+                
+                if($request['module'] == 'modal'){
+                    $buttons = '<button onclick="select('. $result->user_id .',\''. strtoupper($result->lastname .', '. $result->firstname .' '. $result->middlename) .'\')" class= "btn btn-success btn-sm"><i class="fa fa-edit"></i> SELECT</button>';
+                }else{
+                    $buttons = '<button onclick="edit('. $result->employee_id .')" class= "btn btn-success btn-sm"><i class="fa fa-edit"></i> UPDATE</button> ';
 
-                $buttons = '<button onclick="edit('. $result->id .')" class= "btn btn-success btn-sm"><i class="fa fa-edit"></i> UPDATE</button> <button onclick="del('. $result->id .')" class= "btn btn-danger btn-sm"><i class="fa fa-trash"></i> DELETE</button>';
-                $status = ($result->user['status'] != 0)?'<span class="badge bg-primary">ACTIVE</span>':'<span class="badge bg-danger">IN-ACTIVE</span>';
+                    $buttons .= ($result->status == 1)?'<button onclick="del('. $result->employee_id .')" class= "btn btn-danger btn-sm"><i class="fa fa-trash"></i> DELETE</button>':'<button onclick="del('. $result->employee_id .')" class= "btn btn-warning btn-sm"><i class="fa fa-recycle"></i> RESTORE</button>';
 
-                $nestedData['id'] = $result->id;
+                }
+
+                $status = ($result->status == 1)?'<span class="badge bg-primary">ACTIVE</span>':'<span class="badge bg-danger">IN-ACTIVE</span>';
+
+                $nestedData['id'] = $result->employee_id;
                 $nestedData['employee_code'] =  $result->employee_code ;
                 $nestedData['fullname'] =  strtoupper($result->lastname .', '. $result->firstname .' '. $result->middlename);
                 $nestedData['address'] =  strtoupper($result->address);
-                $nestedData['contact'] =  $result->user['contact_number'];
+                $nestedData['contact'] =  $result->contact_number;
                 $nestedData['status'] =  $status;
                 $nestedData['actions'] = $buttons;
                 $data[] = $nestedData;
