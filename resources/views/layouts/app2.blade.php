@@ -241,10 +241,10 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/kanban.html" class="nav-link">
+            <a href="/employee/health-status" class="nav-link">
               <i class="nav-icon fa fa-user-plus"></i>
               <p>
-                Positive Employee
+                Employee Health Status
               </p>
             </a>
           </li>
