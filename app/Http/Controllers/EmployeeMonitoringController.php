@@ -23,7 +23,10 @@ class EmployeeMonitoringController extends Controller
      */
     public function index()
     {
-        return view('health_monitoring.index');
+    }
+
+    public function health_history(){
+        return view('health_history.index');
     }
 
     /**
@@ -69,7 +72,7 @@ class EmployeeMonitoringController extends Controller
 
                     if(EmployeeCovidStatus::where('user_id', '=', $result->user_id)->where('status', '=', '1')->first()){
                         
-                        $buttons = '<button disabled class= "btn btn-danger btn-sm"><i class="fa fa-user-plus"></i> POSITIVE</button> <button disabled class= "btn btn-warning btn-sm"><i class="fa fa-user-plus"></i> SUSPECTED</button>';
+                        $buttons = '<button class= "btn btn-success btn-sm"><i class="fa fa-user-plus"></i> RECOVERED</button> <button style="background-color:gray" class="btn btn-sm"><i class="fa fa-user-plus"></i> DECEASED</button>';
                         $risk = '<span class="badge bg-primary">COVID CASE MONITORING</span>';
                     }else{
                         $buttons = '<button onclick="positive('. $result->user_id .')" class= "btn btn-danger btn-sm"><i class="fa fa-user-plus"></i> POSITIVE</button> <button onclick="suspected('. $result->user_id .')" class= "btn btn-warning btn-sm"><i class="fa fa-user-plus"></i> SUSPECTED</button>';
@@ -80,13 +83,18 @@ class EmployeeMonitoringController extends Controller
                     $risk = '<span class="badge bg-primary">NO HISTORY OF TRANSACTION</span>';
                 }
 
+                $active = DB::table('employee_covid_statuses')->where('user_id', '=', $result->user_id)->where('final_remarks', '=', 'MONITORING')->where('status', '=', '1')->count();
+
                 $nestedData['id'] = $result->id;
                 $nestedData['employee_code'] =  $result->employee_code ;
                 $nestedData['contact'] =  $result->contact_number;
                 $nestedData['fullname'] =  strtoupper($result->lastname .', '. $result->firstname .' '. $result->middlename);
                 $nestedData['risk'] =  $risk;
                 $nestedData['actions'] = $buttons;
-                $data[] = $nestedData;
+                if(empty($active)){
+                    $data[] = $nestedData;
+                }
+
             }
         }
         echo json_encode(array( "data" => $data));
@@ -166,6 +174,8 @@ class EmployeeMonitoringController extends Controller
         if($validator->fails()){
             return response()->json(array('success' => false, 'messages'=>'Please fill up required data!'));
         }else{
+            $max_identifier = DB::table('employee_monitorings')->where('user_id', '=', $request['user_id'])->max('identifier');
+
             $monitoring = new EmployeeMonitoring;
             $monitoring->user_id = $request['user_id'];
             $monitoring->shifting_schedule_id = $request['shifting_list'];
@@ -182,7 +192,11 @@ class EmployeeMonitoringController extends Controller
             $monitoring->relative_arrived_overseas = $request['relative_overseas'];
             $monitoring->person_monitor = $request['person_monitor'];
             $monitoring->status = $request['user_id'];
-            $monitoring->identifier = 1;
+            if(!empty($max_identifier)){
+                $monitoring->identifier = ($max_identifier + 1);
+            }else{
+                $monitoring->identifier = 1;
+            }
             $monitoring->save();
 
             
@@ -192,16 +206,17 @@ class EmployeeMonitoringController extends Controller
 
     public function employeeActiveCase(Request $request){
         $active = new EmployeeCovidStatus;
+        $active->patient_code = strtoupper($request['patient_code']);
         $active->user_id = $request['user_id'];
         $active->health_status_remarks = $request['type'];
-        $active->final_remarks = '';
+        $active->final_remarks = 'MONITORING';
         $active->date = $request['date_confirmed'];
-        $active->fulldetailed_reports = '';
+        $active->fulldetailed_reports =  strtoupper($request['reports']);
         $active->status = 1;
         $active->save();
 
         
-        return response::json(array('success'=>true, 'messages'=>'Record Successfully Saved!'));
+        return response()->json(array('success'=>true, 'messages'=>'Record Successfully Saved!'));
     }
 
     public function verifyPassword(Request $request){

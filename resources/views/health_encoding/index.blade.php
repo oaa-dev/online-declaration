@@ -84,38 +84,38 @@
                                         </tr>
                                         <tr>
                                             <td>Fever</td>
-                                            <td><input type="radio" name="fever" id="" value="YES"></td>
-                                            <td><input type="radio" name="fever" id="" value="NO"></td>
+                                            <td><input type="radio" name="fever" value="YES"></td>
+                                            <td><input type="radio" name="fever" value="NO"></td>
                                         </tr>
                                         
                                         <tr>
                                             <td>Cough</td>
-                                            <td><input type="radio" name="cough" id="" value="YES"></td>
-                                            <td><input type="radio" name="cough" id="" value="NO"></td>
+                                            <td><input type="radio" name="cough" value="YES"></td>
+                                            <td><input type="radio" name="cough" value="NO"></td>
                                         </tr>
                                         
                                         <tr>
                                             <td>Shortness of Breathing</td>
-                                            <td><input type="radio" name="breath" id="" value="YES"></td>
-                                            <td><input type="radio" name="breath" id="" value="NO"></td>
+                                            <td><input type="radio" name="breath" value="YES"></td>
+                                            <td><input type="radio" name="breath" value="NO"></td>
                                         </tr>
                                         
                                         <tr>
                                             <td>Sore Throat</td>
-                                            <td><input type="radio" name="sore_throat" id="" value="YES"></td>
-                                            <td><input type="radio" name="sore_throat" id="" value="NO"></td>
+                                            <td><input type="radio" name="sore_throat" value="YES"></td>
+                                            <td><input type="radio" name="sore_throat" value="NO"></td>
                                         </tr>
                                         
                                         <tr>
                                             <td>Headache</td>
-                                            <td><input type="radio" name="headache" id="" value="YES"></td>
-                                            <td><input type="radio" name="headache" id="" value="NO"></td>
+                                            <td><input type="radio" name="headache" value="YES"></td>
+                                            <td><input type="radio" name="headache" value="NO"></td>
                                         </tr>
                                         
                                         <tr>
                                             <td>Body Pain</td>
-                                            <td><input type="radio" name="body_pain" id="" value="YES"></td>
-                                            <td><input type="radio" name="body_pain" id="" value="NO"></td>
+                                            <td><input type="radio" name="body_pain" value="YES"></td>
+                                            <td><input type="radio" name="body_pain" value="NO"></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -139,32 +139,32 @@
                                         </tr>
                                         <tr>
                                             <td>Relative/Hosehold member with positive symptoms?</td>
-                                            <td><input type="radio" name="household_with_symptoms" id="" value="YES"></td>
-                                            <td><input type="radio" name="household_with_symptoms" id="" value="NO"></td>
+                                            <td><input type="radio" name="household_with_symptoms" value="YES"></td>
+                                            <td><input type="radio" name="household_with_symptoms" value="NO"></td>
                                         </tr>
                                         
                                         <tr>
                                             <td>Person diagnosed with corona virus disease?</td>
-                                            <td><input type="radio" name="person_with_disease" id="" value="YES"></td>
-                                            <td><input type="radio" name="person_with_disease" id="" value="NO"></td>
+                                            <td><input type="radio" name="person_with_disease" value="YES"></td>
+                                            <td><input type="radio" name="person_with_disease" value="NO"></td>
                                         </tr>
                                         
                                         <tr>
                                             <td>Person Under Monitoring/Investigation?</td>
-                                            <td><input type="radio" name="person_monitor" id="" value="YES"></td>
-                                            <td><input type="radio" name="person_monitor" id="" value="NO"></td>
+                                            <td><input type="radio" name="person_monitor" value="YES"></td>
+                                            <td><input type="radio" name="person_monitor" value="NO"></td>
                                         </tr>
                                         
                                         <tr>
                                             <td>Living with frontliners?</td>
-                                            <td><input type="radio" name="living_frontliners" id="" value="YES"></td>
-                                            <td><input type="radio" name="living_frontliners" id="" value="NO"></td>
+                                            <td><input type="radio" name="living_frontliners" value="YES"></td>
+                                            <td><input type="radio" name="living_frontliners" value="NO"></td>
                                         </tr>
                                         
                                         <tr>
                                             <td>Relative who just arrived from Overseas?</td>
-                                            <td><input type="radio" name="relative_overseas" id="" value="YES"></td>
-                                            <td><input type="radio" name="relative_overseas" id="" value="NO"></td>
+                                            <td><input type="radio" name="relative_overseas" value="YES"></td>
+                                            <td><input type="radio" name="relative_overseas" value="NO"></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -238,7 +238,7 @@
     let Toast = '';
     $(document).ready(function(){
         $.ajax({
-            url:'{{ route('shifting.all') }}',
+            url:'{{ route('schedules.all') }}',
             type:'GET',
             dataType:'JSON',
             success:function(response){
@@ -283,6 +283,8 @@
         $('#user_id').val(id);
         $('#employee_name').val(name);
         
+        $("#employee_modal").removeClass("in");
+        $(".modal-backdrop").remove();
         $("#employee_modal").modal("hide");
     }
 
@@ -315,9 +317,8 @@
                         data: $('#create_form').serialize(),
                         dataType: "JSON",
                         success: function (data) {
+                            $("#create_form")[0].reset();
                             if (data.success) {
-                                $('#create_modal').modal('hide');
-                                $("#create_form")[0].reset();
                                 swal.fire({
                                     title: "Success!",
                                     text: data.messages,

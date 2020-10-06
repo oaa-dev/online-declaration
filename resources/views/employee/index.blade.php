@@ -266,14 +266,14 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Email Address</label>
-                                <input type="email" class="form-control" placeholder="Enter Email Address"  id="edit_email" name="edit_email">
+                                <input type="email" class="form-control" disabled placeholder="Enter Email Address"  id="edit_email" name="edit_email">
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Contact Number</label>
-                                <input type="text" class="form-control" placeholder="Enter Contact Number"  id="edit_contact" name="edit_contact">
+                                <input type="text" class="form-control" disabled placeholder="Enter Contact Number"  id="edit_contact" name="edit_contact">
                             </div>
                         </div>
                     </div>

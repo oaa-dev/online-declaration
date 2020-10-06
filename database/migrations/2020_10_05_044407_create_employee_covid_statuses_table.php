@@ -15,6 +15,7 @@ class CreateEmployeeCovidStatusesTable extends Migration
     {
         Schema::create('employee_covid_statuses', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('patient_code');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')
                 ->onDelete('cascade')

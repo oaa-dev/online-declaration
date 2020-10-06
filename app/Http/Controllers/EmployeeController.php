@@ -184,8 +184,6 @@ class EmployeeController extends Controller
             'edit_middlename' => 'required',
             'edit_dateofbirth' => 'required',
             'edit_gender' => 'required',
-            'edit_contact' => 'required',
-            'edit_email' => 'required',
             'edit_employee_code' => 'required',
         ]);
 
@@ -193,15 +191,15 @@ class EmployeeController extends Controller
             return response()->json(array('success'=> false, 'messages' => 'Please fill up all the required fields!'));
         }else{
 
-            $email_exist = User::where('email', '=', $request['edit_email'])->first();
-            $contact_exist = User::where('contact_number', '=', $request['edit_contact'])->first();
+            // $email_exist = User::where('email', '=', $request['edit_email'])->first();
+            // $contact_exist = User::where('contact_number', '=', $request['edit_contact'])->first();
 
-            if($email_exist){
-                return response()->json(array('success'=> false, 'messages' => 'Email address already Exist!'));
-            }else{
-                if($contact_exist){
-                    return response()->json(array('success'=> false, 'messages' => 'Contact Number already Used!'));
-                }else{
+            // if($email_exist){
+            //     return response()->json(array('success'=> false, 'messages' => 'Email address already Exist!'));
+            // }else{
+            //     if($contact_exist){
+            //         return response()->json(array('success'=> false, 'messages' => 'Contact Number already Used!'));
+            //     }else{
                     try {
                         DB::beginTransaction();
 
@@ -216,11 +214,6 @@ class EmployeeController extends Controller
                         $employee->address = $request['edit_address'];
                         $employee->civil_status = $request['edit_civil_status'];
                         $employee->save();
-            
-                        $user = User::where('employee_id', '=', $id)->first();
-                        $user->email = $request['edit_email'];
-                        $user->contact_number = $request['edit_contact'];
-                        $user->save();
                         
                         DB::commit();
 
@@ -229,8 +222,8 @@ class EmployeeController extends Controller
                         DB::rollBack();
                         return response()->json(array('success'=> false, 'error'=>'SQL error!', 'messages'=>'Transaction failed!'));
                     }
-                }
-            }
+            //     }
+            // }
            
         }
     }

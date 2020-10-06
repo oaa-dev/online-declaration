@@ -1,3 +1,9 @@
+@php
+  $company = \App\CompanyProfile::first();
+
+  $profile = \App\Employee::findOrFail(\Auth::user()->employee_id); 
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,30 +30,6 @@
 
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/toastr/toastr.min.css') }}">
-  <!-- bootstrap 4.x is supported. You can also use the bootstrap css 3.3.x versions -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.2/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
-  <!-- if using RTL (Right-To-Left) orientation, load the RTL CSS file after fileinput.css by uncommenting below -->
-  <!-- link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.2/css/fileinput-rtl.min.css" media="all" rel="stylesheet" type="text/css" /-->
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <!-- piexif.min.js is needed for auto orienting image files OR when restoring exif data in resized images and when you 
-      wish to resize images before upload. This must be loaded before fileinput.min.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.2/js/plugins/piexif.min.js" type="text/javascript"></script>
-  <!-- sortable.min.js is only needed if you wish to sort / rearrange files in initial preview. 
-      This must be loaded before fileinput.min.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.2/js/plugins/sortable.min.js" type="text/javascript"></script>
-  <!-- popper.min.js below is needed if you use bootstrap 4.x. You can also use the bootstrap js 
-    3.3.x versions without popper.min.js. -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <!-- bootstrap.min.js below is needed if you wish to zoom and preview file content in a detail modal
-      dialog. bootstrap 4.x is supported. You can also use the bootstrap js 3.3.x versions. -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" type="text/javascript"></script>
-  <!-- the main fileinput plugin file -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.2/js/fileinput.min.js"></script>
-  <!-- optionally if you need a theme like font awesome theme you can include it as mentioned below -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.2/themes/fa/theme.js"></script>
-  <!-- optionally if you need translation for your language then include  locale file as mentioned below -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.2/js/locales/(lang).js"></script>
   @yield('style')
   <style>
     .swal2-popup {
@@ -189,8 +171,8 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <img src="{{ asset('adminlte/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">COVID CORP. PHIL.  </span>
+      <img src="{{ asset('images/'. $company['logo'])}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span style="display: block;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" class="brand-text font-weight-light">{{ $company['company_name'] }}</span>
     </a>
 
     <!-- Sidebar -->
@@ -201,7 +183,7 @@
           <img src="{{ asset('adminlte/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+        <a href="#" class="d-block">{{ $profile['lastname'].', '. $profile['firstname'] .' '. $profile['middlename'][0].'.' }}</a>
         </div>
       </div>
 
@@ -236,6 +218,22 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="/monitoring/health-status" class="nav-link">
+              <i class="nav-icon fa fa-list"></i>
+              <p>
+                Facility Management
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/monitoring/health-status" class="nav-link">
+              <i class="nav-icon fa fa-list"></i>
+              <p>
+                Contact Tracing
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="/monitoring/encoding" class="nav-link">
               <i class="nav-icon fa fa-edit"></i>
               <p>
@@ -245,7 +243,7 @@
           </li>
           
           <li class="nav-item">
-            <a href="/monitoring" class="nav-link">
+            <a href="/monitoring/health-history" class="nav-link">
               <i class="nav-icon fa fa-stethoscope"></i>
               <p>
                 Declaration History
@@ -254,17 +252,17 @@
           </li>
           <li class="nav-item">
             <a href="/monitoring/health-status" class="nav-link">
-              <i class="nav-icon fa fa-user-plus"></i>
+              <i class="nav-icon fa fa-user-tie"></i>
               <p>
                 Employee Health Status
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/monitoring/health-status" class="nav-link">
-              <i class="nav-icon fa fa-list"></i>
+            <a href="/covid_patient" class="nav-link">
+              <i class="nav-icon fa fa-user-plus"></i>
               <p>
-                Patient Monitoring
+                Covid Patient Health Status
               </p>
             </a>
           </li>
@@ -310,6 +308,18 @@
                 <a href="/company/create" class="nav-link">
                   <i class="fa fa-building"></i>
                   <p>Company Profiles</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/schedules" class="nav-link">
+                  <i class="fa fa-calendar"></i>
+                  <p>Shifting Schedules</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/company/create" class="nav-link">
+                  <i class="fa fa-arrow-up"></i>
+                  <p>Threshold</p>
                 </a>
               </li>
             </ul>

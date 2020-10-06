@@ -69,7 +69,10 @@
                             <input type="hidden" id="type" name="type">
                             <input type="date" class="form-control" id="date_confirmed" name="date_confirmed">
                         </div>
-
+                        <div class="form-group">
+                            <label>Patient Code</label>
+                            <input type="text" class="form-control" id="patient_code" name="patient_code">
+                        </div>
                         <div class="form-group">
                             <label>Reports</label>
                             <textarea class="form-control" id="reports" rows="6" name="reports"></textarea>
@@ -120,6 +123,9 @@
     $("#active_form").validate({
         rules: {
             date_confirmed: {
+                required: true
+            },
+            patient_code: {
                 required: true
             }
         },

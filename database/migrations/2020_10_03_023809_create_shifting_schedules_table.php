@@ -18,6 +18,7 @@ class CreateShiftingSchedulesTable extends Migration
             $table->string('description');
             $table->string('in');
             $table->string('out');
+            $table->string('status');
             $table->timestamps();
         });
     }
