@@ -4,11 +4,12 @@
 
 <div class="login-box">
     <div class="login-logo">
-      <a href="../../index2.html"><b>Admin</b>LTE</a>
+      <a href="../../index2.html"><b></b></a>
     </div>
     <!-- /.login-logo -->
     <div class="card">
       <div class="card-body login-card-body">
+        <h3 class="text-center">Login</h3>
         <p class="login-box-msg">Sign in to start your session</p>
   
         <form method="POST" action="{{ route('login') }}">
@@ -52,6 +53,12 @@
             <!-- /.col -->
           </div>
         </form>
+        <p class="mb-1">
+          <a href="/" style="font-weight: bold">Home</a>
+        </p>
+        <p class="mb-1">
+          <a href="forgot-password.html" style="font-weight: bold">Register new Account</a>
+        </p>
       </div>
       <!-- /.login-card-body -->
     </div>
