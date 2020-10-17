@@ -20,12 +20,14 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::post('/emergency-hotline/toggle/{id}', 'EmergencyHotlineController@togglestatus')->name('hotline.toggle');
-Route::post('/emergency-hotline/find-all','EmergencyHotlineController@findall')->name('hotline.find-all');
-Route::resource('emergency-hotline', 'EmergencyHotlineController')->middleware('auth');
+// Route::post('/emergency-hotline/toggle/{id}', 'EmergencyHotlineController@togglestatus')->name('hotline.toggle');
+// Route::post('/emergency-hotline/find-all','EmergencyHotlineController@findall')->name('hotline.find-all');
+// Route::resource('emergency-hotline', 'EmergencyHotlineController')->middleware('auth');
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 /* employee */
+Route::post('/employee/edit-profile', 'EmployeeController@edit_profile')->name('employee.edit_profile')->middleware('auth');
+Route::get('/employee/profile', 'EmployeeController@profile')->name('employee.profile')->middleware('auth');
 Route::post('/employee/toggle/{id}', 'EmployeeController@togglestatus')->name('employee.toggle')->middleware('auth');
 Route::post('/employee/find-all','EmployeeController@findall')->name('employee.find-all')->middleware('auth');
 Route::resource('employee', 'EmployeeController')->middleware('auth');
@@ -63,15 +65,4 @@ Route::post('/covid_patient/find-all','EmployeeCovidStatusController@findall')->
 Route::resource('/covid_patient', 'EmployeeCovidStatusController')->middleware('auth');
 
 
-
-Route::get('send-mail', function () {
-   
-    $details = [
-        'title' => 'Mail from ItSolutionStuff.com',
-        'body' => 'This is for testing email using smtp'
-    ];
-   
-    \Mail::to('gomez.angelo031@gmail.com')->send(new \App\Mail\MailSender($details));
-   
-    dd("Email is Sent.");
-});
+Route::resource('/threshold', 'ThresholdController')->middleware('auth');

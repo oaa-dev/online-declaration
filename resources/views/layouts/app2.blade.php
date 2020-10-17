@@ -148,9 +148,16 @@
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <span class="dropdown-item dropdown-header">SETTING</span>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fa fa-lock mr-2"></i> Logout
+          <a href="/employee/profile" class="dropdown-item">
+            <i class="fa fa-user mr-2"></i>User Profile
           </a>
+          <div class="dropdown-divider"></div>
+        <form method="POST" action="{{ route('logout') }}">
+          @csrf
+            <button type="submit" class="dropdown-item">
+                <i class="fa fa-lock mr-2"></i> Logout
+            </button>
+        </form>
         </div>
       </li>
       <li class="nav-item">
@@ -171,8 +178,8 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <img src="{{ asset('images/'. $company['logo'])}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span style="display: block;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" class="brand-text font-weight-light">{{ $company['company_name'] }}</span>
+      {{-- <img src="{{ asset('images/'. $company['logo'])}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> --}}
+      {{-- <span style="display: block;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" class="brand-text font-weight-light">{{ $company['company_name'] }}</span> --}}
     </a>
 
     <!-- Sidebar -->
@@ -218,22 +225,6 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/monitoring/health-status" class="nav-link">
-              <i class="nav-icon fa fa-list"></i>
-              <p>
-                Facility Management
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/monitoring/health-status" class="nav-link">
-              <i class="nav-icon fa fa-list"></i>
-              <p>
-                Contact Tracing
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
             <a href="/monitoring/encoding" class="nav-link">
               <i class="nav-icon fa fa-edit"></i>
               <p>
@@ -262,7 +253,7 @@
             <a href="/covid_patient" class="nav-link">
               <i class="nav-icon fa fa-user-plus"></i>
               <p>
-                Covid Patient Health Status
+                Patient Health Status
               </p>
             </a>
           </li>
@@ -317,7 +308,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/company/create" class="nav-link">
+                <a href="/threshold" class="nav-link">
                   <i class="fa fa-arrow-up"></i>
                   <p>Threshold</p>
                 </a>

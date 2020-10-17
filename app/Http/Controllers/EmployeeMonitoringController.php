@@ -13,6 +13,7 @@ use DB;
 use App\EmployeeCovidStatus;
 use Hash;
 use Auth;
+use App\Threshold;
 
 class EmployeeMonitoringController extends Controller
 {
@@ -76,7 +77,9 @@ class EmployeeMonitoringController extends Controller
                         $risk = '<span class="badge bg-primary">COVID CASE MONITORING</span>';
                     }else{
                         $buttons = '<button onclick="positive('. $result->user_id .')" class= "btn btn-danger btn-sm"><i class="fa fa-user-plus"></i> POSITIVE</button> <button onclick="suspected('. $result->user_id .')" class= "btn btn-warning btn-sm"><i class="fa fa-user-plus"></i> SUSPECTED</button>';
-                        $risk = ($ctr > 5)?'<span class="badge bg-danger">HISH RISK</span>':'<span class="badge bg-warning">LOW RISK</span>';
+                        
+                        $threshold = Threshold::findOrFail('1')['level'];
+                        $risk = ($ctr >= (!empty($threshold)? $threshold: 5) )?'<span class="badge bg-danger">HISH RISK</span>':'<span class="badge bg-warning">LOW RISK</span>';
                     }
                 }else{
                     $buttons = '<button disabled class= "btn btn-danger btn-sm"><i class="fa fa-user-plus"></i> POSITIVE</button> <button disabled class= "btn btn-warning btn-sm"><i class="fa fa-user-plus"></i> SUSPECTED</button>';
