@@ -128,9 +128,8 @@ class EmployeeController extends Controller
         {
             foreach ($results as $result)
             {
-                
                 if($request['module'] == 'modal'){
-                    $buttons = '<button onclick="select('. $result->user_id .',\''. strtoupper($result->lastname .', '. $result->firstname .' '. $result->middlename) .'\')" class= "btn btn-success btn-sm"><i class="fa fa-edit"></i> SELECT</button>';
+                    $buttons = '<button onclick="select('. $result->user_id .',\''. strtoupper($result->lastname .', '. $result->firstname .' '. $result->middlename) .'\',\''. $result->contact_number .'\')" class= "btn btn-success btn-sm"><i class="fa fa-edit"></i> SELECT</button>';
                 }else{
                     $buttons = '<button onclick="edit('. $result->employee_id .')" class= "btn btn-success btn-sm"><i class="fa fa-edit"></i> UPDATE</button> ';
 

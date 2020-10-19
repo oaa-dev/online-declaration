@@ -143,7 +143,6 @@
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="fa fa-cog"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <span class="dropdown-item dropdown-header">SETTING</span>
@@ -178,8 +177,8 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      {{-- <img src="{{ asset('images/'. $company['logo'])}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> --}}
-      {{-- <span style="display: block;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" class="brand-text font-weight-light">{{ $company['company_name'] }}</span> --}}
+      <img src="{{ asset('images/'. $company['logo'] )}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span style="display: block;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" class="brand-text font-weight-light">{{ $company['company_name'] }}</span>
     </a>
 
     <!-- Sidebar -->

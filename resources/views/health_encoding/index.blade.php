@@ -318,6 +318,7 @@
                         dataType: "JSON",
                         success: function (data) {
                             $("#create_form")[0].reset();
+                            $('#declare').prop('disabled', true);
                             if (data.success) {
                                 swal.fire({
                                     title: "Success!",

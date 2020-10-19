@@ -69,14 +69,23 @@
                             <input type="hidden" id="type" name="type">
                             <input type="date" class="form-control" id="date_confirmed" name="date_confirmed">
                         </div>
-                        <div class="form-group">
-                            <label>Patient Code</label>
-                            <input type="text" class="form-control" id="patient_code" name="patient_code">
+                        <div>
+                            <a class="btn btn-primary btn-sm float-right" id="btn_suspected">Add new Suspected</a>
+                            <label> Suspected Person </label>
+                            <table class="table" id="tbl_suspected">
+                                <tr>
+                                    <td><input type="text" class="form-control"></td>
+                                    <td><input type="text" class="form-control"></td>
+                                    <td><button class="btn btn-danger btn-sm"><i class="fa fa-times" ></i></button></td>
+                                </tr>
+                            </table>
+                            <hr/>
                         </div>
                         <div class="form-group">
                             <label>Reports</label>
                             <textarea class="form-control" id="reports" rows="6" name="reports"></textarea>
                         </div>
+                    </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
@@ -88,6 +97,35 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+
+    <div class="modal fade" id="employee_modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Select Employee</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <div class="modal-body">        
+                    <table id="datatable_employee" class="table" style="width: 100%" role="grid" aria-describedby="example2_info">
+                        <thead>
+                            <tr role="row">
+                                <th>Employee Code</th>
+                                <th>Fullname</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
 @endsection
 
@@ -118,6 +156,33 @@
         });
 
         
+    });
+
+    $('#btn_suspected').on('click', function(){
+
+        $('#employee_modal').modal('show');
+
+        $('#datatable_employee').DataTable().clear().destroy();
+        datatable = $('#datatable_employee').DataTable({
+            "ajax":{
+                "url": '{{ route('employee.find-all') }}',
+                "dataType": "json",
+                "type": "POST",
+                "data":{ 
+                    _token: "{{csrf_token()}}",
+                    module:'modal'
+                }
+            },
+            "columns": [
+                { "data": "employee_code" },
+                { "data": "fullname" },
+                { "data": "status" },
+                { "data": "actions" },
+            ],
+            "columnDefs": [
+                { "orderable": false, "targets": [ 1 ] }, 
+            ]	 	 
+        });
     });
 
     $("#active_form").validate({
@@ -165,6 +230,20 @@
                     });    
                 }
             });
+        }
+    });
+
+    
+    $('#tbl_suspected tbody').on("click", "#remove_schedule", function(e){ 
+        e.preventDefault();
+        $(this).parent().parent().remove();
+        const suspected_list = $("input[name='user_id[]']").map(function(){return $(this).val();}).get();
+        if(suspected_list.length == 0){
+            $('#tbl_suspected').append(`<tr>
+                <td><input type="text" class="form-control"></td>
+                <td><input type="text" class="form-control"></td>
+                <td><a class="btn btn-danger btn-sm"><i class="fa fa-times" ></i></a></td>
+            </tr>`);
         }
     });
 
@@ -236,6 +315,42 @@
             },
             allowOutsideClick: false
         })
+    }
+
+    
+    const select = (id, name, contact) => {
+
+        const suspected_list = $("input[name='user_id[]']").map(function(){return $(this).val();}).get();
+        if(suspected_list.length == 0){
+            $('#tbl_suspected tbody').empty();
+        }
+        const id_exist = suspected_list.find(data => {
+            return data == id;
+        });
+
+        if(!id_exist){
+            $('#tbl_suspected').append(`<tr>
+                <td><input type="text" class="form-control" value="${name}"><input type="hidden" value="${id}" name="user_id[]"></td>
+                <td><input type="text" class="form-control" value="${contact}"></td>
+                <td><a class="btn btn-danger btn-sm" id="remove_schedule"><i class="fa fa-times" ></i></a></td>
+            </tr>`);
+
+            swal.fire({
+                title: "Success!",
+                text: 'Employee add successfully',
+                icon: "success"
+            })
+        }else{
+            swal.fire({
+                title: "Warning!",
+                text: 'Employee already added!',
+                icon: "warning"
+            })
+        }
+
+        
+       
+
     }
 
 
