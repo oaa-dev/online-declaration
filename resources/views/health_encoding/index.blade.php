@@ -175,7 +175,7 @@
                             <div class="callout callout-info">
                                 <h5></h5>
                                 <p>
-                                    <input type="checkbox" style="zoom: 1.5" id="i_agree"> I declare all the above information to be true and correct. By submitting this declaration form
+                                    <input type="checkbox" name="i_agree" style="zoom: 1.5" id="i_agree"> I declare all the above information to be true and correct. By submitting this declaration form
                                     i agree to collect, use and disclosure of my personal information above by health declaration of
                                     employee for the purpose of a precautionary measures against COVID 19 in the copany premises.</p>
                             </div>
@@ -297,6 +297,12 @@
                 required: true
             },
             shifting_list: {
+                required: true
+            },
+            shifting_list: {
+                required: true
+            },
+            i_agree: {
                 required: true
             },
         },

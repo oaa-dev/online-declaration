@@ -208,8 +208,12 @@ class EmployeeMonitoringController extends Controller
     }
 
     public function employeeActiveCase(Request $request){
+        
+        $latest = EmployeeCovidStatus::orderBy('created_at', 'desc')->first(); 
+        $num = str_pad((empty($latest['id'])?1:$latest['id']),5,"0", STR_PAD_LEFT);
+
         $active = new EmployeeCovidStatus;
-        $active->patient_code = strtoupper($request['patient_code']);
+        $active->patient_code = 'CP-'.($num + 1);
         $active->user_id = $request['user_id'];
         $active->health_status_remarks = $request['type'];
         $active->final_remarks = 'MONITORING';
@@ -217,6 +221,21 @@ class EmployeeMonitoringController extends Controller
         $active->fulldetailed_reports =  strtoupper($request['reports']);
         $active->status = 1;
         $active->save();
+
+        foreach ($request['user_id_list'] as $value) {
+            $latest = EmployeeCovidStatus::orderBy('created_at', 'desc')->first(); 
+            $num = str_pad($latest['id'],5,"0", STR_PAD_LEFT);
+
+            $active = new EmployeeCovidStatus;
+            $active->patient_code = 'CP-'.($num + 1);
+            $active->user_id = $value;
+            $active->health_status_remarks = 'SUSPECTED';
+            $active->final_remarks = 'MONITORING';
+            $active->date = $request['date_confirmed'];
+            $active->fulldetailed_reports = '';
+            $active->status = 1;
+            $active->save();
+        }
 
         
         return response()->json(array('success'=>true, 'messages'=>'Record Successfully Saved!'));
@@ -235,7 +254,7 @@ class EmployeeMonitoringController extends Controller
      * @param  \App\EmployeeMonitoring  $employeeMonitoring
      * @return \Illuminate\Http\Response
      */
-    public function show(EmployeeMonitoring $employeeMonitoring)
+    public function show($id)
     {
         //
     }

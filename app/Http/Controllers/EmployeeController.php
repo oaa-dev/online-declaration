@@ -146,7 +146,15 @@ class EmployeeController extends Controller
                 $nestedData['contact'] =  $result->contact_number;
                 $nestedData['status'] =  $status;
                 $nestedData['actions'] = $buttons;
-                $data[] = $nestedData;
+
+                if($request['module'] == 'modal'){
+                    $exist = EmployeeCovidStatus::where('user_id', '=', $result->user_id)->where('status', '=', '1')->first();
+                    if(!$exist){
+                        $data[] = $nestedData;
+                    }
+                }else{  
+                    $data[] = $nestedData;
+                }
             }
         }
 

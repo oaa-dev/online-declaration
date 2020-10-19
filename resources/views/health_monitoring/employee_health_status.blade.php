@@ -23,6 +23,7 @@
                     <div class="card">
                         <!-- /.card-header -->
                         <div class="card-body">
+                            <div class="table-responsive">
                             <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                 <table id="datatable" class="table" role="grid" aria-describedby="example2_info">
                                     <thead>
@@ -37,6 +38,7 @@
                                     <tbody>
                                     </tbody>
                                 </table>
+                            </div>
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -76,7 +78,7 @@
                                 <tr>
                                     <td><input type="text" class="form-control"></td>
                                     <td><input type="text" class="form-control"></td>
-                                    <td><button class="btn btn-danger btn-sm"><i class="fa fa-times" ></i></button></td>
+                                    <td><a class="btn btn-danger btn-sm"><i class="fa fa-times" ></i></a></td>
                                 </tr>
                             </table>
                             <hr/>
@@ -237,7 +239,8 @@
     $('#tbl_suspected tbody').on("click", "#remove_schedule", function(e){ 
         e.preventDefault();
         $(this).parent().parent().remove();
-        const suspected_list = $("input[name='user_id[]']").map(function(){return $(this).val();}).get();
+
+        const suspected_list = $("input[name='user_id_list[]']").map(function(){return $(this).val();}).get();
         if(suspected_list.length == 0){
             $('#tbl_suspected').append(`<tr>
                 <td><input type="text" class="form-control"></td>
@@ -319,18 +322,39 @@
 
     
     const select = (id, name, contact) => {
+   
+        if($('#user_id').val() == id){
+            swal.fire({
+                title: "Warning!",
+                text: 'Cannot add your self as Suspected!',
+                icon: "warning"
+            })
+            return false;
+        }
 
-        const suspected_list = $("input[name='user_id[]']").map(function(){return $(this).val();}).get();
+        const exist = check_status(id);
+        if(!(jQuery.isEmptyObject(exist))){
+            console.log(exist);
+            swal.fire({
+                title: "Warning!",
+                text: 'This user is already a '+ exist.health_status_remarks +' person!' ,
+                icon: "warning"
+            })
+
+            return false;
+        }
+        
+     
+        const suspected_list = $("input[name='user_id_list[]']").map(function(){return $(this).val();}).get();
         if(suspected_list.length == 0){
             $('#tbl_suspected tbody').empty();
         }
-        const id_exist = suspected_list.find(data => {
-            return data == id;
-        });
 
+
+        const id_exist = suspected_list.find(data => { return data == id; });
         if(!id_exist){
             $('#tbl_suspected').append(`<tr>
-                <td><input type="text" class="form-control" value="${name}"><input type="hidden" value="${id}" name="user_id[]"></td>
+                <td><input type="text" class="form-control" value="${name}"><input type="hidden" value="${id}" name="user_id_list[]"></td>
                 <td><input type="text" class="form-control" value="${contact}"></td>
                 <td><a class="btn btn-danger btn-sm" id="remove_schedule"><i class="fa fa-times" ></i></a></td>
             </tr>`);
@@ -347,10 +371,21 @@
                 icon: "warning"
             })
         }
+    }
 
-        
-       
+    const check_status = (id)=> {
+        let response;
+        $.ajax({
+            url: '/covid_patient/'+id,
+            type: "GET",
+            async: false,  
+            dataType: "JSON",
+            success: function (data) {
+                response = data;
+            },
+        }); 
 
+        return response;
     }
 
 

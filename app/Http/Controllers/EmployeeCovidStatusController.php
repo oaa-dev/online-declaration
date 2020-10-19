@@ -81,9 +81,9 @@ class EmployeeCovidStatusController extends Controller
      * @param  \App\EmployeeCovidStatus  $employeeCovidStatus
      * @return \Illuminate\Http\Response
      */
-    public function show(EmployeeCovidStatus $employeeCovidStatus)
+    public function show($id)
     {
-        //
+        return response()->json(EmployeeCovidStatus::where('user_id', '=', $id)->where('status', '=', '1')->first());
     }
 
     /**

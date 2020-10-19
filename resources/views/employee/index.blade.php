@@ -36,21 +36,23 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                                <table id="datatable" class="table" role="grid" aria-describedby="example2_info">
-                                    <thead>
-                                        <tr role="row">
-                                            <th>Employee Code</th>
-                                            <th>Fullname</th>
-                                            <th>Contact</th>
-                                            <th>Address</th>
-                                            <th>Status</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                            <div class="table-responsive">
+                                <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                    <table id="datatable" class="table" role="grid" aria-describedby="example2_info">
+                                        <thead>
+                                            <tr role="row">
+                                                <th>Employee Code</th>
+                                                <th>Fullname</th>
+                                                <th>Contact</th>
+                                                <th>Address</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                         <!-- /.card-body -->
