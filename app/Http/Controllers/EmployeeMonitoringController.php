@@ -225,6 +225,18 @@ class EmployeeMonitoringController extends Controller
         $active->status = 1;
         $active->save();
 
+        $company = CompanyProfile::findOrFail(1);
+        $html_content = '<h1> '. $company['company_name'] .'</h1><hr/><table border="1" style="width:100%; font-size:12px">
+                    <tr>
+                        <td>Employee Code</td>
+                        <td>Patient Code</td>
+                        <td>Employee Name</td>
+                        <td>Contact Number</td>
+                        <td>Address</td>
+                        <td>Email</td>
+                        <td>Status</td>
+                    </tr>';
+
         foreach ($request['user_id_list'] as $value) {
             $latest = EmployeeCovidStatus::orderBy('created_at', 'desc')->first(); 
             $num = str_pad($latest['id'],5,"0", STR_PAD_LEFT);
@@ -238,60 +250,25 @@ class EmployeeMonitoringController extends Controller
             $active->fulldetailed_reports = 'Contacted with patient:' . $positive;
             $active->status = 1;
             $active->save();
+
+            $user = User::where('id', '=', $value)->with('employee')->first();
+
+            $html_content .= '<tr>
+                <td>'. $user->employee['employee_code'] .'</td>
+                <td>'. $active->patient_code .'</td>
+                <td>'. $user->employee['lastname'].', '.$user->employee['firstname'].' '.$user->employee['middlename'] .'</td>
+                <td>'. $user->contact_number .'</td>
+                <td>'. $user->employee['address'] .'</td>
+                <td>'. $user->email .'</td>
+                <td>SUSPECTED</td>
+            </tr>';
         }
 
-        $company = CompanyProfile::findOrFail(1);
-
-        // $html_content = '<h1> '. $company['company_name'] .'<small> '. $company['description'] .' </small> </h1><hr/>';
-        // $html_content .= `<table style="width:100%; border:solid 1px gray">
-        //             <tr>
-        //                 <th>Employee Code</th>
-        //                 <th>Patient Code</th>
-        //                 <th>Employee Name</th>
-        //                 <th>Contact Number</th>
-        //                 <th>Address</th>
-        //                 <th>Email</th>
-        //                 <th>Status</th>
-        //             </tr>`;
-        // foreach ($request['user_id_list'] as $value) {
-        //     $user = User::where('id', '=', $value)->with('employee')->first();
-
-        //     $html_content .= `<tr>
-        //             <td>P</td>
-        //             <td>Patient Code</td>
-        //             <td>Employee Name</td>
-        //             <td>Contact Number</td>
-        //             <td>Address</td>
-        //             <td>Email</td>
-        //             <td>Status</td>
-        //         </tr>`;
-
-        // }
-
-
-        // $html_content .= `</table>`;
+        $html_content .= `</table>`;
  
-            
-$html_content = '<table cellspacing="0" cellpadding="1" border="1">
-    <tr>
-        <td rowspan="3">COL 1 - ROW 1<br />COLSPAN 3<br />text line<br />text line<br />text line<br />text line<br />text line<br />text line</td>
-        <td>COL 2 - ROW 1</td>
-        <td>COL 3 - ROW 1</td>
-    </tr>
-    <tr>
-        <td rowspan="2">COL 2 - ROW 2 - COLSPAN 2<br />text line<br />text line<br />text line<br />text line</td>
-         <td>COL 3 - ROW 2</td>
-    </tr>
-    <tr>
-       <td>COL 3 - ROW 3</td>
-    </tr>
-
-</table>';
-
-// $pdf->writeHTML($tbl, true, false, false, false, '');
-
         PDF::SetTitle('Sample PDF');
-        PDF::AddPage();
+        PDF::SetFont('times', 'B', 20);
+        PDF::AddPage('L');
         PDF::writeHTML($html_content, true, false, true, false, '');
  
         PDF::Output(uniqid().'_SamplePDF.pdf', 'I');

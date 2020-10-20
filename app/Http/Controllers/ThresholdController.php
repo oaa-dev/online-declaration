@@ -36,30 +36,33 @@ class ThresholdController extends Controller
     public function create()
     {
         
-            
-$html_content = '<table cellspacing="0" cellpadding="1" border="1">
-<tr>
-    <td rowspan="3">COL 1 - ROW 1<br />COLSPAN 3<br />text line<br />text line<br />text line<br />text line<br />text line<br />text line</td>
-    <td>COL 2 - ROW 1</td>
-    <td>COL 3 - ROW 1</td>
-</tr>
-<tr>
-    <td rowspan="2">COL 2 - ROW 2 - COLSPAN 2<br />text line<br />text line<br />text line<br />text line</td>
-     <td>COL 3 - ROW 2</td>
-</tr>
-<tr>
-   <td>COL 3 - ROW 3</td>
-</tr>
-
-</table>';
-
-// $pdf->writeHTML($tbl, true, false, false, false, '');
-
-    PDF::SetTitle('Sample PDF');
-    PDF::AddPage();
-    PDF::writeHTML($html_content, true, false, true, false, '');
-
-    PDF::Output(uniqid().'_SamplePDF.pdf', 'I');
+        $company = \App\CompanyProfile::findOrFail(1);
+        $tbl = '<table style="font-size:12px" border="1" cellpadding="2" cellspacing="2" align="center">
+         <tr>
+            <th>Employee Code</th>
+            <th>Patient Code</th>
+            <th>Employee Name</th>
+            <th>Contact Number</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Status</th>
+         </tr>
+         <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+         </tr>
+        </table>';
+        
+        // $pdf->writeHTML($tbl, true, false, false, false, '');
+        
+ 
+        PDF::SetTitle('Sample PDF');
+        PDF::SetFont('times');
+        PDF::AddPage('L');
+        PDF::writeHTML($tbl, true, false, true, false, '');
+ 
+        PDF::Output(uniqid().'_SamplePDF.pdf', 'I');
     }
 
     /**
