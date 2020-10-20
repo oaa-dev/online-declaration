@@ -14,6 +14,8 @@ use App\EmployeeCovidStatus;
 use Hash;
 use Auth;
 use App\Threshold;
+use App\CompanyProfile;
+use PDF;
 
 class EmployeeMonitoringController extends Controller
 {
@@ -211,9 +213,10 @@ class EmployeeMonitoringController extends Controller
         
         $latest = EmployeeCovidStatus::orderBy('created_at', 'desc')->first(); 
         $num = str_pad((empty($latest['id'])?1:$latest['id']),5,"0", STR_PAD_LEFT);
+        $positive = 'CP-'.($num + 1);
 
         $active = new EmployeeCovidStatus;
-        $active->patient_code = 'CP-'.($num + 1);
+        $active->patient_code = $positive;
         $active->user_id = $request['user_id'];
         $active->health_status_remarks = $request['type'];
         $active->final_remarks = 'MONITORING';
@@ -232,10 +235,70 @@ class EmployeeMonitoringController extends Controller
             $active->health_status_remarks = 'SUSPECTED';
             $active->final_remarks = 'MONITORING';
             $active->date = $request['date_confirmed'];
-            $active->fulldetailed_reports = '';
+            $active->fulldetailed_reports = 'Contacted with patient:' . $positive;
             $active->status = 1;
             $active->save();
         }
+
+        $company = CompanyProfile::findOrFail(1);
+
+        // $html_content = '<h1> '. $company['company_name'] .'<small> '. $company['description'] .' </small> </h1><hr/>';
+        // $html_content .= `<table style="width:100%; border:solid 1px gray">
+        //             <tr>
+        //                 <th>Employee Code</th>
+        //                 <th>Patient Code</th>
+        //                 <th>Employee Name</th>
+        //                 <th>Contact Number</th>
+        //                 <th>Address</th>
+        //                 <th>Email</th>
+        //                 <th>Status</th>
+        //             </tr>`;
+        // foreach ($request['user_id_list'] as $value) {
+        //     $user = User::where('id', '=', $value)->with('employee')->first();
+
+        //     $html_content .= `<tr>
+        //             <td>P</td>
+        //             <td>Patient Code</td>
+        //             <td>Employee Name</td>
+        //             <td>Contact Number</td>
+        //             <td>Address</td>
+        //             <td>Email</td>
+        //             <td>Status</td>
+        //         </tr>`;
+
+        // }
+
+
+        // $html_content .= `</table>`;
+ 
+            
+$html_content = '<table cellspacing="0" cellpadding="1" border="1">
+    <tr>
+        <td rowspan="3">COL 1 - ROW 1<br />COLSPAN 3<br />text line<br />text line<br />text line<br />text line<br />text line<br />text line</td>
+        <td>COL 2 - ROW 1</td>
+        <td>COL 3 - ROW 1</td>
+    </tr>
+    <tr>
+        <td rowspan="2">COL 2 - ROW 2 - COLSPAN 2<br />text line<br />text line<br />text line<br />text line</td>
+         <td>COL 3 - ROW 2</td>
+    </tr>
+    <tr>
+       <td>COL 3 - ROW 3</td>
+    </tr>
+
+</table>';
+
+// $pdf->writeHTML($tbl, true, false, false, false, '');
+
+        PDF::SetTitle('Sample PDF');
+        PDF::AddPage();
+        PDF::writeHTML($html_content, true, false, true, false, '');
+ 
+        PDF::Output(uniqid().'_SamplePDF.pdf', 'I');
+        
+        // PDF::writeHTML($html_content, true, false, true, false, '');
+ 
+        // PDF::Output('SamplePDF.pdf');
 
         
         return response()->json(array('success'=>true, 'messages'=>'Record Successfully Saved!'));
