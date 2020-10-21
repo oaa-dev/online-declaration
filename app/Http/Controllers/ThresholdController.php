@@ -37,10 +37,9 @@ class ThresholdController extends Controller
     {
         
         $company = \App\CompanyProfile::findOrFail(1);
-        $tbl = '<table style="font-size:12px" border="1" cellpadding="2" cellspacing="2" align="center">
+        $tbl = '<table style="font-size:12px;" border="1">
          <tr>
             <th>Employee Code</th>
-            <th>Patient Code</th>
             <th>Employee Name</th>
             <th>Contact Number</th>
             <th>Address</th>
@@ -48,6 +47,9 @@ class ThresholdController extends Controller
             <th>Status</th>
          </tr>
          <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
             <td>1</td>
             <td>2</td>
             <td>3</td>

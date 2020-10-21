@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">List of Positive Employee</h1>
+                    <h1 class="m-0">List of Recovered Employee</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -33,7 +33,6 @@
                                                 <th>Patient Code</th>
                                                 <th>Contact</th>
                                                 <th>Address</th>
-                                                <th>Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -70,7 +69,7 @@
                 "url": '{{ route('covid_patient.find-all-by-status') }}',
                 "dataType": "json",
                 "type": "POST",
-                "data":{ _token: "{{csrf_token()}}", status: 'POSITIVE'}
+                "data":{ _token: "{{csrf_token()}}", status: 'RECOVERED'}
             },
             "columns": [
                 { "data": "employee_code" },
@@ -78,7 +77,6 @@
                 { "data": "code" },
                 { "data": "contact" },
                 { "data": "address" },
-                { "data": "status" },
             ],
             "columnDefs": [
                 { "orderable": false, "targets": [ 1 ] }, 
@@ -89,14 +87,14 @@
                     extend: 'print',
                     text:'PRINT',
                     exportOptions: {
-                    columns: [ 0, 1, 2, 3, 4, 5 ] //Your Column value those you want
+                    columns: [ 0, 1, 2, 3, 4 ] //Your Column value those you want
                 }
                 },
                     {
                     extend: 'excel',
                     text:'EXPORT EXCEL',
                     exportOptions: {
-                    columns: [ 0, 1, 2, 3, 4, 5 ] //Your Column value those you want
+                    columns: [ 0, 1, 2, 3, 4 ] //Your Column value those you want
                     }
                 },
             ],

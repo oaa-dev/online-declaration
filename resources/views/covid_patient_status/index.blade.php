@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Employee Health Status</h1>
+                    <h1 class="m-0">Covid Patient Health Status</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -53,7 +53,7 @@
     </div>
 
     <div class="modal fade" id="active_modal">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Employee Status</h4>
@@ -67,18 +67,11 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Date Confirmed</label>
-                            <input type="hidden" id="user_id" name="user_id">
+                            <input type="hidden" id="covid_id" name="covid_id">
                             <input type="hidden" id="type" name="type">
                             <input type="date" class="form-control" id="date_confirmed" name="date_confirmed">
                         </div>
-                        <div class="form-group">
-                            <label>Patient Code</label>
-                            <input type="text" class="form-control" id="patient_code" name="patient_code">
-                        </div>
-                        <div class="form-group">
-                            <label>Reports</label>
-                            <textarea class="form-control" id="reports" rows="6" name="reports"></textarea>
-                        </div>
+                    </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
@@ -90,6 +83,8 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+
+
 
 @endsection
 
@@ -163,7 +158,7 @@
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
-                        url: '{{ route('monitoring.store_active') }}',
+                        url: '{{ route('covid_patient.store') }}',
                         type: "POST",
                         data: $('#active_form').serialize(),
                         dataType: "JSON",
@@ -205,7 +200,7 @@
                     dataType:'json',
                     success:function(success){
                         if(success.success){
-                            $('#user_id').val(id);
+                            $('#covid_id').val(id);
                             $('#type').val('POSITIVE');
                             $('#active_modal').modal('show');
                             //process loader false
@@ -224,9 +219,8 @@
             allowOutsideClick: false
         })
     }
-
     
-    const suspected = (id) => {
+    const get_better = (id) => {
         swal.fire({
             title: 'Please enter password!',
             input: 'password',
@@ -241,8 +235,76 @@
                     dataType:'json',
                     success:function(success){
                         if(success.success){
-                            $('#user_id').val(id);
-                            $('#type').val('SUSPECTED');
+                            $('#covid_id').val(id);
+                            $('#type').val('GET BETTER');
+                            $('#active_modal').modal('show');
+                        }else{
+                            swal.fire({
+                                title: "Password do not match!",
+                                text: "Please input correct password",
+                                icon: "error"
+                            })
+                            //process loader false
+                        }
+                    }
+                }); 
+                    
+            },
+            allowOutsideClick: false
+        })
+    }
+    
+    const deceased = (id) => {
+        swal.fire({
+            title: 'Please enter password!',
+            input: 'password',
+            showCancelButton: true,
+            confirmButtonText: 'Submit',
+            showLoaderOnConfirm: true,
+            preConfirm: function (password) {
+                $.ajax({
+                    url:'{{ route('monitoring.verify-password')}}',
+                    type:'POST',
+                    data:{ _token:"{{ csrf_token() }}",password:password},
+                    dataType:'json',
+                    success:function(success){
+                        if(success.success){
+                            $('#covid_id').val(id);
+                            $('#type').val('DECEASED');
+                            $('#active_modal').modal('show');
+                        }else{
+                            swal.fire({
+                                title: "Password do not match!",
+                                text: "Please input correct password",
+                                icon: "error"
+                            })
+                            //process loader false
+                        }
+                    }
+                }); 
+                    
+            },
+            allowOutsideClick: false
+        })
+    }
+    
+    const recovered = (id) => {
+        swal.fire({
+            title: 'Please enter password!',
+            input: 'password',
+            showCancelButton: true,
+            confirmButtonText: 'Submit',
+            showLoaderOnConfirm: true,
+            preConfirm: function (password) {
+                $.ajax({
+                    url:'{{ route('monitoring.verify-password')}}',
+                    type:'POST',
+                    data:{ _token:"{{ csrf_token() }}",password:password},
+                    dataType:'json',
+                    success:function(success){
+                        if(success.success){
+                            $('#covid_id').val(id);
+                            $('#type').val('RECOVERED');
                             $('#active_modal').modal('show');
                         }else{
                             swal.fire({

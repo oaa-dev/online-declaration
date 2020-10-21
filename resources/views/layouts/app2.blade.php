@@ -266,15 +266,27 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
+                <a href="/reports/positive" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p></p>
+                  <p>Positive Cases</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                <a href="/reports/suspected" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p></p>
+                  <p>Suspected Cases</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/reports/recovered" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Recovered Cases</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/reports/deceased" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Deceased Cases</p>
                 </a>
               </li>
             </ul>

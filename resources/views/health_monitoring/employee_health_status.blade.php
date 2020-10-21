@@ -61,7 +61,7 @@
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="active_form" method="POST" action="{{ route('monitoring.store_active') }}">
+                <form id="active_form" >
                     @csrf
                     @method('POST')
                     <div class="modal-body">
@@ -187,53 +187,55 @@
         });
     });
 
-    // $("#active_form").validate({
-    //     rules: {
-    //         date_confirmed: {
-    //             required: true
-    //         },
-    //         patient_code: {
-    //             required: true
-    //         }
-    //     },
-    //     submitHandler: function (form) {
-    //         Swal.fire({
-    //         title: 'Are you sure?',
-    //         text: "You won't be able to revert this!",
-    //         type: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#3085d6',
-    //         cancelButtonColor: '#d33',
-    //         confirmButtonText: 'Yes, Delete it!'
-    //         }).then((result) => {
-    //             if (result.value) {
-    //                 $.ajax({
-    //                     url: '{{ route('monitoring.store_active') }}',
-    //                     type: "POST",
-    //                     data: $('#active_form').serialize(),
-    //                     dataType: "JSON",
-    //                     success: function (data) {
-    //                         if (data.success) {
-    //                             $('#active_modal').modal('hide');
-    //                             $("#active_form")[0].reset();
-    //                             swal.fire({
-    //                                 title: "Success!",
-    //                                 text: data.messages,
-    //                                 icon: "success"
-    //                             })
-    //                             datatable.ajax.reload( null, false );
-    //                         } else {
-    //                             toastr.error(data.messages)
-    //                         }
-    //                     },
-    //                     error: function (jqXHR, textStatus, errorThrown) {
-    //                         toastr.error(errorThrown)
-    //                     }
-    //                 });    
-    //             }
-    //         });
-    //     }
-    // });
+    $("#active_form").validate({
+        rules: {
+            date_confirmed: {
+                required: true
+            },
+            patient_code: {
+                required: true
+            }
+        },
+        submitHandler: function (form) {
+            Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Delete it!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: '{{ route('monitoring.store_active') }}',
+                        type: "POST",
+                        data: $('#active_form').serialize(),
+                        dataType: "JSON",
+                        success: function (data) {
+                            if (data.success) {
+                                $('#active_modal').modal('hide');
+                                $("#active_form")[0].reset();
+                                datatable.ajax.reload( null, false );
+                                swal.fire({
+                                    title: "Success!",
+                                    text: data.messages,
+                                    icon: "success"
+                                }).then(function(){
+                                    location.reload();
+                                });
+                            } else {
+                                toastr.error(data.messages)
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            toastr.error(errorThrown)
+                        }
+                    });    
+                }
+            });
+        }
+    });
 
     
     $('#tbl_suspected tbody').on("click", "#remove_schedule", function(e){ 

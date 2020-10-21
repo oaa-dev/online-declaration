@@ -61,8 +61,14 @@ Route::post('/schedules/find-all','ShiftingScheduleController@findall')->name('s
 Route::resource('schedules', 'ShiftingScheduleController')->middleware('auth');
 
 
+Route::post('/covid_patient/find-all-by-status','EmployeeCovidStatusController@find_all_by_status')->name('covid_patient.find-all-by-status')->middleware('auth');
 Route::post('/covid_patient/find-all','EmployeeCovidStatusController@findall')->name('covid_patient.find-all')->middleware('auth');
 Route::resource('/covid_patient', 'EmployeeCovidStatusController')->middleware('auth');
 
+
+Route::get('/reports/positive', 'EmployeeCovidStatusController@positive')->name('report.positive');
+Route::get('/reports/suspected', 'EmployeeCovidStatusController@suspected')->name('report.suspected');
+Route::get('/reports/recovered', 'EmployeeCovidStatusController@recovered')->name('report.recovered');
+Route::get('/reports/deceased', 'EmployeeCovidStatusController@deceased')->name('report.deceased');
 
 Route::resource('/threshold', 'ThresholdController')->middleware('auth');
