@@ -115,6 +115,7 @@
 
     <link rel="stylesheet" href="{{ asset('author/css/flaticon.css') }}">
     <link rel="stylesheet" href="{{ asset('author/css/style.css') }}">
+    @laravelPWA
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
