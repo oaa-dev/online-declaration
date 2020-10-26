@@ -11,64 +11,66 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', function () { return view('welcome'); });
 
-
-// Route::post('/emergency-hotline/toggle/{id}', 'EmergencyHotlineController@togglestatus')->name('hotline.toggle');
-// Route::post('/emergency-hotline/find-all','EmergencyHotlineController@findall')->name('hotline.find-all');
-// Route::resource('emergency-hotline', 'EmergencyHotlineController')->middleware('auth');
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
-/* employee */
-Route::post('/employee/edit-profile', 'EmployeeController@edit_profile')->name('employee.edit_profile')->middleware('auth');
-Route::get('/employee/profile', 'EmployeeController@profile')->name('employee.profile')->middleware('auth');
-Route::post('/employee/toggle/{id}', 'EmployeeController@togglestatus')->name('employee.toggle')->middleware('auth');
-Route::post('/employee/find-all','EmployeeController@findall')->name('employee.find-all')->middleware('auth');
-Route::resource('employee', 'EmployeeController')->middleware('auth');
+Route::group(['middleware' => ['auth', 'permission:1']], function () {
+        
+    /* employee */
+    Route::post('/employee/edit-profile', 'EmployeeController@edit_profile')->name('employee.edit_profile');
+    Route::get('/employee/profile', 'EmployeeController@profile')->name('employee.profile');
+    Route::post('/employee/toggle/{id}', 'EmployeeController@togglestatus')->name('employee.toggle');
+    Route::post('/employee/find-all','EmployeeController@findall')->name('employee.find-all');
+    Route::resource('employee', 'EmployeeController');
 
 
-/* emergency hotine */
-Route::post('/emergency-hotline/toggle/{id}', 'EmergencyHotlineController@togglestatus')->name('hotline.toggle')->middleware('auth');
-Route::post('/emergency-hotline/find-all','EmergencyHotlineController@findall')->name('hotline.find-all')->middleware('auth');
-Route::resource('emergency-hotline', 'EmergencyHotlineController')->middleware('auth');
+    /* emergency hotine */
+    Route::post('/emergency-hotline/toggle/{id}', 'EmergencyHotlineController@togglestatus')->name('hotline.toggle');
+    Route::post('/emergency-hotline/find-all','EmergencyHotlineController@findall')->name('hotline.find-all');
+    Route::resource('emergency-hotline', 'EmergencyHotlineController');
 
-/* daily health monitoring */
+    /* daily health monitoring */
 
-Route::get('/monitoring/health-history', 'EmployeeMonitoringController@health_history')->name('monitoring.health_history')->middleware('auth');
-Route::post('/monitoring/store-active', 'EmployeeMonitoringController@employeeActiveCase')->name('monitoring.store_active');
-Route::post('/monitoring/check-password', 'EmployeeMonitoringController@verifyPassword')->name('monitoring.verify-password');
-Route::get('/monitoring/health-status', 'EmployeeMonitoringController@health_status')->name('monitoring.health_status')->middleware('auth');
-Route::post('/monitoring/health-status/find-all','EmployeeMonitoringController@employee_health_condition')->name('monitoring.find-all-health-status')->middleware('auth');
-Route::post('/monitoring/find-all','EmployeeMonitoringController@findall')->name('monitoring.find-all')->middleware('auth');
-Route::get('monitoring/encoding', 'EmployeeMonitoringController@encoding')->middleware('auth');
-Route::resource('monitoring', 'EmployeeMonitoringController')->middleware('auth');
-
-
-/* company profiles */
-Route::resource('company', 'CompanyProfileController')->middleware('auth');
+    Route::get('/monitoring/health-history', 'EmployeeMonitoringController@health_history')->name('monitoring.health_history');
+    Route::post('/monitoring/store-active', 'EmployeeMonitoringController@employeeActiveCase')->name('monitoring.store_active');
+    Route::post('/monitoring/check-password', 'EmployeeMonitoringController@verifyPassword')->name('monitoring.verify-password');
+    Route::get('/monitoring/health-status', 'EmployeeMonitoringController@health_status')->name('monitoring.health_status');
+    Route::post('/monitoring/health-status/find-all','EmployeeMonitoringController@employee_health_condition')->name('monitoring.find-all-health-status');
+    Route::post('/monitoring/find-all','EmployeeMonitoringController@findall')->name('monitoring.find-all');
+    Route::get('monitoring/encoding', 'EmployeeMonitoringController@encoding');
+    Route::resource('monitoring', 'EmployeeMonitoringController');
 
 
-/* shifting schedule */
-Route::post('/schedules/toggle/{id}', 'ShiftingScheduleController@togglestatus')->name('schedules.toggle')->middleware('auth');
-Route::get('/schedules/find-for-combobox', 'ShiftingScheduleController@findall2')->name('schedules.all');
-Route::post('/schedules/find-all','ShiftingScheduleController@findall')->name('schedules.find-all')->middleware('auth');
-Route::resource('schedules', 'ShiftingScheduleController')->middleware('auth');
+    /* company profiles */
+    Route::resource('company', 'CompanyProfileController');
 
 
-Route::post('/covid_patient/find-all-by-status','EmployeeCovidStatusController@find_all_by_status')->name('covid_patient.find-all-by-status')->middleware('auth');
-Route::post('/covid_patient/find-all','EmployeeCovidStatusController@findall')->name('covid_patient.find-all')->middleware('auth');
-Route::resource('/covid_patient', 'EmployeeCovidStatusController')->middleware('auth');
+    /* shifting schedule */
+    Route::post('/schedules/toggle/{id}', 'ShiftingScheduleController@togglestatus')->name('schedules.toggle');
+    Route::get('/schedules/find-for-combobox', 'ShiftingScheduleController@findall2')->name('schedules.all');
+    Route::post('/schedules/find-all','ShiftingScheduleController@findall')->name('schedules.find-all');
+    Route::resource('schedules', 'ShiftingScheduleController');
 
 
-Route::get('/reports/positive', 'EmployeeCovidStatusController@positive')->name('report.positive');
-Route::get('/reports/suspected', 'EmployeeCovidStatusController@suspected')->name('report.suspected');
-Route::get('/reports/recovered', 'EmployeeCovidStatusController@recovered')->name('report.recovered');
-Route::get('/reports/deceased', 'EmployeeCovidStatusController@deceased')->name('report.deceased');
+    Route::post('/covid_patient/find-all-by-status','EmployeeCovidStatusController@find_all_by_status')->name('covid_patient.find-all-by-status');
+    Route::post('/covid_patient/find-all','EmployeeCovidStatusController@findall')->name('covid_patient.find-all');
+    Route::resource('/covid_patient', 'EmployeeCovidStatusController');
 
-Route::resource('/threshold', 'ThresholdController')->middleware('auth');
+
+    Route::get('/reports/positive', 'EmployeeCovidStatusController@positive')->name('report.positive');
+    Route::get('/reports/suspected', 'EmployeeCovidStatusController@suspected')->name('report.suspected');
+    Route::get('/reports/recovered', 'EmployeeCovidStatusController@recovered')->name('report.recovered');
+    Route::get('/reports/deceased', 'EmployeeCovidStatusController@deceased')->name('report.deceased');
+
+    Route::resource('/threshold', 'ThresholdController');
+    
+});
+
+Route::group(['middleware' => ['auth', 'permission:2']], function () {
+    Route::get('/monitoring/encoding', 'EmployeeMonitoringController@encoding');
+    Route::get('/schedules/find-for-combobox', 'ShiftingScheduleController@findall2')->name('schedules.all');
+    Route::resource('/monitoring', 'EmployeeMonitoringController',['only'=>['store']]);
+});

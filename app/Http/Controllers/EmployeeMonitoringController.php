@@ -162,7 +162,7 @@ class EmployeeMonitoringController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validate = [
             'cough' => 'required',
             'fever' => 'required',
             'breath' => 'required',
@@ -175,9 +175,13 @@ class EmployeeMonitoringController extends Controller
             'living_frontliners' => 'required',
             'relative_overseas' => 'required',
             'temperature' => 'required',
-            'user_id' => 'required',
             'shifting_list' => 'required',
-        ]);
+        ];
+        if(\Auth::user()->access == '1'){
+            $validate = array_merge($validate, ['user_id' => 'required']);
+        }
+
+        $validator = Validator::make($request->all(),$validate);
 
         if($validator->fails()){
             return response()->json(array('success' => false, 'messages'=>'Please fill up required data!'));
@@ -185,7 +189,7 @@ class EmployeeMonitoringController extends Controller
             $max_identifier = DB::table('employee_monitorings')->where('user_id', '=', $request['user_id'])->max('identifier');
 
             $monitoring = new EmployeeMonitoring;
-            $monitoring->user_id = $request['user_id'];
+            $monitoring->user_id = (\Auth::user()->access == '1')? $request['user_id']:\Auth::user()->id;
             $monitoring->shifting_schedule_id = $request['shifting_list'];
             $monitoring->temperature = $request['temperature'];
             $monitoring->fever = $request['fever'];
@@ -199,7 +203,7 @@ class EmployeeMonitoringController extends Controller
             $monitoring->living_with_frontliners = $request['living_frontliners'];
             $monitoring->relative_arrived_overseas = $request['relative_overseas'];
             $monitoring->person_monitor = $request['person_monitor'];
-            $monitoring->status = $request['user_id'];
+            $monitoring->status = '1';
             if(!empty($max_identifier)){
                 $monitoring->identifier = ($max_identifier + 1);
             }else{

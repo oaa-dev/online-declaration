@@ -225,6 +225,7 @@ class EmployeeController extends Controller
                         $user->email = $request['email'];
                         $user->contact_number = $request['contact'];
                         $user->password = bcrypt('secret123');
+                        $user->access = $request['access'];
                         $user->status = 1;
                         $user->save();
                         
@@ -297,6 +298,10 @@ class EmployeeController extends Controller
                 $employee->address = $request['edit_address'];
                 $employee->civil_status = $request['edit_civil_status'];
                 $employee->save();
+
+                $user = User::where('employee_id', '=', $employee->id)->first();
+                $user->access = $request['edit_access'];
+                $user->save();
                 
                 DB::commit();
 

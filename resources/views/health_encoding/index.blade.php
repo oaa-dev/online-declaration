@@ -35,13 +35,14 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-3">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                             <label for="">Temperature</label>
                                             <input type="number" class="form-control" name="temperature" id="temperature" placeholder="Degrees Celsius">
                                             </div>
                                         </div>
-                                        <div class="col-5">
+                                        @if(\Auth::user()->access == '1')
+                                        <div class="col-md-5">
                                             
                                             <label for="">Employee Name</label>
                                             <div class="input-group mb-3">
@@ -55,7 +56,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-4">
+                                        @endif
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="">Shifting Schedule</label>
                                                 <select class="form-control" name="shifting_list" id="shifting_list">
@@ -249,6 +251,7 @@
         })
 
 
+        @if(\Auth::user()->access == '1')
         datatable = $('#datatable').DataTable({
             "ajax":{
                 "url": '{{ route('employee.find-all') }}',
@@ -269,6 +272,7 @@
                 { "orderable": false, "targets": [ 1 ] }, 
             ]	 	 
         });
+        @endif
     });
 
     $('#i_agree').change(function() {
@@ -279,6 +283,8 @@
         }
     });
 
+
+    @if(\Auth::user()->access == '1')
     const select = (id, name) => {
         $('#user_id').val(id);
         $('#employee_name').val(name);
@@ -287,7 +293,7 @@
         $(".modal-backdrop").remove();
         $("#employee_modal").modal("hide");
     }
-
+    @endif
     $("#create_form").validate({
         rules: {
             employee_name: {

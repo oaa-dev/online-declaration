@@ -2,6 +2,8 @@
   $company = \App\CompanyProfile::first();
 
   $profile = \App\Employee::findOrFail(\Auth::user()->employee_id); 
+
+  $access = \Auth::user()->access;
 @endphp
 
 <!DOCTYPE html>
@@ -208,125 +210,147 @@
             </a>
           </li>
           <li class="nav-header">MANAGEMENTS</li>
-          <li class="nav-item">
-            <a href="/employee" class="nav-link">
-              <i class="nav-icon fa fa-users"></i>
-              <p>
-                Employee Management
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/emergency-hotline" class="nav-link">
-              <i class="nav-icon fa fa-phone-alt"></i>
-              <p>
-                Emergency Hotlines
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/monitoring/encoding" class="nav-link">
-              <i class="nav-icon fa fa-edit"></i>
-              <p>
-                Declaration Encoding
-              </p>
-            </a>
-          </li>
-          
-          <li class="nav-item">
-            <a href="/monitoring/health-history" class="nav-link">
-              <i class="nav-icon fa fa-stethoscope"></i>
-              <p>
-                Declaration History
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/monitoring/health-status" class="nav-link">
-              <i class="nav-icon fa fa-user-tie"></i>
-              <p>
-                Employee Health Status
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/covid_patient" class="nav-link">
-              <i class="nav-icon fa fa-user-plus"></i>
-              <p>
-                Patient Health Status
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>
-                Reports
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/reports/positive" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Positive Cases</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/reports/suspected" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Suspected Cases</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/reports/recovered" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Recovered Cases</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/reports/deceased" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Deceased Cases</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fa fa-cogs"></i>
-              <p>
-                Settings
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
-                  <i class="fa fa-paperclip"></i>
-                  <p>Activity Logs</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/company/create" class="nav-link">
-                  <i class="fa fa-building"></i>
-                  <p>Company Profiles</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/schedules" class="nav-link">
-                  <i class="fa fa-calendar"></i>
-                  <p>Shifting Schedules</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/threshold" class="nav-link">
-                  <i class="fa fa-arrow-up"></i>
-                  <p>Threshold</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+
+          @if($access == '1')
+            <li class="nav-item">
+              <a href="/employee" class="nav-link">
+                <i class="nav-icon fa fa-users"></i>
+                <p>
+                  Employee Management
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/emergency-hotline" class="nav-link">
+                <i class="nav-icon fa fa-phone-alt"></i>
+                <p>
+                  Emergency Hotlines
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/monitoring/encoding" class="nav-link">
+                <i class="nav-icon fa fa-edit"></i>
+                <p>
+                  Declaration Encoding
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/monitoring/health-history" class="nav-link">
+                <i class="nav-icon fa fa-stethoscope"></i>
+                <p>
+                  Declaration History
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/monitoring/health-status" class="nav-link">
+                <i class="nav-icon fa fa-user-tie"></i>
+                <p>
+                  Employee Health Status
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/covid_patient" class="nav-link">
+                <i class="nav-icon fa fa-user-plus"></i>
+                <p>
+                  Patient Health Status
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                  Reports
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/reports/positive" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Positive Cases</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/reports/suspected" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Suspected Cases</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/reports/recovered" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Recovered Cases</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/reports/deceased" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Deceased Cases</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fa fa-cogs"></i>
+                <p>
+                  Settings
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="pages/layout/top-nav.html" class="nav-link">
+                    <i class="fa fa-paperclip"></i>
+                    <p>Activity Logs</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/company/create" class="nav-link">
+                    <i class="fa fa-building"></i>
+                    <p>Company Profiles</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/schedules" class="nav-link">
+                    <i class="fa fa-calendar"></i>
+                    <p>Shifting Schedules</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/threshold" class="nav-link">
+                    <i class="fa fa-arrow-up"></i>
+                    <p>Threshold</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          @endif
+
+          @if($access == '2')
+            <li class="nav-item">
+              <a href="/monitoring/encoding" class="nav-link">
+                <i class="nav-icon fa fa-edit"></i>
+                <p>
+                  Declaration Encoding
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              <a href="/emergency-hotline" class="nav-link">
+                <i class="nav-icon fa fa-phone-alt"></i>
+                <p>
+                  Emergency Hotlines
+                </p>
+              </a>
+            </li>
+          @endif
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
