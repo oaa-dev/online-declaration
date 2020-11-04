@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0"> Daily Heath Monitoring Form</h1>
+                    <h1 class="m-0"> Daily Health Monitoring Form</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -308,7 +308,7 @@
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Delete it!'
+            confirmButtonText: 'Yes, save it!'
             }).then((result) => {
                 if (result.value) {
                     $.ajax({

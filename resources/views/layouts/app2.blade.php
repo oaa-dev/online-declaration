@@ -218,22 +218,6 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/monitoring/health-status" class="nav-link">
-              <i class="nav-icon fa fa-list"></i>
-              <p>
-                Facility Management
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/monitoring/health-status" class="nav-link">
-              <i class="nav-icon fa fa-list"></i>
-              <p>
-                Contact Tracing
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
             <a href="/monitoring/encoding" class="nav-link">
               <i class="nav-icon fa fa-edit"></i>
               <p>
