@@ -25,7 +25,7 @@
         <section class="content">
             <div class="container-fluid">
               <div class="row">
-                <div class="col-8">
+                <div class="col-12">
                   <div class="card">
                       <div class="card-header">
                         <h3 class="card-title">
@@ -35,7 +35,7 @@
                       <!-- /.card-header -->
                       <div class="card-body">
                         <div class="row">
-                          <div class="col-lg-4 col-6">
+                          <div class="col-lg-3 col-6">
                             <!-- small box -->
                             <div class="small-box bg-danger">
                               <div class="inner">
@@ -50,7 +50,7 @@
                             </div>
                           </div>
                           <!-- ./col -->
-                          <div class="col-lg-4 col-6">
+                          <div class="col-lg-3 col-6">
                             <!-- small box -->
                             <div class="small-box " style="background-color: gray">
                               <div class="inner">
@@ -65,7 +65,21 @@
                             </div>
                           </div>
 
-                          <div class="col-lg-4 col-6">
+                          <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-info">
+                              <div class="inner">
+                                <h3 id="recovered_global">00</h3>
+                
+                                <p>Total Recovered</p>
+                              </div>
+                              <div class="icon">
+                                <i class="ion ion-happy"></i>
+                              </div>
+                              <a href="#" class="small-box-footer">( <span id="today_recovered_global">00</span> + today recovered)</a> 
+                            </div>
+                          </div>
+                          <div class="col-lg-3 col-6">
                             <!-- small box -->
                             <div class="small-box bg-info">
                               <div class="inner">
@@ -83,94 +97,9 @@
                       </div>
                       <!-- /.card-body -->
                   </div>
-                  
-                  <div class="card">
-                    <div class="card-header">
-                      <h3 class="card-title">
-                        Philippines Covid Cases (   COVID 19 Epidemiology  )
-                      </h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-lg-6 col-6">
-                          <!-- small box -->
-                          <div class="small-box bg-danger">
-                            <div class="inner">
-                              <h3 id="cases">00</h3>
-              
-                              <p>COVID 19 Cases</p>
-                            </div>
-                            <div class="icon">
-                              <i class="ion-ios-people"></i>
-                            </div>
-                            <a href="#" class="small-box-footer">( <span id="today_case">00</span> + today cases)</a> 
-                          </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-6 col-6">
-                          <!-- small box -->
-                          <div class="small-box " style="background-color: gray">
-                            <div class="inner">
-                              <h3 id="death">00</h3>
-              
-                              <p>Total Deaths</p>
-                            </div>
-                            <div class="icon">
-                              <i class="ion ion-sad"></i>
-                            </div>
-                            <a href="#" class="small-box-footer">( <span id="today_death">00</span> + today deaths)</a> 
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-lg-6 col-6">
-                          <!-- small box -->
-                          <div class="small-box bg-success">
-                            <div class="inner">
-                              <h3 id="recovered">00</h3>
-              
-                              <p>Recovered Cases</p>
-                            </div>
-                            <div class="icon">
-                              <i class="ion-ios-people"></i>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-6 col-6">
-                          <!-- small box -->
-                          <div class="small-box bg-info">
-                            <div class="inner">
-                              <h3 id="active">00</h3>
-              
-                              <p>Active Cases</p>
-                            </div>
-                            <div class="icon">
-                              <i class="ion-ios-people"></i>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
                   <!-- /.card -->
                 </div>
                 <!-- /.col -->
-
-                <div class="col-4">
-                  <div class="card card-primary">
-                    <div class="card-header">
-                      <h3 class="card-title">Philippines COVID 19 Epidemiology ( Pie Chart )</h3>
-                    </div>
-                    <div class="card-body">
-                      <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                    </div>
-                    <!-- /.card-body -->
-                  </div>
-            
-                </div>
               </div>
             </div><!-- /.container-fluid -->
         </section>

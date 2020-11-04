@@ -36,21 +36,23 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                                <table id="datatable" class="table" role="grid" aria-describedby="example2_info">
-                                    <thead>
-                                        <tr role="row">
-                                            <th>Employee Code</th>
-                                            <th>Fullname</th>
-                                            <th>Contact</th>
-                                            <th>Address</th>
-                                            <th>Status</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                            <div class="table-responsive">
+                                <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                    <table id="datatable" class="table" role="grid" aria-describedby="example2_info">
+                                        <thead>
+                                            <tr role="row">
+                                                <th>Employee Code</th>
+                                                <th>Fullname</th>
+                                                <th>Contact</th>
+                                                <th>Address</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -162,10 +164,25 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label>Address</label>
-                        <textarea class="form-control" rows="3"  id="address" name="address"></textarea>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label>Address</label>
+                                <textarea class="form-control" rows="3"  id="address" name="address"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Access</label>
+                                <select class="form-control"  id="access" name="access">
+                                    <option value="0" selected disabled>Select Access</option>
+                                    <option value="1">Admin</option>
+                                    <option value="2">Employee</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
                 <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -278,9 +295,23 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label>Address</label>
-                        <textarea class="form-control" rows="3"  id="edit_address" name="edit_address"></textarea>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label>Address</label>
+                                <textarea class="form-control" rows="3"  id="edit_address" name="edit_address"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Access</label>
+                                <select class="form-control"  id="edit_access" name="edit_access">
+                                    <option value="0" selected disabled>Select Access</option>
+                                    <option value="1">Admin</option>
+                                    <option value="2">Employee</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -354,6 +385,9 @@
             email: {
                 required: true
             },
+            access: {
+                required: true
+            },
             employee_code: {
                 required: true
             },
@@ -417,9 +451,10 @@
                 $("#edit_employeecode").val(data[0].employee_code);
                 $("#edit_email").val(data[0].user.email);
                 $("#edit_contact").val(data[0].user.contact_number);
+                $("#edit_access").val(data[0].user.access);
                 $("#edit_address").val(data[0].address);
             },
-            error: function (jqXHR, textStatus, errorThrown) {
+            error: function (jqXHR, textStatus, errorThrown) {  
                 alert(errorThrown);
             }
         });
@@ -451,6 +486,9 @@
                 required: true
             },
             edit_email: {
+                required: true
+            },
+            edit_access: {
                 required: true
             },
             edit_employee_code: {

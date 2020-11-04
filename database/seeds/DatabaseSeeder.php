@@ -26,12 +26,18 @@ class DatabaseSeeder extends Seeder
             'image' => '',
             'status' => '1',
         ]);
+
         DB::table('users')->insert([
             'contact_number' => '09123456789',
             'email' => 'admin@admin.com',
             'password' => Hash::make('admin123'),
             'status' => '1',
             'employee_id' => '1',
+        ]);
+        
+        DB::table('thresholds')->insert([
+            'level' => '1',
+            'status' => '1',
         ]);
     }
 }

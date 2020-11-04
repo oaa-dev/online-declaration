@@ -13,6 +13,17 @@
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css')}}">
+  <style>
+    body{
+      background-image: url('{{ asset('author/images/2760147.svg')}}'); 
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      /* background-size: cover; */
+      background-position: left center;
+      background-size: 75% 60%;
+    }
+  </style>
+   @laravelPWA
 </head>
 <body class="hold-transition login-page">
     @yield('content')
@@ -23,5 +34,6 @@
     <script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('adminlte/dist/js/adminlte.min.js')}}"></script>
-    </body>
-    </html>
+    
+  </body>
+  </html>

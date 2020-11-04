@@ -35,13 +35,14 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-3">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                             <label for="">Temperature</label>
                                             <input type="number" class="form-control" name="temperature" id="temperature" placeholder="Degrees Celsius">
                                             </div>
                                         </div>
-                                        <div class="col-5">
+                                        @if(\Auth::user()->access == '1')
+                                        <div class="col-md-5">
                                             
                                             <label for="">Employee Name</label>
                                             <div class="input-group mb-3">
@@ -55,7 +56,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-4">
+                                        @endif
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="">Shifting Schedule</label>
                                                 <select class="form-control" name="shifting_list" id="shifting_list">
@@ -175,7 +177,7 @@
                             <div class="callout callout-info">
                                 <h5></h5>
                                 <p>
-                                    <input type="checkbox" style="zoom: 1.5" id="i_agree"> I declare all the above information to be true and correct. By submitting this declaration form
+                                    <input type="checkbox" name="i_agree" style="zoom: 1.5" id="i_agree"> I declare all the above information to be true and correct. By submitting this declaration form
                                     i agree to collect, use and disclosure of my personal information above by health declaration of
                                     employee for the purpose of a precautionary measures against COVID 19 in the copany premises.</p>
                             </div>
@@ -249,6 +251,7 @@
         })
 
 
+        @if(\Auth::user()->access == '1')
         datatable = $('#datatable').DataTable({
             "ajax":{
                 "url": '{{ route('employee.find-all') }}',
@@ -269,6 +272,7 @@
                 { "orderable": false, "targets": [ 1 ] }, 
             ]	 	 
         });
+        @endif
     });
 
     $('#i_agree').change(function() {
@@ -279,6 +283,8 @@
         }
     });
 
+
+    @if(\Auth::user()->access == '1')
     const select = (id, name) => {
         $('#user_id').val(id);
         $('#employee_name').val(name);
@@ -287,7 +293,7 @@
         $(".modal-backdrop").remove();
         $("#employee_modal").modal("hide");
     }
-
+    @endif
     $("#create_form").validate({
         rules: {
             employee_name: {
@@ -297,6 +303,12 @@
                 required: true
             },
             shifting_list: {
+                required: true
+            },
+            shifting_list: {
+                required: true
+            },
+            i_agree: {
                 required: true
             },
         },
@@ -318,6 +330,7 @@
                         dataType: "JSON",
                         success: function (data) {
                             $("#create_form")[0].reset();
+                            $('#declare').prop('disabled', true);
                             if (data.success) {
                                 swal.fire({
                                     title: "Success!",

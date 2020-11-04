@@ -13,6 +13,9 @@ use DB;
 use App\EmployeeCovidStatus;
 use Hash;
 use Auth;
+use App\Threshold;
+use App\CompanyProfile;
+use PDF;
 
 class EmployeeMonitoringController extends Controller
 {
@@ -70,20 +73,20 @@ class EmployeeMonitoringController extends Controller
                     ($latest_health->living_with_frontliners == 'YES')? $ctr++ : false;
                     ($latest_health->relative_arrived_overseas == 'YES')? $ctr++ : false;
 
-                    if(EmployeeCovidStatus::where('user_id', '=', $result->user_id)->where('status', '=', '1')->first()){
+                    // if(EmployeeCovidStatus::where('user_id', '=', $result->user_id)->where('status', '=', '1')->first()){
                         
-                        $buttons = '<button class= "btn btn-success btn-sm"><i class="fa fa-user-plus"></i> RECOVERED</button> <button style="background-color:gray" class="btn btn-sm"><i class="fa fa-user-plus"></i> DECEASED</button>';
-                        $risk = '<span class="badge bg-primary">COVID CASE MONITORING</span>';
-                    }else{
+                    //     $buttons = '<button class= "btn btn-success btn-sm"><i class="fa fa-user-plus"></i> RECOVERED</button> <button style="background-color:gray" class="btn btn-sm"><i class="fa fa-user-plus"></i> DECEASED</button>';
+                    //     $risk = '<span class="badge bg-primary">COVID CASE MONITORING</span>';
+                    // }else{
                         $buttons = '<button onclick="positive('. $result->user_id .')" class= "btn btn-danger btn-sm"><i class="fa fa-user-plus"></i> POSITIVE</button> <button onclick="suspected('. $result->user_id .')" class= "btn btn-warning btn-sm"><i class="fa fa-user-plus"></i> SUSPECTED</button>';
-                        $risk = ($ctr > 5)?'<span class="badge bg-danger">HISH RISK</span>':'<span class="badge bg-warning">LOW RISK</span>';
-                    }
+                        
+                        $threshold = Threshold::findOrFail('1')['level'];
+                        $risk = ($ctr >= (!empty($threshold)? $threshold: 5) )?'<span class="badge bg-danger">HISH RISK</span>':'<span class="badge bg-warning">LOW RISK</span>';
+                    // }
                 }else{
                     $buttons = '<button disabled class= "btn btn-danger btn-sm"><i class="fa fa-user-plus"></i> POSITIVE</button> <button disabled class= "btn btn-warning btn-sm"><i class="fa fa-user-plus"></i> SUSPECTED</button>';
                     $risk = '<span class="badge bg-primary">NO HISTORY OF TRANSACTION</span>';
                 }
-
-                $active = DB::table('employee_covid_statuses')->where('user_id', '=', $result->user_id)->where('final_remarks', '=', 'MONITORING')->where('status', '=', '1')->count();
 
                 $nestedData['id'] = $result->id;
                 $nestedData['employee_code'] =  $result->employee_code ;
@@ -91,8 +94,13 @@ class EmployeeMonitoringController extends Controller
                 $nestedData['fullname'] =  strtoupper($result->lastname .', '. $result->firstname .' '. $result->middlename);
                 $nestedData['risk'] =  $risk;
                 $nestedData['actions'] = $buttons;
-                if(empty($active)){
-                    $data[] = $nestedData;
+
+                $deceased = EmployeeCovidStatus::where('user_id', '=', $result->user_id)->where('status', '=', '0')->where('final_remarks', '=', 'DECEASED')->first();
+                if(empty($deceased)){
+                    $recovered = EmployeeCovidStatus::where('user_id', '=', $result->user_id)->where('status', '=', '1')->count();
+                    if($recovered == 0){
+                        $data[] = $nestedData;
+                    }
                 }
 
             }
@@ -154,7 +162,7 @@ class EmployeeMonitoringController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validate = [
             'cough' => 'required',
             'fever' => 'required',
             'breath' => 'required',
@@ -167,9 +175,13 @@ class EmployeeMonitoringController extends Controller
             'living_frontliners' => 'required',
             'relative_overseas' => 'required',
             'temperature' => 'required',
-            'user_id' => 'required',
             'shifting_list' => 'required',
-        ]);
+        ];
+        if(\Auth::user()->access == '1'){
+            $validate = array_merge($validate, ['user_id' => 'required']);
+        }
+
+        $validator = Validator::make($request->all(),$validate);
 
         if($validator->fails()){
             return response()->json(array('success' => false, 'messages'=>'Please fill up required data!'));
@@ -177,7 +189,7 @@ class EmployeeMonitoringController extends Controller
             $max_identifier = DB::table('employee_monitorings')->where('user_id', '=', $request['user_id'])->max('identifier');
 
             $monitoring = new EmployeeMonitoring;
-            $monitoring->user_id = $request['user_id'];
+            $monitoring->user_id = (\Auth::user()->access == '1')? $request['user_id']:\Auth::user()->id;
             $monitoring->shifting_schedule_id = $request['shifting_list'];
             $monitoring->temperature = $request['temperature'];
             $monitoring->fever = $request['fever'];
@@ -191,7 +203,7 @@ class EmployeeMonitoringController extends Controller
             $monitoring->living_with_frontliners = $request['living_frontliners'];
             $monitoring->relative_arrived_overseas = $request['relative_overseas'];
             $monitoring->person_monitor = $request['person_monitor'];
-            $monitoring->status = $request['user_id'];
+            $monitoring->status = '1';
             if(!empty($max_identifier)){
                 $monitoring->identifier = ($max_identifier + 1);
             }else{
@@ -205,8 +217,9 @@ class EmployeeMonitoringController extends Controller
     }
 
     public function employeeActiveCase(Request $request){
+
         $active = new EmployeeCovidStatus;
-        $active->patient_code = strtoupper($request['patient_code']);
+        $active->patient_code = '';
         $active->user_id = $request['user_id'];
         $active->health_status_remarks = $request['type'];
         $active->final_remarks = 'MONITORING';
@@ -215,8 +228,27 @@ class EmployeeMonitoringController extends Controller
         $active->status = 1;
         $active->save();
 
+        $active->patient_code = 'CP-' .str_pad($active->id,5,"0", STR_PAD_LEFT);
+        $active->save();
+
+        if(!empty($request['user_id_list'])){
+            foreach ($request['user_id_list'] as $value) {
+                $suspected = new EmployeeCovidStatus;
+                $suspected->patient_code = '';
+                $suspected->user_id = $value;
+                $suspected->health_status_remarks = 'SUSPECTED';
+                $suspected->final_remarks = 'MONITORING';
+                $suspected->date = $request['date_confirmed'];
+                $suspected->fulldetailed_reports = 'Contacted with patient:' . $active->patient_code;
+                $suspected->status = 1;
+                $suspected->save();   
+
+                $suspected->patient_code = 'CP-' .str_pad($suspected->id,5,"0", STR_PAD_LEFT);
+                $suspected->save();
+            }
+        }
         
-        return response()->json(array('success'=>true, 'messages'=>'Record Successfully Saved!'));
+        return response()->json(array('success' => true, 'messages'=>'Record Successfully Saved!'));
     }
 
     public function verifyPassword(Request $request){
@@ -232,7 +264,7 @@ class EmployeeMonitoringController extends Controller
      * @param  \App\EmployeeMonitoring  $employeeMonitoring
      * @return \Illuminate\Http\Response
      */
-    public function show(EmployeeMonitoring $employeeMonitoring)
+    public function show($id)
     {
         //
     }

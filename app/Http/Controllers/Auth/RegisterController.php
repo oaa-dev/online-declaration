@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use App\Employee;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -50,9 +51,14 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'employee_code' => ['required', 'string', 'max:255', 'unique:employees'],
+            'lastname' => ['required', 'string', 'max:255'],
+            'firstname' => ['required', 'string', 'max:255'],
+            'middlename' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'contact_number' => ['required', 'string', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'terms' => ['required'],
         ]);
     }
 
@@ -64,10 +70,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
+        $employee = new Employee;
+        $employee->employee_code = $data['employee_code'];
+        $employee->lastname = $data['lastname'];
+        $employee->firstname = $data['firstname'];
+        $employee->middlename = $data['middlename'];
+        $employee->save();
+
         return User::create([
-            'name' => $data['name'],
+            'employee_id' => $employee->id,
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'contact_number' => $data['contact_number'],
+            'status' => '1',
+            'access' => '2',
         ]);
     }
 }
