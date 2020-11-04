@@ -69,7 +69,7 @@ Route::group(['middleware' => ['auth', 'permission:1']], function () {
     
 });
 
-Route::group(['middleware' => ['auth', 'permission:2']], function () {
+Route::group(['middleware' => ['auth', 'permission:1,2']], function () {
     Route::get('/monitoring/encoding', 'EmployeeMonitoringController@encoding');
     Route::get('/schedules/find-for-combobox', 'ShiftingScheduleController@findall2')->name('schedules.all');
     Route::resource('/monitoring', 'EmployeeMonitoringController',['only'=>['store']]);

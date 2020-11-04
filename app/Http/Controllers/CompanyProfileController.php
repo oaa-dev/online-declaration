@@ -55,8 +55,10 @@ class CompanyProfileController extends Controller
 
                 if($company_ctr >= 1){
                     $company = CompanyProfile::findOrFail(1);
+                    $action = "update";
                 }else{
                     $company = new CompanyProfile;
+                    $action = "create";
                 }
 
                 $company->company_name = strtoupper($request['company']); 
@@ -78,6 +80,8 @@ class CompanyProfileController extends Controller
                 $company->save();
 
                 DB::commit();
+
+                actionLogs('company mngt', $action .' : '. $company->id);
 
                 return response()->json(array('success'=> true, 'messages' => 'Record Successfully saved'));
             } catch (\PDOException $e) {

@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => Hash::make('admin123'),
             'status' => '1',
+            'access' => '1',
             'employee_id' => '1',
         ]);
         
