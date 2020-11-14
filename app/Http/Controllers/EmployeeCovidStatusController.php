@@ -73,9 +73,9 @@ class EmployeeCovidStatusController extends Controller
     public function find_all_by_status(Request $request){
 
         if($request['status'] == 'POSITIVE'){
-            $results = EmployeeCovidStatus::where('status', '=', '1')->where('health_status_remarks', '=', 'POSITIVE')->get();
+            $results = EmployeeCovidStatus::where('health_status_remarks', '=', 'POSITIVE')->get();
         }else if($request['status'] == 'SUSPECTED'){
-            $results = EmployeeCovidStatus::where('status', '=', '1')->where('health_status_remarks', '=', 'SUSPECTED')->get();
+            $results = EmployeeCovidStatus::where('health_status_remarks', '=', 'SUSPECTED')->get();
         }else if($request['status'] == 'RECOVERED'){
             $results = EmployeeCovidStatus::where('final_remarks', '=', 'RECOVERED')->get();
         }else if($request['status'] == 'DECEASED'){
@@ -101,15 +101,15 @@ class EmployeeCovidStatusController extends Controller
                 $nestedData['fullname'] =  strtoupper($employee->lastname .', '. $employee->firstname .' '. $employee->middlename);
                 $nestedData['status'] =  $status;
 
-                if($request['status'] == 'RECOVERED'){
+                // if($request['status'] == 'RECOVERED'){
                     $result = EmployeeCovidStatus::where('user_id', '=', $result->user_id)->where('status', '=', '1')->count();
 
                     if(empty($result)){
                         $data[] = $nestedData;
-                    }
-                }else{
-                    $data[] = $nestedData;
-                }
+                    }   
+                // }else{
+                //     $data[] = $nestedData;
+                // }
 
             }
         }

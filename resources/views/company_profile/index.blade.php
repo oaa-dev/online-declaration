@@ -63,10 +63,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row col-12">
-                                                <img style=" margin:50px; padding:20px; border: 1px solid" src="/images/{{ !empty($company['logo'])? $company['logo'] : '' }}" alt="">
-                                            </div>
-                                                
                                         </div>
                                         <div class="col-8">
                                             <div class="form-group">
@@ -189,6 +185,7 @@
                                     text: data.messages,
                                     icon: "success"
                                 })
+                                location.reload();
                             } else {
                                 swal.fire({
                                     title: "Success!",

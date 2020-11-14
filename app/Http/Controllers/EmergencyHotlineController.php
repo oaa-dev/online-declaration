@@ -58,6 +58,14 @@ class EmergencyHotlineController extends Controller
         //
     }
 
+    public function find_all(){
+        return EmergencyHotline::where('status', '=', '1')->get();
+    }
+
+    public function list_here(){
+        return view('emergency_hotline.list');
+    }
+
     /**
      * Store a newly created resource in storage.
      *

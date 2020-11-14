@@ -73,12 +73,12 @@ class RegisterController extends Controller
     {
         try{
             DB::beginTransaction();
-
+ 
             $employee = new Employee;
-            $employee->employee_code = $data['employee_code'];
-            $employee->lastname = $data['lastname'];
-            $employee->firstname = $data['firstname'];
-            $employee->middlename = $data['middlename'];
+            $employee->employee_code = strtoupper($data['employee_code']);
+            $employee->lastname = strtoupper($data['lastname']);
+            $employee->firstname = strtoupper($data['firstname']);
+            $employee->middlename = strtoupper($data['middlename']);
             $employee->save();
 
             

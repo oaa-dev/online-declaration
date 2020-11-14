@@ -97,9 +97,9 @@ class CompanyProfileController extends Controller
      * @param  \App\CompanyProfile  $companyProfile
      * @return \Illuminate\Http\Response
      */
-    public function show(CompanyProfile $companyProfile)
+    public function show($id)
     {
-        //
+        return CompanyProfile::findOrFail($id);
     }
 
     /**
