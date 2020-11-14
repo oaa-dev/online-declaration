@@ -1,96 +1,3 @@
-{{-- <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Laravel</title>
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
-    <!-- Styles -->
-    <style>
-        html,
-        body {
-            background-color: #fff;
-            color: #636b6f;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 200;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .full-height {
-            height: 100vh;
-        }
-
-        .flex-center {
-            align-items: center;
-            display: flex;
-            justify-content: center;
-        }
-
-        .position-ref {
-            position: relative;
-        }
-
-        .top-right {
-            position: absolute;
-            right: 10px;
-            top: 18px;
-        }
-
-        .content {
-            text-align: center;
-        }
-
-        .title {
-            font-size: 84px;
-        }
-
-        .links>a {
-            color: #636b6f;
-            padding: 0 25px;
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: .1rem;
-            text-decoration: none;
-            text-transform: uppercase;
-        }
-
-        .m-b-md {
-            margin-bottom: 30px;
-        }
-
-    </style>
-</head>
-
-<body>
-    <div class="flex-center position-ref full-height">
-
-
-        <div class="content">
-            <div class="title m-b-md">
-                Laravel
-            </div>
-
-            <div class="links">
-                <a href="https://laravel.com/docs">Docs</a>
-                <a href="https://laracasts.com">Laracasts</a>
-                <a href="https://laravel-news.com">News</a>
-                <a href="https://blog.laravel.com">Blog</a>
-                <a href="https://nova.laravel.com">Nova</a>
-                <a href="https://forge.laravel.com">Forge</a>
-                <a href="https://vapor.laravel.com">Vapor</a>
-                <a href="https://github.com/laravel/laravel">GitHub</a>
-            </div>
-        </div>
-    </div>
-</body>
-
-</html> --}}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -220,16 +127,13 @@
                     <div class="row justify-content-start pb-3">
                         <div class="col-md-12 heading-section ftco-animate">
                             <h2 class="mb-4">About The Company</h2>
-                            <p>A small river named Duden flows by their place and supplies it with the necessary
-                                regelialia. It is a paradisematic country, in which roasted parts of sentences fly into
-                                your mouth.</p>
                             <div class="text-about">
                                 <h4>Mission</h4>
-                                <p>Far far away, behind the word mountains, far from the countries Vokalia and
+                                <p id="mission">Far far away, behind the word mountains, far from the countries Vokalia and
                                     Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right
                                     at the coast of the Semantics, a large language ocean.</p>
                                 <h4>Vision</h4>
-                                <p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large
+                                <p id="vision">Separated they live in Bookmarksgrove right at the coast of the Semantics, a large
                                     language ocean.</p>
                             </div>
                         </div>
@@ -490,7 +394,7 @@
                         </div>
                         <div>
                             <h3 class="mb-4">Address</h3>
-                            <p>198 West 21th Street, Suite 721 New York NY 10016</p>
+                            <p id="address">198 West 21th Street, Suite 721 New York NY 10016</p>
                         </div>
                     </div>
                 </div>
@@ -501,7 +405,7 @@
                         </div>
                         <div>
                             <h3 class="mb-4">Contact Number</h3>
-                            <p><a href="tel://1234567920">+ 1235 2355 98</a></p>
+                            <p id="contact">09123456789</p>
                         </div>
                     </div>
                 </div>
@@ -512,7 +416,7 @@
                         </div>
                         <div>
                             <h3 class="mb-4">Email Address</h3>
-                            <p><a href="mailto:info@yoursite.com">info@yoursite.com</a></p>
+                            <p><a href="" id="email">info@yoursite.com</a></p>
                         </div>
                     </div>
                 </div>
@@ -523,7 +427,7 @@
                         </div>
                         <div>
                             <h3 class="mb-4">Website</h3>
-                            <p><a href="#">yoursite.com</a></p>
+                            <p><a href="#" id="website">yoursite.com</a></p>
                         </div>
                     </div>
                 </div>
@@ -580,6 +484,19 @@
     <script>
 
         $(document).ready(function(){
+            $.ajax({
+                url: '/company/1',
+                type: "GET",
+                dataType: "JSON",
+                success: function (data) {
+                    $('#address').text(data.address);
+                    $('#contact').text(data.contact_number);
+                    $('#email').text(data.email);
+                    $('#mission').text(data.mission);
+                    $('#vision').text(data.vision);
+                }
+            })
+
             $.ajax({
                 url: 'https://coronavirus-19-api.herokuapp.com/countries/philippines',
                 type: "GET",

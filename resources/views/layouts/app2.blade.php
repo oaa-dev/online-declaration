@@ -132,7 +132,7 @@
 <div class="wrapper">
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  <nav class="main-header navbar navbar-expand navbar-dark navbar-navy">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -162,7 +162,7 @@
         </form>
         </div>
       </li>
-      <li class="nav-item">
+      {{-- <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>
         </a>
@@ -171,18 +171,13 @@
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
           <i class="fas fa-th-large"></i>
         </a>
-      </li>
+      </li> --}}
     </ul>
   </nav>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-      <img src="{{ asset('images/'. $company['logo'] )}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span style="display: block;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" class="brand-text font-weight-light">{{ $company['company_name'] }}</span>
-    </a>
+  <aside class="main-sidebar elevation-4 sidebar-light-navy">
 
     <!-- Sidebar -->
     <div class="sidebar">
@@ -363,11 +358,11 @@
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2020 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    {{-- <strong>Copyright &copy; 2020
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 3.1.0-pre
-    </div>
+    </div> --}}
   </footer>
 
   <!-- Control Sidebar -->

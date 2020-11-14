@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin123'),
             'status' => '1',
             'employee_id' => '1',
+            'access' => '1',
         ]);
         
         DB::table('thresholds')->insert([

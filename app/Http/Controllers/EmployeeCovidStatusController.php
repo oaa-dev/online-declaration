@@ -73,9 +73,9 @@ class EmployeeCovidStatusController extends Controller
     public function find_all_by_status(Request $request){
 
         if($request['status'] == 'POSITIVE'){
-            $results = EmployeeCovidStatus::where('status', '=', '1')->where('health_status_remarks', '=', 'POSITIVE')->get();
+            $results = EmployeeCovidStatus::where('health_status_remarks', '=', 'POSITIVE')->get();
         }else if($request['status'] == 'SUSPECTED'){
-            $results = EmployeeCovidStatus::where('status', '=', '1')->where('health_status_remarks', '=', 'SUSPECTED')->get();
+            $results = EmployeeCovidStatus::where('health_status_remarks', '=', 'SUSPECTED')->get();
         }else if($request['status'] == 'RECOVERED'){
             $results = EmployeeCovidStatus::where('final_remarks', '=', 'RECOVERED')->get();
         }else if($request['status'] == 'DECEASED'){

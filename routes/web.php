@@ -14,6 +14,7 @@
 Auth::routes();
 
 Route::get('/', function () { return view('welcome'); });
+Route::get('company/{id}', 'CompanyProfileController@show');
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
@@ -69,7 +70,9 @@ Route::group(['middleware' => ['auth', 'permission:1']], function () {
     
 });
 
-Route::group(['middleware' => ['auth', 'permission:2']], function () {
+Route::group(['middleware' => ['auth', 'permission:1,2']], function () {
+    Route::get('/employee/profile', 'EmployeeController@profile')->name('employee.profile');
+    Route::post('/employee/edit-profile', 'EmployeeController@edit_profile')->name('employee.edit_profile');
     Route::get('/monitoring/encoding', 'EmployeeMonitoringController@encoding');
     Route::get('/schedules/find-for-combobox', 'ShiftingScheduleController@findall2')->name('schedules.all');
     Route::resource('/monitoring', 'EmployeeMonitoringController',['only'=>['store']]);
