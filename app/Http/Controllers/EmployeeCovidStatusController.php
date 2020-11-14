@@ -101,15 +101,15 @@ class EmployeeCovidStatusController extends Controller
                 $nestedData['fullname'] =  strtoupper($employee->lastname .', '. $employee->firstname .' '. $employee->middlename);
                 $nestedData['status'] =  $status;
 
-                if($request['status'] == 'RECOVERED'){
+                // if($request['status'] == 'RECOVERED'){
                     $result = EmployeeCovidStatus::where('user_id', '=', $result->user_id)->where('status', '=', '1')->count();
 
                     if(empty($result)){
                         $data[] = $nestedData;
-                    }
-                }else{
-                    $data[] = $nestedData;
-                }
+                    }   
+                // }else{
+                //     $data[] = $nestedData;
+                // }
 
             }
         }

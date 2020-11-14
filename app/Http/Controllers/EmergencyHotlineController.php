@@ -58,6 +58,14 @@ class EmergencyHotlineController extends Controller
         //
     }
 
+    public function find_all(){
+        return EmergencyHotline::where('status', '=', '1')->get();
+    }
+
+    public function list_here(){
+        return view('emergency_hotline.list');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -87,6 +95,8 @@ class EmergencyHotlineController extends Controller
                 $hotline->save();
 
                 DB::commit();
+                
+                actionLogs('emergency hotline mngt', ' create : '. $hotline->id);
 
                 return response()->json(array('success'=> true, 'messages' => 'Record Successfully saved'));
             } catch (\PDOException $e) {
@@ -148,6 +158,8 @@ class EmergencyHotlineController extends Controller
 
                 DB::commit();
 
+                actionLogs('emergency hotline mngt', ' update : '. $emergencyHotline->id);
+
                 return response()->json(array('success'=> true, 'messages' => 'Record Successfully saved'));
             } catch (\PDOException $e) {
                 DB::rollBack();
@@ -183,6 +195,8 @@ class EmergencyHotlineController extends Controller
             $result->status ='1';
         }
         $result->save();
+        
+        actionLogs('emergency hotline mngt', ' delete : '. $result->id);
 
         return response::json(array('success'=>true, 'messages'=>$message));
     }

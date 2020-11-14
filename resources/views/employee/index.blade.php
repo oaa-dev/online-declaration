@@ -7,15 +7,9 @@
         <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0">Employee Management</h1>
-            </div><!-- /.col -->
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Employee Management</li>
-                </ol>
-            </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <h1 class="m-0">Employee Management</h1>
+                </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
         </div>
@@ -542,7 +536,7 @@
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Delete it!'
+            confirmButtonText: 'Yes, Save it!'
         }).then((result) => {
             if (result.value) {
                 $.ajax({

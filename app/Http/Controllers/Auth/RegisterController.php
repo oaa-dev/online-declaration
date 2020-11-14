@@ -9,6 +9,7 @@ use App\Employee;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use DB;
 
 class RegisterController extends Controller
 {
@@ -70,21 +71,30 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        try{
+            DB::beginTransaction();
+ 
+            $employee = new Employee;
+            $employee->employee_code = strtoupper($data['employee_code']);
+            $employee->lastname = strtoupper($data['lastname']);
+            $employee->firstname = strtoupper($data['firstname']);
+            $employee->middlename = strtoupper($data['middlename']);
+            $employee->save();
 
-        $employee = new Employee;
-        $employee->employee_code = $data['employee_code'];
-        $employee->lastname = $data['lastname'];
-        $employee->firstname = $data['firstname'];
-        $employee->middlename = $data['middlename'];
-        $employee->save();
+            
+            $user = new User;
+            $user->employee_id = $employee->id;
+            $user->email = $data['email'];
+            $user->password = Hash::make($data['password']);
+            $user->contact_number = $data['contact_number'];
+            $user->status = '1';
+            $user->access = '2';
+            $user->save();
+            DB::commit();
 
-        return User::create([
-            'employee_id' => $employee->id,
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'contact_number' => $data['contact_number'],
-            'status' => '1',
-            'access' => '2',
-        ]);
+            return $user;
+        }catch(\PDOException $e){
+            DB::rollback();
+        }
     }
 }

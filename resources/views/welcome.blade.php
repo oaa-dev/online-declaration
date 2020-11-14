@@ -405,7 +405,7 @@
                         </div>
                         <div>
                             <h3 class="mb-4">Contact Number</h3>
-                            <p id="contact">09123456789</p>
+                            <p id="contact_number"><a href="tel://1234567920">+ 1235 2355 98</a></p>
                         </div>
                     </div>
                 </div>
@@ -416,7 +416,7 @@
                         </div>
                         <div>
                             <h3 class="mb-4">Email Address</h3>
-                            <p><a href="" id="email">info@yoursite.com</a></p>
+                            <p><a href="mailto:info@yoursite.com" id="email">info@yoursite.com</a></p>
                         </div>
                     </div>
                 </div>
@@ -484,6 +484,20 @@
     <script>
 
         $(document).ready(function(){
+            
+            $.ajax({
+                url: '/company/1',
+                type: "GET",
+                dataType: "JSON",
+                success: function (data) {
+                    $('#address').text(data.address);
+                    $('#contact_number').text(data.contact_number);
+                    $('#email').text(data.email);
+                    $('#mission').text(data.mission);
+                    $('#vision').text(data.vision);
+                }
+            });
+
             $.ajax({
                 url: '/company/1',
                 type: "GET",

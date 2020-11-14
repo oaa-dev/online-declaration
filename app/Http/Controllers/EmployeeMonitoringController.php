@@ -95,13 +95,13 @@ class EmployeeMonitoringController extends Controller
                 $nestedData['risk'] =  $risk;
                 $nestedData['actions'] = $buttons;
 
-                $deceased = EmployeeCovidStatus::where('user_id', '=', $result->user_id)->where('status', '=', '0')->where('final_remarks', '=', 'DECEASED')->first();
-                if(empty($deceased)){
+                // $deceased = EmployeeCovidStatus::where('user_id', '=', $result->user_id)->where('status', '=', '0')->where('final_remarks', '=', 'DECEASED')->first();
+                // if(empty($deceased)){
                     $recovered = EmployeeCovidStatus::where('user_id', '=', $result->user_id)->where('status', '=', '1')->count();
                     if($recovered == 0){
                         $data[] = $nestedData;
                     }
-                }
+                // }
 
             }
         }
