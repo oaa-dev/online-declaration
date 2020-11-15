@@ -332,75 +332,6 @@
                 </p>
               </a>
             </li>
-
-            
-            {{-- <li class="nav-item">
-              <a href="pages/layout/top-nav.html" class="nav-link">
-                <i class="fa fa-paperclip"></i>
-                <p>
-                  Activity Logs
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="/company/create" class="nav-link">
-                <i class="fa fa-building"></i>
-                <p>
-                  Company Profiles
-                </p>
-              </a>
-            </li> --}}
-            {{-- <li class="nav-item">
-              <a href="/schedules" class="nav-link">
-                <i class="fa fa-calendar"></i>
-                <p>
-                  Shifting Schedules
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="/threshold" class="nav-link">
-                <i class="fa fa-arrow-up"></i>
-                <p>
-                  Threshold
-                </p>
-              </a>
-            </li> --}}
-            {{-- <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fa fa-cogs"></i>
-                <p>
-                  Settings
-                  <i class="fas fa-angle-left right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="pages/layout/top-nav.html" class="nav-link">
-                    <i class="fa fa-paperclip"></i>
-                    <p>  Activity Logs</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/company/create" class="nav-link">
-                    <i class="fa fa-building"></i>
-                    <p>  Company Profiles</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/schedules" class="nav-link">
-                    <i class="fa fa-calendar"></i>
-                    <p>  Shifting Schedules</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/threshold" class="nav-link">
-                    <i class="fa fa-arrow-up"></i>
-                    <p>  Threshold</p>
-                  </a>
-                </li>
-              </ul>
-            </li> --}}
           @endif
 
           @if($access == '2')
@@ -421,23 +352,47 @@
                 </p>
               </a>
             </li>
+            @if(!empty(\App\EmployeeCovidStatus::where('user_id', '=', \Auth::user()->id)->where('status', '=', '1')->first()))
+              <li class="nav-item">
+                <a href="/covid_monitoring/create" class="nav-link">
+                  <i class="nav-icon fa fa-user-plus"></i>
+                  <p>
+                    Patient Health Monitoring
+                  </p>
+                </a>
+              </li>
+            @endif
 
             <li class="nav-item">
-              <a href="/emergency-hotline/list" class="nav-link">
-                <i class="nav-icon fa fa-phone-alt"></i>
-                <p>
-                  Daily Health Declaration
-                </p>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a href="/emergency-hotline/list" class="nav-link">
-                <i class="nav-icon fa fa-phone-alt"></i>
+              <a href="/monitoring/health-history" class="nav-link">
+                <i class="nav-icon fa fa-list"></i>
                 <p>
                   Health Status History
                 </p>
               </a>
+            </li>
+            
+            <li class="nav-header">SETTING</li>
+            
+            <li class="nav-item">
+              <a href="/employee/profile" class="nav-link">
+                <i class="nav-icon fa fa-user"></i>
+                <p>
+                  My Profile
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              <form method="POST" id="myform" action="{{ route('logout') }}">
+                @csrf
+                  <a href="#" onclick="document.getElementById('myform').submit()" class="nav-link">
+                    <i class="nav-icon fa fa-cogs"></i>
+                    <p>
+                      Logout
+                    </p>
+                  </a>
+              </form>
             </li>
           @endif
         </ul>

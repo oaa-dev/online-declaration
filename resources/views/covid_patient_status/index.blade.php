@@ -84,6 +84,53 @@
     </div>
     <!-- /.modal -->
 
+    <div class="modal fade" id="health_monitoring_modal">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Patent Monitoring History</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                            <table id="historydatatable" class="table" role="grid" aria-describedby="example2_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th>Temperature</th>
+                                        <th>Fever</th>
+                                        <th>Cough</th>
+                                        <th>Shortness of breath</th>
+                                        <th>Sore Throat</th>
+                                        <th>Headache</th>
+                                        <th>Body Pain</th>
+                                        <th>Colds</th>
+                                        <th>Vomiting</th>
+                                        <th>Diarrhea</th>
+                                        <th>Fatigue / Chills</th>
+                                        <th>Joint Pains</th>
+                                        <th>Other Symptoms</th>
+                                        <th>Daily Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
 
 
 @endsection
@@ -184,6 +231,57 @@
             });
         }
     });
+
+    const reports = (patient_code) => {
+        $('#historydatatable').DataTable({
+            "ajax":{
+                "url": '{{ route('covid_monitoring.find-all') }}',
+                "dataType": "json",
+                "type": "POST",
+                "data":{ _token: "{{csrf_token()}}",
+                        patient_code: patient_code
+                        }
+            },
+            "columns": [
+                { "data": "temperature" },
+                { "data": "fever" },
+                { "data": "cough" },
+                { "data": "shortness_of_breathing" },
+                { "data": "sore_throat" },
+                { "data": "headache" },
+                { "data": "body_pain" },
+                { "data": "colds" },
+                { "data": "vomiting" },
+                { "data": "diarrhea" },
+                { "data": "fatigue_chill" },
+                { "data": "joint_pains" },
+                { "data": "other_symptoms" },
+                { "data": "health_condition" },
+            ],
+            "columnDefs": [
+                { "orderable": false, "targets": [ 1 ] }, 
+            ],
+            dom: 'Brtip',
+            buttons: [
+                {
+                    extend: 'print',
+                    text:'PRINT',
+                    exportOptions: {
+                    columns: [ 0, 1, 2, 3 ,4,5,6,7,8,9,10,11,12,13] //Your Column value those you want
+                }
+                },
+                    {
+                    extend: 'excel',
+                    text:'EXPORT EXCEL',
+                    exportOptions: {
+                    columns: [ 0, 1, 2, 3 ,4,5,6,7,8,9,10,11,12,13] //Your Column value those you want
+                    }
+                },
+            ],
+        });
+
+        $('#health_monitoring_modal').modal('show');
+    }
 
     const positive = (id) => {
         swal.fire({

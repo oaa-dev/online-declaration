@@ -14,13 +14,13 @@
 Auth::routes();
 
 Route::get('/', function () { return view('welcome'); });
-Route::get('company/{id}', 'CompanyProfileController@show');
+// Route::get('company/{id}', 'CompanyProfileController@show');
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 // Route::get('/company/{id}', 'CompanyProfileController@show');
 
 // Route::group(['middleware' => ['auth', 'permission:1']], function () {
-        
+    
     /* employee */
     Route::post('/employee/edit-profile', 'EmployeeController@edit_profile')->name('employee.edit_profile')->middleware('auth');
     Route::get('/employee/profile', 'EmployeeController@profile')->name('employee.profile')->middleware('auth');
@@ -57,7 +57,7 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
     Route::post('/schedules/find-all','ShiftingScheduleController@findall')->name('schedules.find-all')->middleware('auth');
     Route::resource('schedules', 'ShiftingScheduleController')->middleware('auth');
 
-
+    Route::get('/covid_patient/statistics', 'EmployeeCovidStatusController@statistics')->middleware('auth');
     Route::post('/covid_patient/find-all-by-status','EmployeeCovidStatusController@find_all_by_status')->name('covid_patient.find-all-by-status')->middleware('auth');
     Route::post('/covid_patient/find-all','EmployeeCovidStatusController@findall')->name('covid_patient.find-all')->middleware('auth');
     Route::resource('/covid_patient', 'EmployeeCovidStatusController')->middleware('auth');
@@ -69,6 +69,10 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
     Route::get('/reports/deceased', 'EmployeeCovidStatusController@deceased')->name('report.deceased')->middleware('auth');
 
     Route::resource('/threshold', 'ThresholdController')->middleware('auth');
+
+    
+    Route::post('/covid_monitoring/find-all','CovidPatientMonitoringController@findall')->name('covid_monitoring.find-all')->middleware('auth');
+    Route::resource('/covid_monitoring', 'CovidPatientMonitoringController')->middleware('auth');
     
 // })
 

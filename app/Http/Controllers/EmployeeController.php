@@ -209,13 +209,13 @@ class EmployeeController extends Controller
             
                         $employee = new Employee;
                         $employee->employee_code = strtoupper($request['employee_code']); 
-                        $employee->lastname = $request['lastname'];
-                        $employee->firstname = $request['firstname'];
-                        $employee->middlename = $request['middlename'];
-                        $employee->suffix = $request['suffix'];
+                        $employee->lastname = strtoupper($request['lastname']);
+                        $employee->firstname = strtoupper($request['firstname']);
+                        $employee->middlename = strtoupper($request['middlename']);
+                        $employee->suffix = strtoupper($request['suffix']);
                         $employee->date_of_birth = $request['dateofbirth'];
                         $employee->gender = $request['gender'];
-                        $employee->address = $request['address'];
+                        $employee->address = strtoupper($request['address']);
                         $employee->civil_status = $request['civil_status'];
                         $employee->status = 1;
                         $employee->save();
@@ -289,13 +289,13 @@ class EmployeeController extends Controller
 
                 $employee = Employee::findOrFail($id);
                 $employee->employee_code = strtoupper($request['edit_employee_code']); 
-                $employee->lastname = $request['edit_lastname'];
-                $employee->firstname = $request['edit_firstname'];
-                $employee->middlename = $request['edit_middlename'];
-                $employee->suffix = $request['edit_suffix'];
+                $employee->lastname = strtoupper($request['edit_lastname']);
+                $employee->firstname = strtoupper($request['edit_firstname']);
+                $employee->middlename = strtoupper($request['edit_middlename']);
+                $employee->suffix = strtoupper($request['edit_suffix']);
                 $employee->date_of_birth = $request['edit_dateofbirth'];
                 $employee->gender = $request['edit_gender'];
-                $employee->address = $request['edit_address'];
+                $employee->address = strtoupper($request['edit_address']);
                 $employee->civil_status = $request['edit_civil_status'];
                 $employee->save();
 

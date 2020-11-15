@@ -71,7 +71,7 @@
                             <input type="hidden" id="type" name="type">
                             <input type="date" class="form-control" id="date_confirmed" name="date_confirmed">
                         </div>
-                        <div>
+                        <div id="suspected_list">
                             <a class="btn btn-primary btn-sm float-right" id="btn_suspected">Add new Suspected</a>
                             <label> Suspected Person </label>
                             <table class="table" id="tbl_suspected">
@@ -304,6 +304,7 @@
                     success:function(success){
                         if(success.success){
                             $('#user_id').val(id);
+                            $('#suspected_list').hide();
                             $('#type').val('SUSPECTED');
                             $('#active_modal').modal('show');
                         }else{

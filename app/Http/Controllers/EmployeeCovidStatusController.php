@@ -21,6 +21,25 @@ class EmployeeCovidStatusController extends Controller
         return view('covid_patient_status.index');
     }
 
+    public function statistics(){
+        
+        $suspected = EmployeeCovidStatus::where('health_status_remarks', '=', 'SUSPECTED')->where('status', '=', '1')->count();
+        $recovered = EmployeeCovidStatus::where('final_remarks', '=', 'RECOVERED')->count();
+        $positive = EmployeeCovidStatus::where('health_status_remarks', '=', 'POSITIVE')->where('status', '=', '1')->count();
+        $deceased = EmployeeCovidStatus::where('final_remarks', '=', 'DECEASED')->count();
+        $active = EmployeeCovidStatus::where('status', '=', '1')->count();
+        
+
+        return [
+            'suspected' => $suspected,
+            'recovered' => $recovered,
+            'positive' => $positive,
+            'deceased' => $deceased,
+            'active' => $active,
+        ];
+    
+    }
+
     public function positive(){
         return view('reports.positive');
     }
@@ -54,6 +73,8 @@ class EmployeeCovidStatusController extends Controller
                 }else{
                     $buttons = '<button onclick="get_better('. $result->id .')" class= "btn btn-info btn-sm"><i class="fa fa-user-plus"></i> GET BETTER </button> <button onclick="positive('. $result->id .')" class= "btn btn-sm btn-danger"><i class="fa fa-user-plus"></i> POSITIVE</button>';
                 }
+
+                $buttons .= '  <button onclick="reports(\''. $result->patient_code .'\')" class= "btn btn-info btn-sm"><i class="fa fa-list"></i> DAILY REPORTS</button>';
 
                 $status = ($result->health_status_remarks == 'POSITIVE')?'<span class="badge bg-danger">POSITIVE</span>':'<span class="badge bg-warning">SUSPECTED</span>';
                 

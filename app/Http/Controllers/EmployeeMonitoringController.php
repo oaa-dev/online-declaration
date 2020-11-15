@@ -110,12 +110,22 @@ class EmployeeMonitoringController extends Controller
     
     public function encoding()
     {
-        return view('health_encoding.index');
+        // $active = EmployeeCovidStatus::where('user_id', '=', \Auth::user()->id)->where('status', '=', '1')->first();
+        // if(!empty($active)){
+        //     return view('layouts.error', ['messages' => 'YOU BEEN MARK AS '.$active['health_status_remarks'], 'description' => 'Please update your daily health status on Patient Health Monitoring in your Navigation. And wait for the futher announcement of the Health Officials. Thank you' ]);
+        // }else{
+            return view('health_encoding.index');
+        // }
     }
 
     public function findall(request $request)
     {
-        $results = EmployeeMonitoring::all();
+
+        if(\Auth::user()->access == '1'){
+            $results = EmployeeMonitoring::all();
+        }else{
+            $results = EmployeeMonitoring::where('user_id', '=', \Auth::user()->id)->get();
+        }
 
         $data = array();
         if(!empty($results))
@@ -174,7 +184,7 @@ class EmployeeMonitoringController extends Controller
             'person_monitor' => 'required',
             'living_frontliners' => 'required',
             'relative_overseas' => 'required',
-            'temperature' => 'required',
+            // 'temperature' => 'required',
             'shifting_list' => 'required',
         ];
         if(\Auth::user()->access == '1'){
@@ -191,7 +201,7 @@ class EmployeeMonitoringController extends Controller
             $monitoring = new EmployeeMonitoring;
             $monitoring->user_id = (\Auth::user()->access == '1')? $request['user_id']:\Auth::user()->id;
             $monitoring->shifting_schedule_id = $request['shifting_list'];
-            $monitoring->temperature = $request['temperature'];
+            $monitoring->temperature = !empty($request['temperature'])? $request['temperature']: 'NONE';
             $monitoring->fever = $request['fever'];
             $monitoring->cough = $request['cough'];
             $monitoring->shortness_of_breathing = $request['breath'];

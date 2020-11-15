@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0"> Daily Health Monitoring Form</h1>
+                    <h3 class="m-0"> Patient Health Monitoring Form</h3>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -37,32 +37,8 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                            <label for="">Temperature</label>
-                                            <input type="number" class="form-control" name="temperature" id="temperature" placeholder="Degrees Celsius">
-                                            </div>
-                                        </div>
-                                        @if(\Auth::user()->access == '1')
-                                        <div class="col-md-5">
-                                            
-                                            <label for="">Employee Name</label>
-                                            <div class="input-group mb-3">
-                                                <!-- /btn-group -->
-                                                
-                                                <input type="hidden" id="user_id" name="user_id">
-                                                <input type="text" class="form-control" id="employee_name" placeholder="Employee Name" disabled name="employee_name">
-                                                
-                                                <div class="input-group-prepend">
-                                                    <a data-toggle="modal" data-target="#employee_modal" class="btn btn-primary">SEARCH</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @endif
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="">Shifting Schedule</label>
-                                                <select class="form-control" name="shifting_list" id="shifting_list">
-                                                    <option disabled value="" selected>Select Schedule</option>
-                                                </select>
+                                                <label for="">Temperature</label>
+                                                <input type="number" class="form-control" name="temperature" id="temperature" placeholder="Degrees Celsius">
                                             </div>
                                         </div>
                                     </div>
@@ -119,60 +95,102 @@
                                             <td><input type="radio" name="body_pain" value="YES"></td>
                                             <td><input type="radio" name="body_pain" value="NO"></td>
                                         </tr>
+                                        
+                                        <tr>
+                                            <td>Colds</td>
+                                            <td><input type="radio" name="colds" value="YES"></td>
+                                            <td><input type="radio" name="colds" value="NO"></td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td>Vomiting</td>
+                                            <td><input type="radio" name="vomiting" value="YES"></td>
+                                            <td><input type="radio" name="vomiting" value="NO"></td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td>Diarrhea</td>
+                                            <td><input type="radio" name="diarrhea" value="YES"></td>
+                                            <td><input type="radio" name="diarrhea" value="NO"></td>
+                                        </tr>
+
+                                        
+                                        <tr>
+                                            <td>Fatigue/Chill</td>
+                                            <td><input type="radio" name="fatigue" value="YES"></td>
+                                            <td><input type="radio" name="fatigue" value="NO"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Joints Pain</td>
+                                            <td><input type="radio" name="joint_pains" value="YES"></td>
+                                            <td><input type="radio" name="joint_pains" value="NO"></td>
+                                        </tr>
                                     </table>
                                 </div>
                                 <!-- /.card-body -->
                             </div>
-
                             
                             <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">
-                                        Have you had close contact with the person below?
-                                    </h3>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                            <label for="">Other Symptoms</label>
+                                            <textarea rows="3" name="other_symptoms" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                            <label for="">Health Condition</label>
+                                            <select class="form-control" name="condition">
+                                                <option value="MONITORING">ON GOING</option>
+                                                @if($health_status == 'POSITIVE')
+                                                    <option value="RECOVERED">RECOVERED</option>
+                                                @else
+                                                    <option value="GET BETTER">GET BETTER</option>
+                                                    <option value="POSITIVE">POSITIVE</option>
+                                                @endif
+                                                <option value="DECEASED">DECEASED</option>
+                                            </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                            <label for="">Date Confirmed</label>
+                                            <input type="date" class="form-control" name="date_confirmed">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- /.card-header -->
-                                <div class="card-body">
-                                    <table class="table table-bordered">
-                                        <tr>
-                                            <th>Person List</th>
-                                            <th>Yes</th>
-                                            <th>No</th>
-                                        </tr>
-                                        <tr>
-                                            <td>Relative/Hosehold member with positive symptoms?</td>
-                                            <td><input type="radio" name="household_with_symptoms" value="YES"></td>
-                                            <td><input type="radio" name="household_with_symptoms" value="NO"></td>
-                                        </tr>
-                                        
-                                        <tr>
-                                            <td>Person diagnosed with corona virus disease?</td>
-                                            <td><input type="radio" name="person_with_disease" value="YES"></td>
-                                            <td><input type="radio" name="person_with_disease" value="NO"></td>
-                                        </tr>
-                                        
-                                        <tr>
-                                            <td>Person Under Monitoring/Investigation?</td>
-                                            <td><input type="radio" name="person_monitor" value="YES"></td>
-                                            <td><input type="radio" name="person_monitor" value="NO"></td>
-                                        </tr>
-                                        
-                                        <tr>
-                                            <td>Living with frontliners?</td>
-                                            <td><input type="radio" name="living_frontliners" value="YES"></td>
-                                            <td><input type="radio" name="living_frontliners" value="NO"></td>
-                                        </tr>
-                                        
-                                        <tr>
-                                            <td>Relative who just arrived from Overseas?</td>
-                                            <td><input type="radio" name="relative_overseas" value="YES"></td>
-                                            <td><input type="radio" name="relative_overseas" value="NO"></td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <!-- /.card-body -->
                             </div>
 
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                            <label for="">Name of Informant</label>
+                                            <input type="text" class="form-control" name="informant" id="informant" placeholder="Name of Informant">
+                                             </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                            <label for="">Relationship</label>
+                                            <input type="text" class="form-control" name="relationship" id="relationship" placeholder="Relationship">
+                                             </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                            <label for="">Contact Number</label>
+                                            <input type="text" class="form-control" name="contact" id="contact">
+                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-header -->
+                            </div>
                             
                             <div class="callout callout-info">
                                 <h5></h5>
@@ -201,36 +219,6 @@
       <!-- /.content -->
     </div>
 
-    
-    <div class="modal fade" id="employee_modal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Select Employee</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-                <div class="modal-body">        
-                    <table id="datatable" class="table" style="width: 100%" role="grid" aria-describedby="example2_info">
-                        <thead>
-                            <tr role="row">
-                                <th>Employee Code</th>
-                                <th>Fullname</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-
 @endsection
 
 
@@ -239,40 +227,6 @@
     let datatable = [];
     let Toast = '';
     $(document).ready(function(){
-        $.ajax({
-            url:'{{ route('schedules.all') }}',
-            type:'GET',
-            dataType:'JSON',
-            success:function(response){
-                response.forEach(data => {
-                    $('#shifting_list').append(`<option value="${data.id}">${data.description} (${data.in}-${data.out})</option>`)
-                });
-            }
-        })
-
-
-        @if(\Auth::user()->access == '1')
-        datatable = $('#datatable').DataTable({
-            "ajax":{
-                "url": '{{ route('employee.find-all') }}',
-                "dataType": "json",
-                "type": "POST",
-                "data":{ 
-                    _token: "{{csrf_token()}}",
-                    module:'modal'
-                }
-            },
-            "columns": [
-                { "data": "employee_code" },
-                { "data": "fullname" },
-                { "data": "status" },
-                { "data": "actions" },
-            ],
-            "columnDefs": [
-                { "orderable": false, "targets": [ 1 ] }, 
-            ]	 	 
-        });
-        @endif
     });
 
     $('#i_agree').change(function() {
@@ -283,32 +237,21 @@
         }
     });
 
-
-    @if(\Auth::user()->access == '1')
-    const select = (id, name) => {
-        $('#user_id').val(id);
-        $('#employee_name').val(name);
-        
-        $("#employee_modal").removeClass("in");
-        $(".modal-backdrop").remove();
-        $("#employee_modal").modal("hide");
-    }
-    @endif
     $("#create_form").validate({
         rules: {
-            employee_name: {
+            condition: {
                 required: true
             },
-            // temperature: {
-            //     required: true
-            // },
-            shifting_list: {
+            date_confirmed: {
                 required: true
             },
-            shifting_list: {
+            informant: {
                 required: true
             },
-            i_agree: {
+            relationship: {
+                required: true
+            },
+            contact: {
                 required: true
             },
         },
@@ -324,7 +267,7 @@
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
-                        url: '{{ route('monitoring.store') }}',
+                        url: '{{ route('covid_monitoring.store') }}',
                         type: "POST",
                         data: $('#create_form').serialize(),
                         dataType: "JSON",
