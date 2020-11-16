@@ -110,12 +110,16 @@ class EmployeeMonitoringController extends Controller
     
     public function encoding()
     {
-        // $active = EmployeeCovidStatus::where('user_id', '=', \Auth::user()->id)->where('status', '=', '1')->first();
-        // if(!empty($active)){
-        //     return view('layouts.error', ['messages' => 'YOU BEEN MARK AS '.$active['health_status_remarks'], 'description' => 'Please update your daily health status on Patient Health Monitoring in your Navigation. And wait for the futher announcement of the Health Officials. Thank you' ]);
-        // }else{
+        if(\Auth::user()->access != '1'){
+            $active = EmployeeCovidStatus::where('user_id', '=', \Auth::user()->id)->where('status', '=', '1')->first();
+            if(!empty($active)){
+                return view('layouts.error', ['messages' => 'YOU BEEN MARK AS '.$active['health_status_remarks'], 'description' => 'Please update your daily health status on Patient Health Monitoring in your Navigation. And wait for the futher announcement of the Health Officials. Thank you' ]);
+            }else{
+                return view('health_encoding.index');
+            }
+        }else{
             return view('health_encoding.index');
-        // }
+        }
     }
 
     public function findall(request $request)
