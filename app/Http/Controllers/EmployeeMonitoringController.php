@@ -45,6 +45,62 @@ class EmployeeMonitoringController extends Controller
         return view('health_monitoring.employee_health_status');
     }
 
+    public function getAllHighRisk(Request $request)
+    {
+        $results = User::join('employees', 'employees.id', 'users.id')->select('users.id as user_id', 'employees.id as employee_id', 'users.*', 'employees.*')
+                ->where('users.status', '=', '1')->get();
+
+        $data = array();
+        if(!empty($results))
+        {
+            foreach ($results as $result)
+            {
+                $ctr = 0;
+
+                $max_identifier = DB::table('employee_monitorings')->where('user_id', '=', $result->user_id)->max('identifier');
+                $latest_health = DB::table('employee_monitorings')->where('identifier', '=', $max_identifier)->where('user_id', '=', $result->user_id)->orderBy('created_at', 'DESC')->first();
+                
+                if(!empty($latest_health)){
+                    ($latest_health->fever == 'YES')? $ctr++ : false;
+                    ($latest_health->cough == 'YES')? $ctr++ : false;
+                    ($latest_health->shortness_of_breathing == 'YES')? $ctr++ : false;
+                    ($latest_health->sore_throat == 'YES')? $ctr++ : false;
+                    ($latest_health->headache == 'YES')? $ctr++ : false;
+                    ($latest_health->body_pain == 'YES')? $ctr++ : false;
+                    ($latest_health->household_member_positive == 'YES')? $ctr++ : false;
+                    ($latest_health->person_diagnosed_positive == 'YES')? $ctr++ : false;
+                    ($latest_health->person_monitor == 'YES')? $ctr++ : false;
+                    ($latest_health->living_with_frontliners == 'YES')? $ctr++ : false;
+                    ($latest_health->relative_arrived_overseas == 'YES')? $ctr++ : false;
+
+                    $threshold = Threshold::findOrFail('1')['level'];
+
+                    if($ctr >= $threshold){
+                        $nestedData['fullname'] =  strtoupper($result->lastname .', '. $result->firstname .' '. $result->middlename);
+                        $nestedData['risk'] =  'HIGH RISK';
+                        $nestedData['date'] =  explode(' ', $result['created_at'])[0];
+                        $data[] = $nestedData;
+                    }
+                }
+
+                // $nestedData['id'] = $result->id;
+                // $nestedData['employee_code'] =  $result->employee_code ;
+                // $nestedData['contact'] =  $result->contact_number;
+
+                
+                // $nestedData['actions'] = $buttons;
+
+                //  $recovered = EmployeeCovidStatus::where('user_id', '=', $result->user_id)->where('status', '=', '1')->count();
+                // if($recovered == 0){
+                //     $data[] = $nestedData;
+                // }
+                
+            }
+        }
+
+        return $data;
+    }
+
     public function employee_health_condition(Request $request)
     {
         $results = User::join('employees', 'employees.id', 'users.id')->select('users.id as user_id', 'employees.id as employee_id', 'users.*', 'employees.*')

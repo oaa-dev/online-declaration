@@ -36,7 +36,8 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
     Route::resource('emergency-hotline', 'EmergencyHotlineController')->middleware('auth');
 
     /* daily health monitoring */
-
+    
+    Route::get('/monitoring/getAllHighRisk', 'EmployeeMonitoringController@getAllHighRisk')->name('monitoring.getAllHighRisk')->middleware('auth');
     Route::get('/monitoring/health-history', 'EmployeeMonitoringController@health_history')->name('monitoring.health_history')->middleware('auth');
     Route::post('/monitoring/store-active', 'EmployeeMonitoringController@employeeActiveCase')->name('monitoring.store_active')->middleware('auth');
     Route::post('/monitoring/check-password', 'EmployeeMonitoringController@verifyPassword')->name('monitoring.verify-password')->middleware('auth');

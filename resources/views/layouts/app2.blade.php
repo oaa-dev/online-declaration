@@ -142,6 +142,15 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" id="number" aria-expanded="true">
+          <i class="far fa-comments"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;" id="notifications">       
+          <a href="/monitoring/health-status" class="dropdown-item dropdown-footer">See All</a>
+        </div>
+      </li>
+
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
@@ -495,6 +504,44 @@
       });  
     }, 1000);
   });
+
+  const notification = () => {
+    $.ajax({
+      url:'/monitoring/getAllHighRisk',
+      type:'GET',
+      success:function(response){
+        console.log(response.length);
+
+        response.forEach(data => {
+          
+          $('#number').append(`<span class="badge badge-danger navbar-badge">${response.length}</span>`);
+          $('#notifications').empty();
+          $('#notifications').append(` <a href="/monitoring/health-status" class="dropdown-item">
+              <!-- Message Start -->
+              <div class="media">
+                <img src="{{ asset('adminlte/dist/img/user3-128x128.jpg')}}" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                <div class="media-body">
+                  <h3 class="dropdown-item-title">
+                    ${data.fullname}
+                    <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+                  </h3>
+                  <p class="text-sm">This Employee is High Risk!</p>
+                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> ${data.date}</p>
+                </div>
+              </div>
+              <!-- Message End -->
+            </a>
+          <div class="dropdown-divider"></div>`)
+        });
+
+        $('#notifications').append(`<a href="/monitoring/health-status" class="dropdown-item dropdown-footer">See All</a>`);
+      }
+    })
+  }
+
+  setInterval(() => {
+    notification();
+  }, 10000);
 </script>
 </body>
 </html>

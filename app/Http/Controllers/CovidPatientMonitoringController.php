@@ -66,6 +66,7 @@ class CovidPatientMonitoringController extends Controller
                 $nestedData['joint_pains'] =  ($result->joint_pains == 'YES')?'<label class="label label-danger">YES</label>':'<label class="label label-primary">NO</label>';
                 $nestedData['other_symptoms'] =  $result->other_symptoms;
                 $nestedData['health_condition'] =  $result->health_condition;
+                $nestedData['date'] = explode(' ', $result->created_at)[0];
                 $data[] = $nestedData;
 
             }

@@ -99,6 +99,7 @@
                             <table id="historydatatable" class="table" role="grid" aria-describedby="example2_info">
                                 <thead>
                                     <tr role="row">
+                                        <th>Date</th>
                                         <th>Temperature</th>
                                         <th>Fever</th>
                                         <th>Cough</th>
@@ -233,6 +234,7 @@
     });
 
     const reports = (patient_code) => {
+        $('#historydatatable').DataTable().clear().destroy();
         $('#historydatatable').DataTable({
             "ajax":{
                 "url": '{{ route('covid_monitoring.find-all') }}',
@@ -243,6 +245,7 @@
                         }
             },
             "columns": [
+                { "data": "date" },
                 { "data": "temperature" },
                 { "data": "fever" },
                 { "data": "cough" },
