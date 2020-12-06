@@ -539,9 +539,9 @@
     })
   }
 
-  setInterval(() => {
-    notification();
-  }, 10000);
+  // setInterval(() => {
+  //   notification();
+  // }, 10000);
 </script>
 </body>
 </html>
