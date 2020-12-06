@@ -118,7 +118,7 @@ class CovidPatientMonitoringController extends Controller
                 $monitoring = new CovidPatientMonitoring;
                 $monitoring->user_id = \Auth::user()->id;
                 $monitoring->patient_code = EmployeeCovidStatus::where('user_id', '=', \Auth::user()->id)->where('status', '=', '1')->first()['patient_code'];
-                $monitoring->temperature = $request['temperature'];
+                $monitoring->temperature = !empty($request['temperature'])? $request['temperature']: 'NONE';
                 $monitoring->fever = $request['fever'];
                 $monitoring->cough = $request['cough'];
                 $monitoring->shortness_of_breathing = $request['breath'];
