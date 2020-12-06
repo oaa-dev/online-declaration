@@ -36,8 +36,8 @@ class ShiftingScheduleController extends Controller
 
                 $nestedData['id'] = $result->id;
                 $nestedData['description'] =  $result->description;
-                $nestedData['time_in'] =  date('h:i:s a', strtotime($result->out));
-                $nestedData['time_out'] =  date('h:i:s a', strtotime($result->in));
+                $nestedData['time_in'] =  strtoupper(date('h:i:s a', strtotime($result->in)));
+                $nestedData['time_out'] =  strtoupper(date('h:i:s a', strtotime($result->out)));
                 $nestedData['status'] =  $status;
                 $nestedData['actions'] = $buttons;
                 $data[] = $nestedData;

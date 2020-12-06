@@ -498,18 +498,6 @@
                 }
             });
 
-            $.ajax({
-                url: '/company/1',
-                type: "GET",
-                dataType: "JSON",
-                success: function (data) {
-                    $('#address').text(data.address);
-                    $('#contact').text(data.contact_number);
-                    $('#email').text(data.email);
-                    $('#mission').text(data.mission);
-                    $('#vision').text(data.vision);
-                }
-            })
 
             $.ajax({
                 url: 'https://coronavirus-19-api.herokuapp.com/countries/philippines',
