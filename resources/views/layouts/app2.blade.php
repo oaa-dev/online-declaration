@@ -366,7 +366,7 @@
                 <a href="/covid_monitoring/create" class="nav-link">
                   <i class="nav-icon fa fa-user-plus"></i>
                   <p>
-                    Patient Health Monitoring
+                    Patient Health Montrg
                   </p>
                 </a>
               </li>
