@@ -78,7 +78,7 @@ class EmployeeMonitoringController extends Controller
                     if($ctr >= $threshold){
                         $nestedData['fullname'] =  strtoupper($result->lastname .', '. $result->firstname .' '. $result->middlename);
                         $nestedData['risk'] =  'HIGH RISK';
-                        $nestedData['date'] =  explode(' ', $latest_health['created_at'])[0];
+                        $nestedData['date'] =  explode(' ', $latest_health->created_at)[0];
                         $data[] = $nestedData;
                     }
                 }
