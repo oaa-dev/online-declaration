@@ -514,11 +514,12 @@
       type:'GET',
       success:function(response){
         console.log(response);
+        
+        $('#number').append(`<span class="badge badge-danger navbar-badge">${response.length}</span>`);
+        $('#notifications').empty();
 
         response.forEach(data => {
           
-          $('#number').append(`<span class="badge badge-danger navbar-badge">${response.length}</span>`);
-          $('#notifications').empty();
           $('#notifications').append(` <a href="/monitoring/health-status" class="dropdown-item">
               <!-- Message Start -->
               <div class="media">
