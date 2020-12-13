@@ -499,7 +499,7 @@
 <script type="text/javascript">
   $(window).on('load', function(){
     
-    notification();
+    // notification();
 
     setTimeout(function(){
       $( "#fakeloader-overlay" ).fadeOut(300, function() {
@@ -543,9 +543,9 @@
     })
   }
 
-  // setInterval(() => {
-    // notification();
-  // }, 10000);
+  setInterval(() => {
+    notification();
+  }, 10000);
 </script>
 </body>
 </html>
