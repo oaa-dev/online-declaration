@@ -529,7 +529,7 @@
                     ${data.fullname}
                     <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
                   </h3>
-                  <p class="text-sm">This Employee is High Risk!</p>
+                  <p class="text-sm">This Employee is ${data.risk}!</p>
                   <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> ${data.date}</p>
                 </div>
               </div>
