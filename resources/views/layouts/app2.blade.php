@@ -513,7 +513,7 @@
       url:'/monitoring/getAllHighRisk',
       type:'GET',
       success:function(response){
-        console.log(response.length);
+        console.log(response);
 
         response.forEach(data => {
           
