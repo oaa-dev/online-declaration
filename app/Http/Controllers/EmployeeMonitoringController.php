@@ -87,7 +87,12 @@ class EmployeeMonitoringController extends Controller
 
                 if(!empty($latest_condition)){
                     $nestedData['fullname'] =  strtoupper($result->lastname .', '. $result->firstname .' '. $result->middlename);
-                    $nestedData['risk'] =  $latest_condition->final_remarks;
+                    
+                    if($latest_condition->final_remarks == 'MONITORING'){
+                        $nestedData['risk'] =  $latest_condition->health_status_remarks;
+                    }else{
+                        $nestedData['risk'] =  $latest_condition->final_remarks;
+                    }
                     $nestedData['date'] =  explode(' ', $latest_condition->updated_at)[0];
                     $data[] = $nestedData;        
                 }        
