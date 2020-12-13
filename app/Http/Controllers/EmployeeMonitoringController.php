@@ -83,17 +83,15 @@ class EmployeeMonitoringController extends Controller
                     }
                 }
 
-                // $nestedData['id'] = $result->id;
-                // $nestedData['employee_code'] =  $result->employee_code ;
-                // $nestedData['contact'] =  $result->contact_number;
+                $latest_condition = DB::table('employee_covid_statuses')->where('user_id', '=', $result->user_id)->whereDate('updated_at', DB::raw('CURDATE()'))->first();
 
-                
-                // $nestedData['actions'] = $buttons;
+                $nestedData['fullname'] =  strtoupper($result->lastname .', '. $result->firstname .' '. $result->middlename);
+                $nestedData['risk'] =  $latest_condition->final_remarks;
+                $nestedData['date'] =  explode(' ', $latest_condition->updated_at)[0];
+                $data[] = $nestedData;                
 
-                //  $recovered = EmployeeCovidStatus::where('user_id', '=', $result->user_id)->where('status', '=', '1')->count();
-                // if($recovered == 0){
-                //     $data[] = $nestedData;
-                // }
+
+
                 
             }
         }
