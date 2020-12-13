@@ -144,7 +144,7 @@
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" id="number" aria-expanded="true">
-          <i class="far fa-comments"></i>
+          <i class="fa fa-bell-o"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;" id="notifications">       
           <a href="/monitoring/health-status" class="dropdown-item dropdown-footer">See All</a>
@@ -498,6 +498,9 @@
 
 <script type="text/javascript">
   $(window).on('load', function(){
+    
+    notification();
+
     setTimeout(function(){
       $( "#fakeloader-overlay" ).fadeOut(300, function() {
         $( "#fakeloader-overlay" ).remove();  
@@ -540,7 +543,7 @@
   }
 
   // setInterval(() => {
-  //   notification();
+    // notification();
   // }, 10000);
 </script>
 </body>

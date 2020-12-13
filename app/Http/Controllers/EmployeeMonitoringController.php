@@ -58,6 +58,7 @@ class EmployeeMonitoringController extends Controller
                 $ctr = 0;
 
                 $max_identifier = DB::table('employee_monitorings')->where('user_id', '=', $result->user_id)->max('identifier');
+                dd($max_identifier);
                 $latest_health = DB::table('employee_monitorings')->where('identifier', '=', $max_identifier)->where('user_id', '=', $result->user_id)->orderBy('created_at', 'DESC')->first();
                 
                 if(!empty($latest_health)){
