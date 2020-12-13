@@ -85,10 +85,12 @@ class EmployeeMonitoringController extends Controller
 
                 $latest_condition = DB::table('employee_covid_statuses')->where('user_id', '=', $result->user_id)->whereDate('updated_at', DB::raw('CURDATE()'))->first();
 
-                $nestedData['fullname'] =  strtoupper($result->lastname .', '. $result->firstname .' '. $result->middlename);
-                $nestedData['risk'] =  $latest_condition->final_remarks;
-                $nestedData['date'] =  explode(' ', $latest_condition->updated_at)[0];
-                $data[] = $nestedData;                
+                if(!empty($latest_condition)){
+                    $nestedData['fullname'] =  strtoupper($result->lastname .', '. $result->firstname .' '. $result->middlename);
+                    $nestedData['risk'] =  $latest_condition->final_remarks;
+                    $nestedData['date'] =  explode(' ', $latest_condition->updated_at)[0];
+                    $data[] = $nestedData;        
+                }        
 
 
 
