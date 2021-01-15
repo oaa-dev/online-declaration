@@ -305,6 +305,22 @@
                 </li>
               </ul>
             </li>
+            
+            <li class="nav-header"><hr></li>
+            
+            <li class="nav-item">
+              <a href="/monitoring/health-history" class="nav-link">
+                <i class="nav-icon fa fa-list"></i>
+                <p>Annual Medical Report</p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              <a href="/monitoring/health-history" class="nav-link">
+                <i class="nav-icon fa fa-list"></i>
+                <p>Employee Medical History</p>
+              </a>
+            </li>
 
             <li class="nav-header">SETTING</li>
             
@@ -338,6 +354,14 @@
                 <i class="nav-icon fa fa-arrow-up"></i>
                 <p>
                   Questions Threshold
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/threshold" class="nav-link">
+                <i class="nav-icon fa fa-lock"></i>
+                <p>
+                  Access Management
                 </p>
               </a>
             </li>

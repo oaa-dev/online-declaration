@@ -84,3 +84,6 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
     // Route::get('/schedules/find-for-combobox', 'ShiftingScheduleController@findall2')->name('schedules.all');
     // Route::resource('/monitoring', 'EmployeeMonitoringController',['only'=>['store']]);
 // });
+
+Route::post('/annual-medical-reports/find-all','AnnualMedicalReportController@findall')->name('annual-medical-reports.find-all')->middleware('auth');
+Route::resource('/annual-medical-reports', 'AnnualMedicalReportController');
