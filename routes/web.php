@@ -37,6 +37,7 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
     /* daily health monitoring */
     
+    Route::get('/monitoring/show_monitoring_by_emp_code/{emp_code}', 'EmployeeMonitoringController@show_monitoring_by_emp_code')->name('monitoring.show_monitoring_by_emp_code')->middleware('auth');
     Route::get('/monitoring/getAllHighRisk', 'EmployeeMonitoringController@getAllHighRisk')->name('monitoring.getAllHighRisk')->middleware('auth');
     Route::get('/monitoring/health-history', 'EmployeeMonitoringController@health_history')->name('monitoring.health_history')->middleware('auth');
     Route::post('/monitoring/store-active', 'EmployeeMonitoringController@employeeActiveCase')->name('monitoring.store_active')->middleware('auth');
@@ -85,5 +86,9 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
     // Route::resource('/monitoring', 'EmployeeMonitoringController',['only'=>['store']]);
 // });
 
+Route::post('/annual-medical-reports/find-all-history','AnnualMedicalReportController@findHistory')->name('annual-medical-reports.find-all-history')->middleware('auth');
 Route::post('/annual-medical-reports/find-all','AnnualMedicalReportController@findall')->name('annual-medical-reports.find-all')->middleware('auth');
 Route::resource('/annual-medical-reports', 'AnnualMedicalReportController');
+
+Route::resource('/scanner', 'ScannerController');
+

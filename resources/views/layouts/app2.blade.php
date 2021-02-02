@@ -309,7 +309,7 @@
             <li class="nav-header"><hr></li>
             
             <li class="nav-item">
-              <a href="/monitoring/health-history" class="nav-link">
+              <a href="/annual-medical-reports" class="nav-link">
                 <i class="nav-icon fa fa-list"></i>
                 <p>Annual Medical Report</p>
               </a>
@@ -325,10 +325,10 @@
             <li class="nav-header">SETTING</li>
             
             <li class="nav-item">
-              <a href="/monitoring/health-history" class="nav-link">
-                <i class="nav-icon fa fa-list"></i>
+              <a href="/scanner" class="nav-link">
+                <i class="nav-icon fa fa-qrcode"></i>
                 <p>
-                  Activity Logs
+                  QR Scanner 
                 </p>
               </a>
             </li>
@@ -357,14 +357,14 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <a href="/threshold" class="nav-link">
                 <i class="nav-icon fa fa-lock"></i>
                 <p>
                   Access Management
                 </p>
               </a>
-            </li>
+            </li> --}}
           @endif
 
           @if($access == '2')
@@ -534,31 +534,49 @@
       url:'/monitoring/getAllHighRisk',
       type:'GET',
       success:function(response){
-        console.log(response.length);
 
-        response.forEach(data => {
-          
-          $('#number').append(`<span class="badge badge-danger navbar-badge">${response.length}</span>`);
+        if(response.length == 0){
           $('#notifications').empty();
+
           $('#notifications').append(` <a href="/monitoring/health-status" class="dropdown-item">
               <!-- Message Start -->
               <div class="media">
-                <img src="{{ asset('adminlte/dist/img/user3-128x128.jpg')}}" alt="User Avatar" class="img-size-50 img-circle mr-3">
                 <div class="media-body">
                   <h3 class="dropdown-item-title">
-                    ${data.fullname}
-                    <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+                    <span class="float-right text-sm text-warning"></span>
                   </h3>
-                  <p class="text-sm">This Employee is High Risk!</p>
-                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> ${data.date}</p>
                 </div>
               </div>
               <!-- Message End -->
             </a>
           <div class="dropdown-divider"></div>`)
-        });
 
         $('#notifications').append(`<a href="/monitoring/health-status" class="dropdown-item dropdown-footer">See All</a>`);
+        }else{
+          $('#number').append(`<span class="badge badge-danger navbar-badge">${response.length}</span>`);
+          $('#notifications').empty();
+
+          response.forEach(data => {
+            $('#notifications').append(` <a href="/monitoring/health-status" class="dropdown-item">
+                <!-- Message Start -->
+                <div class="media">
+                  <img src="{{ asset('adminlte/dist/img/user3-128x128.jpg')}}" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                  <div class="media-body">
+                    <h3 class="dropdown-item-title">
+                      ${data.fullname}
+                      <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+                    </h3>
+                    <p class="text-sm">This Employee is High Risk!</p>
+                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> ${data.date}</p>
+                  </div>
+                </div>
+                <!-- Message End -->
+              </a>
+            <div class="dropdown-divider"></div>`)
+          });
+
+          $('#notifications').append(`<a href="/monitoring/health-status" class="dropdown-item dropdown-footer">See All</a>`);
+        }
       }
     })
   }

@@ -16,6 +16,7 @@ use Auth;
 use App\Threshold;
 use App\CompanyProfile;
 use PDF;
+use SimpleSoftwareIO\QrCode\Generator;
 
 class EmployeeMonitoringController extends Controller
 {
@@ -58,7 +59,11 @@ class EmployeeMonitoringController extends Controller
                 $ctr = 0;
 
                 $max_identifier = DB::table('employee_monitorings')->where('user_id', '=', $result->user_id)->max('identifier');
-                $latest_health = DB::table('employee_monitorings')->where('identifier', '=', $max_identifier)->where('user_id', '=', $result->user_id)->orderBy('created_at', 'DESC')->first();
+                $latest_health = DB::table('employee_monitorings')->where('user_id', '=', $result->user_id)
+                ->whereMonth('created_at', '=', date('m'))
+                ->whereDay('created_at', '=', date('d'))
+                ->whereYear('created_at', '=', date('Y'))
+                ->first();
                 
                 if(!empty($latest_health)){
                     ($latest_health->fever == 'YES')? $ctr++ : false;
@@ -82,19 +87,6 @@ class EmployeeMonitoringController extends Controller
                         $data[] = $nestedData;
                     }
                 }
-
-                // $nestedData['id'] = $result->id;
-                // $nestedData['employee_code'] =  $result->employee_code ;
-                // $nestedData['contact'] =  $result->contact_number;
-
-                
-                // $nestedData['actions'] = $buttons;
-
-                //  $recovered = EmployeeCovidStatus::where('user_id', '=', $result->user_id)->where('status', '=', '1')->count();
-                // if($recovered == 0){
-                //     $data[] = $nestedData;
-                // }
-                
             }
         }
 
@@ -337,6 +329,35 @@ class EmployeeMonitoringController extends Controller
     public function show($id)
     {
         //
+    }
+
+    public function show_monitoring_by_emp_code($code){
+
+        if(Employee::where('employee_code', '=', $code)->first()){
+
+            $monitoring = EmployeeMonitoring::join('users as users', 'users.id', 'employee_monitorings.user_id')
+                ->join('employees as employees', 'employees.id', 'users.employee_id')
+                ->where('employees.employee_code', '=', $code)
+                ->select('employee_monitorings.*', 'employees.*', 'users.email', 'users.contact_number', 'users.access')
+                ->whereMonth('employee_monitorings.created_at', '=', date('m'))
+                ->whereDay('employee_monitorings.created_at', '=', date('d'))
+                ->whereYear('employee_monitorings.created_at', '=', date('Y'))
+                ->get();
+
+            
+            if($monitoring->count() > 0){
+                $qrcode = new Generator;
+                $monitoring = $monitoring[0];
+
+                $monitoring['qrcode'] = '<img style="width:100%; height:100%" src="data:image/svg+xml;base64,'. base64_encode($qrcode->size(50)->generate($monitoring->employee_code)) .' ">';
+        
+                return response()->json(array('success'=>true, 'messages' => $monitoring));
+            }else{
+                return response()->json(array('success'=>false, 'messages' => 'No data entry today!'));
+            }
+        }else{
+            return response()->json(array('success'=>false, 'messages' => 'User not exist!'));
+        }
     }
 
     /**
