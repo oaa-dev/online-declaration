@@ -53,7 +53,9 @@ class AnnualMedicalReportController extends Controller
                     }
                 }
 
-                $buttons = (!$flag)?'<button onclick="select('. $result->user_id .',\''. strtoupper($result->lastname .', '. $result->firstname .' '. $result->middlename) .'\',\''. $result->gender .'\')" class= "btn btn-success btn-sm"><i class="fa fa-edit"></i> SELECT</button>':'<button class= "btn btn-success btn-sm" disabled><i class="fa fa-edit"></i> SELECT</button>';
+                $buttons = (!$flag)?'<button onclick="select('. $result->user_id .',\''. strtoupper($result->lastname .', '. $result->firstname .' '. $result->middlename) .'\',\''. $result->gender .'\')" class= "btn btn-success btn-sm"><i class="fa fa-edit"></i> EXAMINE</button> ':'<button class= "btn btn-success btn-sm" disabled><i class="fa fa-edit"></i> EXAMINE</button> ';
+                
+                $buttons .= '<button onclick="select('. $result->user_id .')" class= "btn btn-info btn-sm"><i class="fa fa-edit"></i> VIEW HISTORY</button> ';
                 
                 $status = (!$flag)?'<span class="badge bg-danger">NOT EXAMINE</span>':'<span class="badge bg-primary">EXAMINE</span>';
 
@@ -124,11 +126,11 @@ class AnnualMedicalReportController extends Controller
                 $reports->dental = $request['dental'];
                 $reports->urinalysis = $request['urinalysis'];
                 $reports->sigmoidoscopy = $request['sigmoidoscopy'];
-                $reports->stool_occult_blood = $request['stool_occult_blood'];
+                $reports->stool_occult_blood = $request['stool_occult'];
                 $reports->colonoscopy = $request['colonoscopy'];
                 $reports->extremities = $request['extremities'];
                 $reports->abdomen = $request['abdomen'];
-                $reports->date = '';
+                $reports->date = date('Y');
                 $reports->remarks = '';
                 $reports->status = '1';
                 $reports->save();
