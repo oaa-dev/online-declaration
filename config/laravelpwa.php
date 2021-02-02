@@ -4,7 +4,7 @@ return [
     'name' => 'LaravelPWA',
     'manifest' => [
         'name' => env('APP_NAME', 'Health App Declaration'),
-        'short_name' => 'Online Heath Declaration',
+        'short_name' => 'OHD',
         'start_url' => '/',
         'background_color' => '#ffffff',
         'theme_color' => '#000000',
