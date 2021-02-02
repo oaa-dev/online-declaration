@@ -318,12 +318,12 @@
             <li class="nav-item">
               <a href="/monitoring/health-history" class="nav-link">
                 <i class="nav-icon fa fa-list"></i>
-                <p>Employee Medical History</p>
+                <p>Medical History</p>
               </a>
             </li>
 
             <li class="nav-header">SETTING</li>
-{{--             
+            
             <li class="nav-item">
               <a href="/scanner" class="nav-link">
                 <i class="nav-icon fa fa-qrcode"></i>
@@ -331,7 +331,7 @@
                   QR Scanner 
                 </p>
               </a>
-            </li> --}}
+            </li>
             
             <li class="nav-item">
               <a href="/company/create" class="nav-link">
