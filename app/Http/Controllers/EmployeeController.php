@@ -11,6 +11,8 @@ use Response;
 use Hash;
 use Auth;
 use App\EmployeeCovidStatus;
+use SimpleSoftwareIO\QrCode\Generator;
+
  
 class EmployeeController extends Controller
 {
@@ -133,14 +135,14 @@ class EmployeeController extends Controller
                 }else{
                     $buttons = '<button onclick="edit('. $result->employee_id .')" class= "btn btn-success btn-sm"><i class="fa fa-edit"></i> UPDATE</button> ';
 
-                    $buttons .= ($result->status == 1)?'<button onclick="del('. $result->employee_id .')" class= "btn btn-danger btn-sm"><i class="fa fa-trash"></i> DELETE</button>':'<button onclick="del('. $result->employee_id .')" class= "btn btn-warning btn-sm"><i class="fa fa-recycle"></i> RESTORE</button>';
-
+                    $buttons .= ($result->status == 1)?'<button onclick="del('. $result->employee_id .')" class= "btn btn-danger btn-sm"><i class="fa fa-trash"></i> DELETE</button>':'<button onclick="del('. $result->employee_id .')" class= "btn btn-warning btn-sm"><i class="fa fa-recycle"></i> RESTORE</button> ';
                 }
 
                 $status = ($result->status == 1)?'<span class="badge bg-primary">ACTIVE</span>':'<span class="badge bg-danger">IN-ACTIVE</span>';
-
+                $qrcode = new Generator;
                 $nestedData['id'] = $result->employee_id;
-                $nestedData['employee_code'] =  $result->employee_code ;
+                $nestedData['qrcode'] = '<img src="data:image/svg+xml;base64,'. base64_encode($qrcode->size(50)->generate($result->employee_code)) .' ">'; 
+                $nestedData['employee_code'] =  $result->employee_code;
                 $nestedData['fullname'] =  strtoupper($result->lastname .', '. $result->firstname .' '. $result->middlename);
                 $nestedData['address'] =  strtoupper($result->address);
                 $nestedData['contact'] =  $result->contact_number;

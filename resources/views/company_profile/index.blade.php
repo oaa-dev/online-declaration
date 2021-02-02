@@ -52,7 +52,7 @@
                                     @csrf
                                     @method('POST')
                                     <div class="row">
-                                        <div class="col-4 text-center">
+                                        {{-- <div class="col-4 text-center">
                                             <div class="row col-12 text-center">
                                                 <div class="kv-avatar-hint">
                                                     <small><b>Note:</b> Select file < 1500 KB</small> 
@@ -63,8 +63,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-8">
+                                            <div class="form-group">
+                                                <label for="">Company Logo</label>
+                                                <input id="input-id" type="file" name="logo" id="logo" class="file" data-preview-file-type="text" >
+                                            </div>
                                             <div class="form-group">
                                                 <label for="">Company Name</label>
                                                 <input type="text" class="form-control" value="{{ !empty($company['company_name'])? $company['company_name'] : '' }}" name="company" id="company" placeholder="Company Name">

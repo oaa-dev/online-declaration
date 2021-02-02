@@ -35,6 +35,7 @@
                                     <table id="datatable" class="table" role="grid" aria-describedby="example2_info">
                                         <thead>
                                             <tr role="row">
+                                                <th>QRCode</th>
                                                 <th>Employee Code</th>
                                                 <th>Fullname</th>
                                                 <th>Contact</th>
@@ -338,6 +339,7 @@
                 "data":{ _token: "{{csrf_token()}}"}
             },
             "columns": [
+                { "data": "qrcode" },
                 { "data": "employee_code" },
                 { "data": "fullname" },
                 { "data": "contact" },
@@ -527,6 +529,21 @@
             });
         }
     });
+
+    const print = (element) => {
+        alert(element);
+        var divToPrint=document.getElementById(element);
+
+        var newWin=window.open('','Print-Window');
+
+        newWin.document.open();
+
+        newWin.document.write('<html><body onload="window.print()">'+divToPrint.innerHTML+'</body></html>');
+
+        newWin.document.close();
+
+        setTimeout(function(){newWin.close();},10);
+    }
 
     const del = (id) => {
         Swal.fire({
