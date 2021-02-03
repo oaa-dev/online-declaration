@@ -195,48 +195,55 @@ class EmployeeController extends Controller
 
         if($validator->fails()){
             return response()->json(array('success'=> false, 'messages' => 'Please fill up all the required fields!'));
-        }else{
+        }else{ 
 
+
+
+            $employee_code_exist = Employee::where('employee_code', '=', strtoupper($request['employee_code']))->first();
             $email_exist = User::where('email', '=', $request['email'])->first();
             $contact_exist = User::where('contact_number', '=', $request['contact'])->first();
 
-            if($email_exist){
-                return response()->json(array('success'=> false, 'messages' => 'Email address already Exist!'));
+            if($employee_code_exist){
+                return response()->json(array('success'=> false, 'messages' => 'Employee code already Exist!'));
             }else{
-                if($contact_exist){
-                    return response()->json(array('success'=> false, 'messages' => 'Contact Number already Used!'));
+                if($email_exist){
+                    return response()->json(array('success'=> false, 'messages' => 'Email address already Exist!'));
                 }else{
-                     try {
-                        DB::beginTransaction();
-            
-                        $employee = new Employee;
-                        $employee->employee_code = strtoupper($request['employee_code']); 
-                        $employee->lastname = strtoupper($request['lastname']);
-                        $employee->firstname = strtoupper($request['firstname']);
-                        $employee->middlename = strtoupper($request['middlename']);
-                        $employee->suffix = strtoupper($request['suffix']);
-                        $employee->date_of_birth = $request['dateofbirth'];
-                        $employee->gender = $request['gender'];
-                        $employee->address = strtoupper($request['address']);
-                        $employee->civil_status = $request['civil_status'];
-                        $employee->status = 1;
-                        $employee->save();
-            
-                        $user = new User;
-                        $user->employee_id = $employee->id;
-                        $user->email = $request['email'];
-                        $user->contact_number = $request['contact'];
-                        $user->password = bcrypt('secret123');
-                        $user->access = $request['access'];
-                        $user->status = 1;
-                        $user->save();
-                        
-                        DB::commit();
+                    if($contact_exist){
+                        return response()->json(array('success'=> false, 'messages' => 'Contact Number already Used!'));
+                    }else{
+                        try {
+                            DB::beginTransaction();
+                
+                            $employee = new Employee;
+                            $employee->employee_code = strtoupper($request['employee_code']); 
+                            $employee->lastname = strtoupper($request['lastname']);
+                            $employee->firstname = strtoupper($request['firstname']);
+                            $employee->middlename = strtoupper($request['middlename']);
+                            $employee->suffix = strtoupper($request['suffix']);
+                            $employee->date_of_birth = $request['dateofbirth'];
+                            $employee->gender = $request['gender'];
+                            $employee->address = strtoupper($request['address']);
+                            $employee->civil_status = $request['civil_status'];
+                            $employee->status = 1;
+                            $employee->save();
+                
+                            $user = new User;
+                            $user->employee_id = $employee->id;
+                            $user->email = $request['email'];
+                            $user->contact_number = $request['contact'];
+                            $user->password = bcrypt('secret123');
+                            $user->access = $request['access'];
+                            $user->status = 1;
+                            $user->save();
+                            
+                            DB::commit();
 
-                        return response()->json(array('success'=> true, 'messages' => 'Record Successfully saved'));
-                    } catch (\PDOException $e) {
-                        DB::rollBack();
-                        return response()->json(array('success'=> false, 'error'=>'SQL error!', 'messages'=>'Transaction failed!'));
+                            return response()->json(array('success'=> true, 'messages' => 'Record Successfully saved'));
+                        } catch (\PDOException $e) {
+                            DB::rollBack();
+                            return response()->json(array('success'=> false, 'error'=>'SQL error!', 'messages'=>'Transaction failed!'));
+                        }
                     }
                 }
             }
@@ -286,31 +293,41 @@ class EmployeeController extends Controller
         if($validator->fails()){
             return response()->json(array('success'=> false, 'messages' => 'Please fill up all the required fields!'));
         }else{
-            try {
-                DB::beginTransaction();
+            
 
-                $employee = Employee::findOrFail($id);
-                $employee->employee_code = strtoupper($request['edit_employee_code']); 
-                $employee->lastname = strtoupper($request['edit_lastname']);
-                $employee->firstname = strtoupper($request['edit_firstname']);
-                $employee->middlename = strtoupper($request['edit_middlename']);
-                $employee->suffix = strtoupper($request['edit_suffix']);
-                $employee->date_of_birth = $request['edit_dateofbirth'];
-                $employee->gender = $request['edit_gender'];
-                $employee->address = strtoupper($request['edit_address']);
-                $employee->civil_status = $request['edit_civil_status'];
-                $employee->save();
+            $employee_code_exist = Employee::where('employee_code', '=', strtoupper($request['edit_employee_code']))->first();
+            $email_exist = User::where('email', '=', $request['email'])->first();
+            $contact_exist = User::where('contact_number', '=', $request['contact'])->first();
 
-                $user = User::where('employee_id', '=', $employee->id)->first();
-                $user->access = $request['edit_access'];
-                $user->save();
-                
-                DB::commit();
+            if($employee_code_exist){
+                return response()->json(array('success'=> false, 'messages' => 'Employee code already Exist!'));
+            }else{
+                try {
+                    DB::beginTransaction();
 
-                return response()->json(array('success'=> true, 'messages' => 'Record Successfully updated'));
-            } catch (\PDOException $e) {
-                DB::rollBack();
-                return response()->json(array('success'=> false, 'error'=>'SQL error!', 'messages'=>'Transaction failed!'));
+                    $employee = Employee::findOrFail($id);
+                    $employee->employee_code = strtoupper($request['edit_employee_code']); 
+                    $employee->lastname = strtoupper($request['edit_lastname']);
+                    $employee->firstname = strtoupper($request['edit_firstname']);
+                    $employee->middlename = strtoupper($request['edit_middlename']);
+                    $employee->suffix = strtoupper($request['edit_suffix']);
+                    $employee->date_of_birth = $request['edit_dateofbirth'];
+                    $employee->gender = $request['edit_gender'];
+                    $employee->address = strtoupper($request['edit_address']);
+                    $employee->civil_status = $request['edit_civil_status'];
+                    $employee->save();
+
+                    $user = User::where('employee_id', '=', $employee->id)->first();
+                    $user->access = $request['edit_access'];
+                    $user->save();
+                    
+                    DB::commit();
+
+                    return response()->json(array('success'=> true, 'messages' => 'Record Successfully updated'));
+                } catch (\PDOException $e) {
+                    DB::rollBack();
+                    return response()->json(array('success'=> false, 'error'=>'SQL error!', 'messages'=>'Transaction failed!'));
+                }
             }
         }
     }

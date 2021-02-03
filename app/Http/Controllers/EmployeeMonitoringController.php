@@ -79,8 +79,9 @@ class EmployeeMonitoringController extends Controller
                     ($latest_health->relative_arrived_overseas == 'YES')? $ctr++ : false;
 
                     $threshold = Threshold::findOrFail('1')['level'];
+                    $covid_monitoring = EmployeeCovidStatus::where('user_id', '=', $result->user_id)->where('status', '=', '1')->count();
 
-                    if($ctr >= $threshold){
+                    if($ctr >= $threshold && $covid_monitoring == 0 ){
                         $nestedData['fullname'] =  strtoupper($result->lastname .', '. $result->firstname .' '. $result->middlename);
                         $nestedData['risk'] =  'HIGH RISK';
                         $nestedData['date'] =  explode(' ', $latest_health->created_at)[0];

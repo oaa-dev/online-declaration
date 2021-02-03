@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\MedicalHistory;
 use Illuminate\Http\Request;
 
 class MedicalHistoryController extends Controller
@@ -13,54 +14,31 @@ class MedicalHistoryController extends Controller
      */
     public function index()
     {
-        //
+        return view('medical_history.index');
     }
 
     public function findall(request $request)
     {
-        if($request['module'] == 'modal'){
-            $results = Employee::join('users', 'users.employee_id', 'employees.id')
-                ->select('employees.id as employee_id','users.id as user_id', 'employees.*','users.*')
-                ->where('users.status', '=', '1')
-                ->get();
-        }else{
-            $results = Employee::join('users', 'users.employee_id', 'employees.id')
-                ->select('employees.id as employee_id','users.id as user_id', 'employees.*','users.*')
-                ->get();
-        }
 
+        $results = MedicalHistory::join('users', 'users.id', 'medical_histories.user_id')
+            ->join('employees', 'employees.id', 'users.employee_id')
+            ->select('employees.id as employee_id', 'employees.*', 'medical_histories.*','medical_histories.id as medical_id',)
+            ->get();
+    
         $data = array();
         if(!empty($results))
         {
             foreach ($results as $result)
             {
-                if($request['module'] == 'modal'){
-                    $buttons = '<button onclick="select('. $result->user_id .',\''. strtoupper($result->lastname .', '. $result->firstname .' '. $result->middlename) .'\',\''. $result->contact_number .'\')" class= "btn btn-success btn-sm"><i class="fa fa-edit"></i> SELECT</button>';
-                }else{
-                    $buttons = '<button onclick="edit('. $result->employee_id .')" class= "btn btn-success btn-sm"><i class="fa fa-edit"></i> UPDATE</button> ';
+                $buttons = '<button onclick="edit('. $result->employee_id .')" class= "btn btn-success btn-sm"><i class="fa fa-edit"></i> UPDATE</button> ';
 
-                    $buttons .= ($result->status == 1)?'<button onclick="del('. $result->employee_id .')" class= "btn btn-danger btn-sm"><i class="fa fa-trash"></i> DELETE</button>':'<button onclick="del('. $result->employee_id .')" class= "btn btn-warning btn-sm"><i class="fa fa-recycle"></i> RESTORE</button> ';
-                }
-
-                $status = ($result->status == 1)?'<span class="badge bg-primary">ACTIVE</span>':'<span class="badge bg-danger">IN-ACTIVE</span>';
-                $qrcode = new Generator;
                 $nestedData['id'] = $result->employee_id;
-                $nestedData['qrcode'] = '<img src="data:image/svg+xml;base64,'. base64_encode($qrcode->size(50)->generate($result->employee_code)) .' ">'; 
                 $nestedData['employee_code'] =  $result->employee_code;
                 $nestedData['fullname'] =  strtoupper($result->lastname .', '. $result->firstname .' '. $result->middlename);
-                $nestedData['address'] =  strtoupper($result->address);
-                $nestedData['contact'] =  $result->contact_number;
-                $nestedData['status'] =  $status;
+                $nestedData['date'] =  explode(' ', $result->created_at)[0];
+                $nestedData['status'] =  $result->nature_of_visit;
                 $nestedData['actions'] = $buttons;
-
-                if($request['module'] == 'modal'){
-                    $exist = EmployeeCovidStatus::where('user_id', '=', $result->user_id)->where('status', '=', '1')->first();
-                    if(!$exist){
-                        $data[] = $nestedData;
-                    }
-                }else{  
-                    $data[] = $nestedData;
-                }
+                $data[] = $nestedData;
             }
         }
 

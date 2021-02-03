@@ -15,6 +15,19 @@ class CreateMedicalHistoriesTable extends Migration
     {
         Schema::create('medical_histories', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->string('nature_of_visit')->nullable();
+            $table->longText('reason_for_visit')->nullable();
+            $table->string('temperature')->nullable();
+            $table->string('blood_pressure')->nullable();
+            $table->longText('additional_information')->nullable();
+            $table->longText('instructions')->nullable();
+            $table->longText('treatment')->nullable();
+            $table->longText('remarks')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

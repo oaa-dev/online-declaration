@@ -90,5 +90,10 @@ Route::post('/annual-medical-reports/find-all-history','AnnualMedicalReportContr
 Route::post('/annual-medical-reports/find-all','AnnualMedicalReportController@findall')->name('annual-medical-reports.find-all')->middleware('auth');
 Route::resource('/annual-medical-reports', 'AnnualMedicalReportController');
 
+/* medical histories */
+Route::post('/medical-histories/find-all-history','MedicalHistoryController@findall')->name('medical-hiostories.find-all-history')->middleware('auth');
+Route::resource('/medical-histories', 'MedicalHistoryController');
+
+/* scanner */
 Route::resource('/scanner', 'ScannerController');
 
