@@ -65,7 +65,7 @@ class CompanyProfileController extends Controller
                 $company->contact_number = $request['contact'];
                 $company->email = $request['email'];
                 $company->description =  strtoupper($request['description']);
-                $company->address =  strtoupper($request['description']);
+                $company->address =  strtoupper($request['address']);
                 $company->mission =  strtoupper($request['mission']);
                 $company->vision =  strtoupper($request['vision']);
 

@@ -144,7 +144,7 @@
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" id="number" aria-expanded="true">
-          <i class="far fa-comments"></i>
+          <i class="fa fa-bell"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;" id="notifications">       
           <a href="/monitoring/health-status" class="dropdown-item dropdown-footer">See All</a>
@@ -318,7 +318,7 @@
             <li class="nav-item">
               <a href="/monitoring/health-history" class="nav-link">
                 <i class="nav-icon fa fa-list"></i>
-                <p>Employee Medical History</p>
+                <p>Medical History</p>
               </a>
             </li>
 
@@ -390,7 +390,7 @@
                 <a href="/covid_monitoring/create" class="nav-link">
                   <i class="nav-icon fa fa-user-plus"></i>
                   <p>
-                    Patient Health Monitoring
+                    Patient Health Montrg
                   </p>
                 </a>
               </li>
@@ -522,6 +522,9 @@
 
 <script type="text/javascript">
   $(window).on('load', function(){
+    
+    // notification();
+
     setTimeout(function(){
       $( "#fakeloader-overlay" ).fadeOut(300, function() {
         $( "#fakeloader-overlay" ).remove();  

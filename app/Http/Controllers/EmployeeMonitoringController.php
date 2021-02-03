@@ -83,7 +83,7 @@ class EmployeeMonitoringController extends Controller
                     if($ctr >= $threshold){
                         $nestedData['fullname'] =  strtoupper($result->lastname .', '. $result->firstname .' '. $result->middlename);
                         $nestedData['risk'] =  'HIGH RISK';
-                        $nestedData['date'] =  explode(' ', $result['created_at'])[0];
+                        $nestedData['date'] =  explode(' ', $latest_health->created_at)[0];
                         $data[] = $nestedData;
                     }
                 }
@@ -248,7 +248,7 @@ class EmployeeMonitoringController extends Controller
         if($validator->fails()){
             return response()->json(array('success' => false, 'messages'=>'Please fill up required data!'));
         }else{
-            $max_identifier = DB::table('employee_monitorings')->where('user_id', '=', $request['user_id'])->max('identifier');
+            $max_identifier = DB::table('employee_monitorings')->where('user_id', '=', ((\Auth::user()->access == '1')? $request['user_id']:\Auth::user()->id) )->max('identifier');
 
             $monitoring = new EmployeeMonitoring;
             $monitoring->user_id = (\Auth::user()->access == '1')? $request['user_id']:\Auth::user()->id;
