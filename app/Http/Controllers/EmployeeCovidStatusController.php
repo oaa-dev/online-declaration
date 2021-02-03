@@ -123,11 +123,11 @@ class EmployeeCovidStatusController extends Controller
                 $nestedData['status'] =  $status;
 
                 // if($request['status'] == 'RECOVERED'){
-                    $result = EmployeeCovidStatus::where('user_id', '=', $result->user_id)->where('status', '=', '1')->count();
+                    // $result = EmployeeCovidStatus::where('user_id', '=', $result->user_id)->where('status', '=', '1')->count();
 
-                    if(empty($result)){
+                    // if(empty($result)){
                         $data[] = $nestedData;
-                    }   
+                    // }   
                 // }else{
                 //     $data[] = $nestedData;
                 // }
