@@ -18,12 +18,12 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <div class="row d-flex justify-content-center" style="margin: 10% 0px auto 0px">
+                <div class="row d-flex justify-content-center">
                     <div class="col-md-2">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
-                                    <img src="data:image/svg+xml;base64,{{ $qrcode }} " style="width: 100%">
+                                    <img src="data:image/svg+xml;base64,{{ $qrcode }}" style="width: 100%">
                                 </div>
                             </div>
                         </div>

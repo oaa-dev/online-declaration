@@ -408,6 +408,15 @@
             <li class="nav-header">SETTING</li>
             
             <li class="nav-item">
+              <a href="/scanner/code" class="nav-link">
+                <i class="nav-icon fa fa-qrcode"></i>
+                <p>
+                  QR Code
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
               <a href="/employee/profile" class="nav-link">
                 <i class="nav-icon fa fa-user"></i>
                 <p>
@@ -416,14 +425,6 @@
               </a>
             </li>
             
-            <li class="nav-item">
-              <a href="/scanner/code" class="nav-link">
-                <i class="nav-icon fa fa-user"></i>
-                <p>
-                  QR Code
-                </p>
-              </a>
-            </li>
             
             <li class="nav-item">
               <form method="POST" id="myform" action="{{ route('logout') }}">
