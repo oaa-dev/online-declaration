@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Generator;
 
 class ScannerController extends Controller
 {
@@ -37,13 +38,23 @@ class ScannerController extends Controller
         //
     }
 
+    public function code()
+    {
+        $profile = \App\Employee::findOrFail(\Auth::user()->employee_id); 
+
+        $qrcode = new Generator;
+        $element = base64_encode($qrcode->size(50)->generate($profile->employee_code)); 
+                
+        return view('entrance_scanning.qrcode', ['qrcode' => $element]);
+    }
+
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($code)
     {
         //
     }

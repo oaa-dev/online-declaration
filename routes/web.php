@@ -95,5 +95,6 @@ Route::post('/medical-histories/find-all-history','MedicalHistoryController@find
 Route::resource('/medical-histories', 'MedicalHistoryController');
 
 /* scanner */
+Route::get('/scanner/code', 'ScannerController@code')->name('scanner.code')->middleware('auth');
 Route::resource('/scanner', 'ScannerController');
 

@@ -417,6 +417,15 @@
             </li>
             
             <li class="nav-item">
+              <a href="/scanner/code" class="nav-link">
+                <i class="nav-icon fa fa-user"></i>
+                <p>
+                  QR Code
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
               <form method="POST" id="myform" action="{{ route('logout') }}">
                 @csrf
                   <a href="#" onclick="document.getElementById('myform').submit()" class="nav-link">
