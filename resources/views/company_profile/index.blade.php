@@ -65,10 +65,10 @@
                                             </div>
                                         </div> --}}
                                         <div class="col-8">
-                                            <div class="form-group">
+                                            {{-- <div class="form-group">
                                                 <label for="">Company Logo</label>
                                                 <input id="input-id" type="file" name="logo" id="logo" class="file" data-preview-file-type="text" >
-                                            </div>
+                                            </div> --}}
                                             <div class="form-group">
                                                 <label for="">Company Name</label>
                                                 <input type="text" class="form-control" value="{{ !empty($company['company_name'])? $company['company_name'] : '' }}" name="company" id="company" placeholder="Company Name">

@@ -36,7 +36,7 @@
                         <div class="card-header">
                         <h3 class="card-title">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create_modal">
-                                <i class="fa fa-plus"></i> Create New Hotlines
+                                <i class="fa fa-plus"></i> Create New
                             </button>
                         </h3>
                         </div>
@@ -105,21 +105,36 @@
                         </div>
                         <hr>
                         <div class="row">
-                            <legend>Nature of Visit</legend>
-                            <div class="form-check form-check-inline">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> INJURY
-                                </label>
+                            <div class="col-md-5">
+                                <legend>Nature of Visit</legend>
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="nature_of_visit[]" value="INJURY"> INJURY
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="nature_of_visit[]" value="ILLNESS"> ILLNESS
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="nature_of_visit[]" value="OTHER"> OTHER
+                                    </label>
+                                </div>
+                                <label for="nature_of_visit[]" class="error"></label>
                             </div>
-                            <div class="form-check form-check-inline">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> ILLNESS
-                                </label>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                  <label for="">Temperature</label>
+                                  <input type="number" class="form-control" name="temperature" placeholder="">
+                                </div>
                             </div>
-                            <div class="form-check form-check-inline">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> OTHER
-                                </label>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Blood Pressure</label>
+                                    <input type="text" class="form-control" name="blood_pressure" placeholder="">
+                                </div>
                             </div>
                         </div> 
                         <hr>
@@ -128,135 +143,121 @@
                             <div class="col-md-4">
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> ALLERGY
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="ALLERGY"> ALLERGY
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> ASTHMA
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="ASTHMA"> ASTHMA
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> BRUISE
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="BRUISE"> BRUISE
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> BURN
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="BURN"> BURN
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> COLD/COUGH
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="COLD/COUGH"> COLD/COUGH
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> CRUMPS
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="CRUMPS"> CRUMPS
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> CUT/SCRAPE
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="CUT/SCRAPE"> CUT/SCRAPE
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> DENTAL
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="DENTAL"> DENTAL
                                     </label>
                                 </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> INSECT BITE
-                                    </label>
-                                </div>
+                                <label for="reason_for_visit[]" class="error"></label>
                             </div>
 
                             <div class="col-md-4">
 
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> EARACHE
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="EARACHE"> EARACHE
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> EYE
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="EYE"> EYE
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> FEVER
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="FEVER"> FEVER
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> HEADACHE
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="HEADACHE"> HEADACHE
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> HEAD INJURY
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="HEAD INJURY"> HEAD INJURY
                                     </label>
                                 </div> 
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> INSECT BITE
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="INSECT BITE"> INSECT BITE
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> VOMITING
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="VOMITING"> VOMITING
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> HEADACHE
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> HEAD INJURY
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="NOSE BLEED"> NOSE BLEED
                                     </label>
                                 </div>
                             </div>
-
+                            
                             <div class="col-md-4">
-                               
+                                
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> VOMITING
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="INSECT BITE"> INSECT BITE
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> NOSE BLEED
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="FRACTURE"> FRACTURE
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> FRACTURE
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="RASH"> RASH
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> RASH
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="SORETHROAT"> SORETHROAT
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> SORETHROAT
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="SPLINTER"> SPLINTER
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> SPLINTER
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> STOMACH ACHE
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="STOMACH ACHE"> STOMACH ACHE
                                     </label>
                                 </div>
                             </div>
@@ -267,48 +268,44 @@
                                 <legend>Treatment</legend>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> EMS
+                                        <input class="form-check-input" type="checkbox" name="treatment[]" value="CLEANSED WOUND"> CLEANSED WOUND
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> CLEANSED WOUND
+                                        <input class="form-check-input" type="checkbox" name="treatment[]" value="APPLIED BANDAGE"> APPLIED BANDAGE
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> APPLIED BANDAGE
+                                        <input class="form-check-input" type="checkbox" name="treatment[]" value="ICE APPLIED/ COLD COMPRESS"> ICE APPLIED/ COLD COMPRESS
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> ICE APPLIED/ COLD COMPRESS
+                                        <input class="form-check-input" type="checkbox" name="treatment[]" value="MEDICATION GIVEN"> MEDICATION GIVEN
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> MEDICATION GIVEN
+                                        <input class="form-check-input" type="checkbox" name="treatment[]" value="WARM COMPRESS"> WARM COMPRESS
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> WARM COMPRESS
+                                        <input class="form-check-input" type="checkbox" name="treatment[]" value="RESTED IN OFFICE"> RESTED IN OFFICE
                                     </label>
                                 </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" value="checkedValue"> RESTED IN OFFICE
-                                    </label>
-                                </div>
+                                <label for="treatment[]" class="error"></label>
                             </div>
                             <div class="col-md-8">
                                 <div class="col-md-12 form-group">
                                   <label for="">OBSERVATION/ ADDITIONAL INFORMATION</label>
-                                  <textarea class="form-control" name="" id="" rows="3"></textarea>
+                                  <textarea class="form-control" name="observation" rows="3"></textarea>
                                 </div>
                                 <div class="col-md-12 form-group">
                                   <label for="">INTRUCTIONS</label>
-                                  <textarea class="form-control" name="" id="" rows="3"></textarea>
+                                  <textarea class="form-control" name="instruction" rows="3"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -361,41 +358,232 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Update Emergency Hotlines</h4>
+                    <h4 class="modal-title">Update Medical Records</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="update_form">
-                    @csrf
-                    @method('PUT')
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input type="hidden" id="edit_id" name="edit_id">
-                            <input type="text" class="form-control" placeholder="Enter Name" id="edit_name" name="edit_name">
-                        </div>
-                    
-                        <div class="form-group">
-                            <label>Contact Number</label>
-                            <input type="text" class="form-control" placeholder="Enter Contact" id="edit_contact" name="edit_contact">
-                        </div>
-                    
-                        <div class="form-group">
-                            <label>Email Address</label>
-                            <input type="text" class="form-control" placeholder="Enter email address" id="edit_email" name="edit_email">
-                        </div>
-                    
-                        <div class="form-group">
-                            <label>Description</label>
-                            <textarea class="form-control" rows="3"  id="edit_description" name="edit_description"></textarea>
+                
+            <form id="update_form">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="edit_id" id="edit_id">
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <legend>Nature of Visit</legend>
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="nature_of_visit[]" value="INJURY"> INJURY
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="nature_of_visit[]" value="ILLNESS"> ILLNESS
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="nature_of_visit[]" value="OTHER"> OTHER
+                                    </label>
+                                </div>
+                                <label for="nature_of_visit[]" class="error"></label>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                  <label for="">Temperature</label>
+                                  <input type="number" class="form-control" name="temperature" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Blood Pressure</label>
+                                    <input type="text" class="form-control" name="blood_pressure" placeholder="">
+                                </div>
+                            </div>
+                        </div> 
+                        <hr>
+                        <div class="row">
+                            <legend>Reason for Visit</legend>
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="ALLERGY"> ALLERGY
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="ASTHMA"> ASTHMA
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="BRUISE"> BRUISE
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="BURN"> BURN
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="COLD/COUGH"> COLD/COUGH
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="CRUMPS"> CRUMPS
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="CUT/SCRAPE"> CUT/SCRAPE
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="DENTAL"> DENTAL
+                                    </label>
+                                </div>
+                                <label for="reason_for_visit[]" class="error"></label>
+                            </div>
+
+                            <div class="col-md-4">
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="EARACHE"> EARACHE
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="EYE"> EYE
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="FEVER"> FEVER
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="HEADACHE"> HEADACHE
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="HEAD INJURY"> HEAD INJURY
+                                    </label>
+                                </div> 
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="INSECT BITE"> INSECT BITE
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="VOMITING"> VOMITING
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="NOSE BLEED"> NOSE BLEED
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="INSECT BITE"> INSECT BITE
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="FRACTURE"> FRACTURE
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="RASH"> RASH
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="SORETHROAT"> SORETHROAT
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="SPLINTER"> SPLINTER
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="reason_for_visit[]" value="STOMACH ACHE"> STOMACH ACHE
+                                    </label>
+                                </div>
+                            </div>
+                        </div>   
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <legend>Treatment</legend>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="treatment[]" value="CLEANSED WOUND"> CLEANSED WOUND
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="treatment[]" value="APPLIED BANDAGE"> APPLIED BANDAGE
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="treatment[]" value="ICE APPLIED/ COLD COMPRESS"> ICE APPLIED/ COLD COMPRESS
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="treatment[]" value="MEDICATION GIVEN"> MEDICATION GIVEN
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="treatment[]" value="WARM COMPRESS"> WARM COMPRESS
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="treatment[]" value="RESTED IN OFFICE"> RESTED IN OFFICE
+                                    </label>
+                                </div>
+                                <label for="treatment[]" class="error"></label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="col-md-12 form-group">
+                                  <label for="">OBSERVATION/ ADDITIONAL INFORMATION</label>
+                                  <textarea class="form-control" name="observation" rows="3"></textarea>
+                                </div>
+                                <div class="col-md-12 form-group">
+                                  <label for="">INTRUCTIONS</label>
+                                  <textarea class="form-control" name="instruction" rows="3"></textarea>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+                
+            </form>
             </div>
             <!-- /.modal-content -->
         </div>
@@ -453,17 +641,22 @@
 
     $("#create_form").validate({
         rules: {
-            name: {
-                minlength: 3,
+            employee_name: {
                 required: true
             },
-            contact: {
+            temperature: {
                 required: true
             },
-            email: {
+            blood_pressure: {
                 required: true
             },
-            description: {
+            "nature_of_visit[]": {
+                required: true
+            },
+            "reason_for_visit[]": {
+                required: true
+            },
+            "treatment[]": {
                 required: true
             },
         },
@@ -479,7 +672,7 @@
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
-                        url: '{{ route('emergency-hotline.store') }}',
+                        url: '{{ route('medical-histories.store') }}',
                         type: "POST",
                         data: $('#create_form').serialize(),
                         dataType: "JSON",
@@ -495,7 +688,7 @@
                                 datatable.ajax.reload( null, false );
                             } else {
                                 swal.fire({
-                                    title: "Success!",
+                                    title: "Error!",
                                     text: data.messages,
                                     icon: "danger"
                                 })
@@ -503,7 +696,7 @@
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
                             swal.fire({
-                                title: "Success!",
+                                title: "Error!",
                                 text: errorThrown,
                                 icon: "danger"
                             })
@@ -523,20 +716,75 @@
         $("#employee_modal").modal("hide");
     }
 
-    const edit = (id) => {
+    const edit = (id, form_stat) => {
+
+        if(form_stat == false){
+            var form = document.getElementById("update_form");
+            var elements = form.elements;
+            for (var i = 0, len = elements.length; i < len; ++i) {
+                elements[i].disabled = true;
+            }
+            $("#update_modal .modal-title").text('View Medical Records');
+            $("#update_modal .modal-footer").hide();
+        }else{
+            var form = document.getElementById("update_form");
+            var elements = form.elements;
+            for (var i = 0, len = elements.length; i < len; ++i) {
+                elements[i].disabled = false;
+            }
+            $("#update_modal .modal-title").text('Update Medical Records');
+            $("#update_modal .modal-footer").show();
+        }
+
+        $("#update_form input[name='nature_of_visit[]']").prop('checked', false);
+        $("#update_form input[name='reason_for_visit[]']").prop('checked', false);
+        $("#update_form input[name='treatment[]']").prop('checked', false);
+        $("#update_form textarea[name='observation']").val('');
+        $("#update_form textarea[name='instruction']").val('');
+        $("#update_form input[name='temperature']").val('');
+        $("#update_form input[name='blood_pressure']").val('');
+
         $.ajax({
-            url: '/emergency-hotline/' + id,
+            url: '/medical-histories/' + id,
             type: "GET",
             dataType: "JSON",
             success: function (data) {
 
                 console.log(data);
+                if(typeof(data.nature_of_visit) == 'string'){
+                    $("#update_form input[name='nature_of_visit[]'][value='"+data.nature_of_visit+"']").prop('checked', true);
+                }else{
+                    data.nature_of_visit.forEach(data => {
+                        $("#update_form input[name='nature_of_visit[]'][value='"+data+"']").prop('checked', true);
+                    });
+                }
+
+                if(typeof(data.reason_for_visit) == 'string'){
+                    $("#update_form input[name='reason_for_visit[]'][value='"+data.reason_for_visit+"']").prop('checked', true);
+                }else{
+                    data.reason_for_visit.forEach(data => {
+                        $("#update_form input[name='reason_for_visit[]'][value='"+data+"']").prop('checked', true);
+                    });
+                }
+                
+                if(typeof(data.treatment) == 'string'){
+                    $("#update_form input[name='treatment[]'][value='"+data.treatment+"']").prop('checked', true);
+                }else{
+                    data.treatment.forEach(data => {
+                        $("#update_form input[name='treatment[]'][value='"+data+"']").prop('checked', true);
+                    });
+                }
+
+                
+                $("#update_form textarea[name='observation']").val(data.additional_information);
+                $("#update_form textarea[name='instruction']").val(data.instructions);
+                $("#update_form input[name='temperature']").val(data.temperature);
+                $("#update_form input[name='blood_pressure']").val(data.blood_pressure);
+                $("#update_form input[name='edit_id']").val(data.id);
+
+
+
                 $("#update_modal").modal("show");
-                $("#edit_id").val(data.id);
-                $("#edit_name").val(data.name);
-                $("#edit_contact").val(data.contact_number);
-                $("#edit_email").val(data.email_address);
-                $("#edit_description").val(data.description);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert(errorThrown);
@@ -546,17 +794,22 @@
 
     $("#update_form").validate({
         rules: {
-            edit_name: {
-                minlength: 3,
+            employee_name: {
                 required: true
             },
-            edit_contact: {
+            temperature: {
                 required: true
             },
-            edit_email: {
+            blood_pressure: {
                 required: true
             },
-            edit_description: {
+            "nature_of_visit[]": {
+                required: true
+            },
+            "reason_for_visit[]": {
+                required: true
+            },
+            "treatment[]": {
                 required: true
             },
         },
@@ -572,7 +825,7 @@
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
-                        url: '/emergency-hotline/'+ $('#edit_id').val(),
+                        url: '/medical-histories/'+ $('#edit_id').val(),
                         type: "POST",
                         data: $('#update_form').serialize(),
                         dataType: "JSON",

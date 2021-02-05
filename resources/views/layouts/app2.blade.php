@@ -316,7 +316,7 @@
             </li>
             
             <li class="nav-item">
-              <a href="/monitoring/health-history" class="nav-link">
+              <a href="/medical-histories" class="nav-link">
                 <i class="nav-icon fa fa-list"></i>
                 <p>Medical History</p>
               </a>
