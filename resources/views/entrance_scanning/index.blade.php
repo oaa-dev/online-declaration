@@ -23,52 +23,46 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="profile" id="profile" style="border: black solid 6px; height: 250px">
-
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div style="width: 100%" id="reader"></div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row">
 
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                         <div class="row">
-                                            <label class="col-md-4">SEARCH :</label>
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control" name="" id="search_by_empCode" autofocus placeholder="Enter Employee code" style="width: 100%">
-                                            </div>
-                                        </div>
-
-                                        <hr>
-                                        <div class="row">
-                                            <label class="col-md-4">EMPLOYEE CODE :</label>
-                                            <div class="col-md-8">
+                                            <label class="col-md-6">EMPLOYEE CODE :</label>
+                                            <div class="col-md-6">
                                                 <label id="employee_code"> --- </label>
                                             </div>
                                         </div>
 
                                         <div class="row">
-                                            <label class="col-md-4">NAME :</label>
-                                            <div class="col-md-8">
+                                            <label class="col-md-6">NAME :</label>
+                                            <div class="col-md-6">
                                                 <label id="name"> ---</label>
                                             </div>
                                         </div>
 
                                         <div class="row">
-                                            <label class="col-md-4">CONTACT :</label>
-                                            <div class="col-md-8">
+                                            <label class="col-md-6">CONTACT :</label>
+                                            <div class="col-md-6">
                                                 <label id="contact"> ---</label>
                                             </div>
                                         </div>
                                         
                                         <div class="row">
-                                            <label class="col-md-4">ACCESS :</label>
-                                            <div class="col-md-8">
+                                            <label class="col-md-6">ACCESS :</label>
+                                            <div class="col-md-6">
                                                 <label id="access"> ---</label>
                                             </div>
                                         </div>
                                         
                                         <div class="row">
-                                            <label class="col-md-4">ADDRESS :</label>
-                                            <div class="col-md-8">
+                                            <label class="col-md-6">ADDRESS :</label>
+                                            <div class="col-md-6">
                                                 <label id="address"> ---</label>
                                             </div>
                                         </div>
@@ -170,11 +164,16 @@
 @endsection
 
 @section('script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/1.2.4/html5-qrcode.min.js" integrity="sha512-5FboyimcYZd+ugMvU09YJZWwfzvScC1hYvk3Maf5U/LzsSfHOwO/idYc3ssEba34F2XokrdPjKwQwqW2Gbx6iw==" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function(){
-        $('#search_by_empCode').on('change', function(){
+
+
+        function onScanSuccess(qrCodeMessage) {
+            // handle on success condition with the decoded message
+            
             $.ajax({
-                url:'/monitoring/show_monitoring_by_emp_code/'+$(this).val(),
+                url:'/monitoring/show_monitoring_by_emp_code/'+qrCodeMessage,
                 type:'GET',
                 dataType:'JSON',
                 success:function(response){
@@ -227,6 +226,13 @@
                     }
                 }
             })
+        }
+
+        var html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess);
+
+        $('#search_by_empCode').on('change', function(){
+            
         })
     });
 </script>
